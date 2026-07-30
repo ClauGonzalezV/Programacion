@@ -12,6 +12,12 @@ const EditorModule = {
     },
 
     init() {
+        const currencySelect = document.getElementById('doc-currency');
+        if (currencySelect) {
+            currencySelect.value = 'CLP';
+            const opt = currencySelect.options[currencySelect.selectedIndex];
+            if (opt) this.state.currencySymbol = opt.dataset.symbol || '$';
+        }
         this.setDefaultDates();
         this.bindEvents();
         this.renderInitialItemRows();
@@ -30,7 +36,8 @@ const EditorModule = {
     bindEvents() {
         // Input change handlers for live updates
         const inputsToListen = [
-            'doc-type', 'doc-currency', 'doc-template', 'input-doc-number', 'input-doc-status',
+            'doc-type', 'doc-currency', 'doc-template', 'doc-watermark', 'doc-language',
+            'input-doc-number', 'input-doc-status',
             'input-doc-date', 'input-doc-duedate', 'input-emitter-name', 'input-emitter-taxid',
             'input-emitter-email', 'input-emitter-phone', 'input-emitter-address',
             'input-client-name', 'input-client-taxid', 'input-client-email', 'input-client-phone',
@@ -52,6 +59,11 @@ const EditorModule = {
             const opt = e.target.options[e.target.selectedIndex];
             this.state.currencySymbol = opt.dataset.symbol || '$';
             this.recalculateAndRender();
+        });
+
+        // Auto-numbering on doc type change
+        document.getElementById('doc-type').addEventListener('change', () => {
+            this.autoSetDocNumber();
         });
 
         // Accent Color Dots
@@ -266,6 +278,8 @@ const EditorModule = {
             currency: document.getElementById('doc-currency').value,
             currencySymbol: this.state.currencySymbol,
             template: document.getElementById('doc-template').value,
+            watermark: document.getElementById('doc-watermark') ? document.getElementById('doc-watermark').value : '',
+            language: document.getElementById('doc-language') ? document.getElementById('doc-language').value : 'es',
             accentColor: this.state.accentColor,
             number: document.getElementById('input-doc-number').value || 'COT-001',
             status: document.getElementById('input-doc-status').value,
@@ -348,7 +362,6 @@ const EditorModule = {
         document.getElementById('items-tbody').innerHTML = '';
         this.renderInitialItemRows();
         this.setDefaultDates();
-        // Clear signature canvas
         const canvas = document.getElementById('signature-canvas');
         if (canvas) {
             canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
@@ -360,5 +373,29 @@ const EditorModule = {
         if (typeof showToast === 'function') {
             showToast('Formulario limpiado', 'info');
         }
+    },
+
+    // Feature 5: Auto-numbering
+    autoSetDocNumber() {
+        const docType = document.getElementById('doc-type').value;
+        const prefixes = {
+            'COTIZACIÓN': 'COT', 'PRESUPUESTO': 'PRE', 'FACTURA': 'FAC',
+            'RECIBO': 'REC', 'NOTA DE CRÉDITO': 'NC', 'NOTA DE DÉBITO': 'ND',
+            'ORDEN DE COMPRA': 'OC', 'PROFORMA': 'PRO', 'CONTRATO': 'CTR'
+        };
+        const prefix = prefixes[docType] || 'DOC';
+        const counters = JSON.parse(localStorage.getItem('facturapulse_counters') || '{}');
+        const nextNum = (counters[docType] || 0) + 1;
+        const padded = String(nextNum).padStart(4, '0');
+        const year = new Date().getFullYear();
+        document.getElementById('input-doc-number').value = `${prefix}-${year}-${padded}`;
+        this.recalculateAndRender();
+    },
+
+    // Increment counter after saving
+    incrementDocCounter(docType) {
+        const counters = JSON.parse(localStorage.getItem('facturapulse_counters') || '{}');
+        counters[docType] = (counters[docType] || 0) + 1;
+        localStorage.setItem('facturapulse_counters', JSON.stringify(counters));
     }
 };

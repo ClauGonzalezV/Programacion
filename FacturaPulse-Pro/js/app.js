@@ -66,6 +66,7 @@ const App = {
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                 document.getElementById(`tab-${targetTab}`).classList.add('active');
 
+                if (targetTab === 'dashboard') DashboardModule.render();
                 if (targetTab === 'clients') this.renderClientsTab();
                 if (targetTab === 'catalog') this.renderCatalogTab();
                 if (targetTab === 'history') this.renderHistoryTab();
@@ -86,6 +87,7 @@ const App = {
         document.getElementById('btn-save-draft').addEventListener('click', () => {
             const data = EditorModule.getCollectFormData();
             StorageManager.saveDocumentToHistory(data);
+            EditorModule.incrementDocCounter(data.docType);
             this.updateHistoryBadge();
             showToast('Documento guardado en el historial', 'success');
         });
@@ -161,6 +163,18 @@ const App = {
                 showToast('Historial vaciado', 'info');
             }
         });
+
+        // Feature 10: CSV Export
+        const btnCsv = document.getElementById('btn-export-csv');
+        if (btnCsv) {
+            btnCsv.addEventListener('click', () => this.exportCSV());
+        }
+
+        // Feature 3: Send by Email
+        const btnEmail = document.getElementById('btn-send-email');
+        if (btnEmail) {
+            btnEmail.addEventListener('click', () => this.sendByEmail());
+        }
     },
 
     loadClientIntoEditor(client) {
@@ -420,31 +434,52 @@ const App = {
         const history = StorageManager.getHistory();
 
         if (history.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" class="text-center" style="color: var(--text-muted); padding: 40px;">No tienes facturas ni cotizaciones guardadas aún.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8" class="text-center" style="color: var(--text-muted); padding: 40px;">No tienes facturas ni cotizaciones guardadas aún.</td></tr>';
             return;
         }
 
-        tbody.innerHTML = history.map(h => `
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+
+        tbody.innerHTML = history.map(h => {
+            // Feature 13: Due date alert badges
+            let dueBadge = '';
+            if (h.dueDate && h.status !== 'Pagada') {
+                const dd = new Date(h.dueDate);
+                const diff = Math.ceil((dd - now) / (1000 * 60 * 60 * 24));
+                if (diff < 0) dueBadge = '<span class="due-badge badge-due-overdue">VENCIDA</span>';
+                else if (diff <= 3) dueBadge = `<span class="due-badge badge-due-warn">${diff === 0 ? 'HOY' : diff + 'd'}</span>`;
+                else dueBadge = `<span class="due-badge badge-due-ok">${diff}d</span>`;
+            }
+
+            const fmtDate = h.dueDate ? h.dueDate.split('-').reverse().join('/') : 'N/A';
+
+            return `
             <tr>
                 <td><strong>${h.number}</strong></td>
                 <td>${h.docType}</td>
                 <td>${h.client.name || 'Sin cliente'}</td>
                 <td>${h.date || 'N/A'}</td>
+                <td>${fmtDate} ${dueBadge}</td>
                 <td><strong>${h.currencySymbol} ${h.totals.grandTotal.toLocaleString('es-CL', { minimumFractionDigits: 2 })}</strong></td>
                 <td><span class="status-pill ${h.status}">${h.status}</span></td>
                 <td>
                     <button type="button" class="btn btn-xs btn-secondary" onclick="App.reloadDocumentFromHistory('${h.number}')" title="Cargar en editor">
-                        <i class="fa-solid fa-pen-to-square"></i> Cargar
+                        <i class="fa-solid fa-pen-to-square"></i>
                     </button>
-                    <button type="button" class="btn btn-xs btn-primary" onclick="App.exportHistoryPDF('${h.number}')" title="Exportar a PDF">
-                        <i class="fa-solid fa-file-pdf"></i> PDF
+                    <button type="button" class="btn btn-xs btn-outline" onclick="App.duplicateDocument('${h.number}')" title="Duplicar">
+                        <i class="fa-solid fa-copy"></i>
+                    </button>
+                    <button type="button" class="btn btn-xs btn-primary" onclick="App.exportHistoryPDF('${h.number}')" title="PDF">
+                        <i class="fa-solid fa-file-pdf"></i>
                     </button>
                     <button type="button" class="btn btn-xs btn-ghost" onclick="App.deleteHistoryItem('${h.number}')">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
             </tr>
-        `).join('');
+        `;
+        }).join('');
     },
 
     reloadDocumentFromHistory(number) {
@@ -452,7 +487,9 @@ const App = {
         const doc = history.find(h => h.number === number);
         if (doc) {
             document.getElementById('doc-type').value = doc.docType || 'COTIZACIÓN';
-            document.getElementById('doc-currency').value = doc.currency || 'USD';
+            document.getElementById('doc-currency').value = doc.currency || 'CLP';
+            const currOpt = document.getElementById('doc-currency').options[document.getElementById('doc-currency').selectedIndex];
+            EditorModule.state.currencySymbol = currOpt ? currOpt.dataset.symbol : '$';
             document.getElementById('doc-template').value = doc.template || 'modern';
             document.getElementById('input-doc-number').value = doc.number || '';
             document.getElementById('input-doc-status').value = doc.status || 'Pendiente';
@@ -515,5 +552,65 @@ const App = {
             this.updateHistoryBadge();
             showToast('Documento eliminado del historial', 'info');
         }
+    },
+
+    // Feature 6: Duplicate Document
+    duplicateDocument(number) {
+        const history = StorageManager.getHistory();
+        const doc = history.find(h => h.number === number);
+        if (doc) {
+            this.reloadDocumentFromHistory(number);
+            setTimeout(() => {
+                EditorModule.autoSetDocNumber();
+                EditorModule.setDefaultDates();
+                document.getElementById('input-doc-status').value = 'Borrador';
+                EditorModule.recalculateAndRender();
+                showToast(`Documento duplicado. Nuevo número asignado.`, 'success');
+            }, 100);
+        }
+    },
+
+    // Feature 10: Export items to CSV
+    exportCSV() {
+        const data = EditorModule.getCollectFormData();
+        const items = data.items || [];
+        if (items.length === 0) {
+            showToast('No hay ítems para exportar', 'error');
+            return;
+        }
+        let csv = 'Descripción,Cantidad,Precio Unitario,Total\n';
+        items.forEach(item => {
+            const total = (parseFloat(item.quantity) || 0) * (parseFloat(item.price) || 0);
+            csv += `"${(item.description || '').replace(/"/g, '""')}",${item.quantity},${item.price},${total.toFixed(2)}\n`;
+        });
+        csv += `\n,,Subtotal,${data.totals.subtotal.toFixed(2)}\n`;
+        csv += `,,Total,${data.totals.grandTotal.toFixed(2)}\n`;
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${data.docType}_${data.number}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('CSV exportado correctamente', 'success');
+    },
+
+    // Feature 3: Send by Email
+    sendByEmail() {
+        const data = EditorModule.getCollectFormData();
+        const clientEmail = data.client.email || '';
+        const subject = encodeURIComponent(`${data.docType} N° ${data.number} - ${data.emitter.name || 'Emitia Pro'}`);
+        const body = encodeURIComponent(
+            `Estimado/a ${data.client.name || 'Cliente'},\n\n` +
+            `Adjunto encontrará el documento ${data.docType} N° ${data.number}.\n\n` +
+            `Total: ${data.currencySymbol} ${data.totals.grandTotal.toLocaleString('es-CL', { minimumFractionDigits: 2 })}\n` +
+            `Fecha: ${data.date}\n` +
+            `Vencimiento: ${data.dueDate}\n\n` +
+            `${data.bankDetails ? 'Datos bancarios:\n' + data.bankDetails + '\n\n' : ''}` +
+            `Saludos cordiales,\n${data.emitter.name || ''}\n${data.emitter.phone || ''}`
+        );
+        window.open(`mailto:${clientEmail}?subject=${subject}&body=${body}`, '_self');
+        showToast('Abriendo cliente de correo...', 'info');
     }
 };

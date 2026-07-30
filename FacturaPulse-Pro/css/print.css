@@ -3,40 +3,107 @@
    ========================================================================== */
 
 @media print {
-    /* Hide all UI elements except the document paper */
+    /* 1. Hide all UI components, headers, forms, navigation and other tabs */
+    header,
+    nav,
     .app-header,
     .customizer-bar,
     .editor-pane,
     .preview-header-bar,
     .modal-backdrop,
     .toast-container,
-    .header-tabs,
-    .header-actions {
+    .tab-content,
+    #tab-dashboard,
+    #tab-clients,
+    #tab-catalog,
+    #tab-history,
+    .section-header-row {
         display: none !important;
     }
 
-    body, .app-layout, .app-workspace, .tab-content, .workspace-grid, .preview-pane, .paper-container-wrapper {
-        background: transparent !important;
+    /* 2. Unhide only the containers holding the document paper */
+    html,
+    body,
+    .app-layout,
+    .app-workspace,
+    #tab-editor,
+    .workspace-grid,
+    .preview-pane,
+    .paper-container-wrapper,
+    #document-paper,
+    #document-paper * {
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    /* 3. Reset margins, padding and backgrounds for clean A4 output */
+    body,
+    .app-layout,
+    .app-workspace,
+    #tab-editor,
+    .workspace-grid,
+    .preview-pane,
+    .paper-container-wrapper {
+        background: #ffffff !important;
         padding: 0 !important;
         margin: 0 !important;
         overflow: visible !important;
-        display: block !important;
         width: 100% !important;
         height: auto !important;
+        max-height: none !important;
+        box-shadow: none !important;
+        border: none !important;
     }
 
     .document-paper {
         box-shadow: none !important;
         border-radius: 0 !important;
-        padding: 10mm 12mm !important;
+        padding: 0 !important;
         width: 100% !important;
         margin: 0 !important;
-        page-break-after: avoid;
-        page-break-inside: avoid;
+        gap: 0 !important;
+    }
+
+    .doc-page {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 8mm 12mm !important;
+        width: 210mm !important;
+        height: 297mm !important;
+        max-height: 297mm !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        background: #ffffff !important;
+    }
+
+    /* Don't break after the last page */
+    .doc-page:last-child {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+
+    /* Prevent breaking inside key structural blocks */
+    .doc-header-grid,
+    .doc-parties-grid,
+    .doc-meta-dates,
+    .doc-table,
+    .doc-summary-grid,
+    .doc-footer,
+    .doc-table tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    /* Hide continuation indicator on printed paper */
+    .doc-page-continues {
+        display: none !important;
     }
 
     @page {
-        size: A4;
+        size: A4 portrait;
         margin: 0;
     }
 }

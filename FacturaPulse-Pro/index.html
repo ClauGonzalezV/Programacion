@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="FacturaPulse Pro - Generador comercial de cotizaciones, presupuestos y facturas en PDF. Diseños profesionales y cálculo automático.">
-    <title>FacturaPulse Pro | Generador de Cotizaciones y Facturas</title>
+    <meta name="description" content="Emitia Pro - Plataforma comercial de cotizaciones, presupuestos y facturas en PDF. Diseños profesionales y cálculo automático.">
+    <title>Emitia Pro | Sistema de Facturación y Cotizaciones</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +33,7 @@
                     <i class="fa-solid fa-bolt-lightning"></i>
                 </div>
                 <div class="brand-info">
-                    <h1 class="brand-title">FacturaPulse <span class="badge-pro">PRO</span></h1>
+                    <h1 class="brand-title">Emitia <span class="badge-pro">PRO</span></h1>
                     <p class="brand-subtitle">Cotizaciones & Facturas Profesionales</p>
                 </div>
             </div>
@@ -39,6 +43,10 @@
                 <button class="nav-tab active" id="tab-btn-editor" data-tab="editor">
                     <i class="fa-solid fa-file-signature"></i>
                     <span>Creador</span>
+                </button>
+                <button class="nav-tab" id="tab-btn-dashboard" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
                 </button>
                 <button class="nav-tab" id="tab-btn-clients" data-tab="clients">
                     <i class="fa-solid fa-users"></i>
@@ -103,7 +111,7 @@
                                 <option value="USD" data-symbol="$">USD — Dólar EE.UU. ($)</option>
                                 <option value="MXN" data-symbol="$">MXN — Peso Mexicano ($)</option>
                                 <option value="COP" data-symbol="$">COP — Peso Colombiano ($)</option>
-                                <option value="CLP" data-symbol="$">CLP — Peso Chileno ($)</option>
+                                <option value="CLP" data-symbol="$" selected>CLP — Peso Chileno ($)</option>
                                 <option value="ARS" data-symbol="$">ARS — Peso Argentino ($)</option>
                                 <option value="PEN" data-symbol="S/.">PEN — Sol Peruano (S/.)</option>
                                 <option value="BRL" data-symbol="R$">BRL — Real Brasileño (R$)</option>
@@ -145,6 +153,30 @@
                             <option value="executive">Ejecutiva Minimal</option>
                             <option value="dark">Dark Executive</option>
                             <option value="classic">Clásica Imprenta</option>
+                            <option value="minimal">Minimalista</option>
+                            <option value="colorful">Colorida Startup</option>
+                            <option value="corporate">Corporativa Formal</option>
+                            <option value="neon">Tech Neon</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="doc-watermark"><i class="fa-solid fa-droplet"></i> Marca:</label>
+                        <select id="doc-watermark" class="form-select">
+                            <option value="">Sin marca de agua</option>
+                            <option value="PAGADA">PAGADA ✅</option>
+                            <option value="ANULADA">ANULADA ❌</option>
+                            <option value="BORRADOR">BORRADOR 📝</option>
+                            <option value="VENCIDA">VENCIDA ⏰</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="doc-language"><i class="fa-solid fa-globe"></i> Idioma Doc:</label>
+                        <select id="doc-language" class="form-select">
+                            <option value="es">Español</option>
+                            <option value="en">English</option>
+                            <option value="pt">Português</option>
                         </select>
                     </div>
 
@@ -411,6 +443,12 @@
                                 <i class="fa-solid fa-eye"></i> Vista Previa en Tiempo Real
                             </div>
                             <div class="preview-actions">
+                                <button type="button" class="btn btn-xs btn-ghost" id="btn-export-csv" title="Exportar a CSV">
+                                    <i class="fa-solid fa-file-csv"></i> CSV
+                                </button>
+                                <button type="button" class="btn btn-xs btn-ghost" id="btn-send-email" title="Enviar por email">
+                                    <i class="fa-solid fa-envelope"></i> Email
+                                </button>
                                 <button type="button" class="btn btn-xs btn-ghost" id="btn-zoom-fit" title="Ajustar vista">
                                     <i class="fa-solid fa-expand"></i>
                                 </button>
@@ -425,6 +463,41 @@
                             <div id="document-paper" class="document-paper template-modern" data-accent="#4f46e5">
                                 <!-- Dynamic Document Engine renders here -->
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: DASHBOARD -->
+            <section class="tab-content" id="tab-dashboard">
+                <div class="container-padded">
+                    <div class="section-header-row">
+                        <div>
+                            <h2><i class="fa-solid fa-chart-pie"></i> Dashboard de Estadísticas</h2>
+                            <p class="section-desc">Resumen visual de tus ventas, clientes top y documentos pendientes.</p>
+                        </div>
+                    </div>
+                    <div class="dashboard-stats-row" id="dashboard-stats-row">
+                        <!-- Dynamic stat cards -->
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="card-box dashboard-chart-card">
+                            <div class="card-box-header"><h3><i class="fa-solid fa-chart-bar"></i> Ingresos últimos 6 meses</h3></div>
+                            <div class="card-box-body"><canvas id="chart-revenue" width="600" height="280"></canvas></div>
+                        </div>
+                        <div class="card-box dashboard-chart-card">
+                            <div class="card-box-header"><h3><i class="fa-solid fa-chart-pie"></i> Estado de Documentos</h3></div>
+                            <div class="card-box-body"><canvas id="chart-status" width="280" height="280"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="card-box">
+                            <div class="card-box-header"><h3><i class="fa-solid fa-trophy"></i> Top 5 Clientes</h3></div>
+                            <div class="card-box-body" id="dashboard-top-clients"><!-- Dynamic --></div>
+                        </div>
+                        <div class="card-box">
+                            <div class="card-box-header"><h3><i class="fa-solid fa-bell"></i> Documentos por Vencer</h3></div>
+                            <div class="card-box-body" id="dashboard-due-soon"><!-- Dynamic --></div>
                         </div>
                     </div>
                 </div>
@@ -523,6 +596,7 @@
                                     <th>Tipo</th>
                                     <th>Cliente</th>
                                     <th>Fecha</th>
+                                    <th>Vence</th>
                                     <th>Total</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
@@ -655,9 +729,20 @@
 
     <!-- JavaScript Scripts -->
     <script src="js/storage.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/templates.js"></script>
     <script src="js/editor.js"></script>
     <script src="js/export.js"></script>
+    <script src="js/dashboard.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(() => {});
+            });
+        }
+    </script>
 </body>
 </html>
