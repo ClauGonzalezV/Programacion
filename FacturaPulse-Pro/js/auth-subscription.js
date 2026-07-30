@@ -3,7 +3,6 @@
    ========================================================================== */
 
 const AuthSubscription = {
-    // Config Placeholder - Pre-configured for local & production
     firebaseConfig: {
         apiKey: "AIzaSyDemoKeyEmitiaProForDevelopmentOnly12345",
         authDomain: "emitia-pro.firebaseapp.com",
@@ -14,10 +13,14 @@ const AuthSubscription = {
     },
 
     currentUser: null,
-    userPlan: { isPro: true, planName: 'PLAN PRO (Demo)', expiresAt: null },
+    userPlan: { isPro: false, planName: 'PLAN GRATUITO', expiresAt: null },
 
     init() {
-        // Initialize Firebase if compat SDK is loaded
+        const savedPlan = localStorage.getItem('emitia_user_plan');
+        if (savedPlan) {
+            try { this.userPlan = JSON.parse(savedPlan); } catch (e) {}
+        }
+
         if (typeof firebase !== 'undefined' && !firebase.apps.length) {
             try {
                 firebase.initializeApp(this.firebaseConfig);
@@ -28,6 +31,7 @@ const AuthSubscription = {
         }
         this.bindUIEvents();
         this.updateUI();
+        this.applyPlanRestrictions();
     },
 
     bindFirebaseEvents() {
@@ -38,7 +42,6 @@ const AuthSubscription = {
             if (user) {
                 this.loadUserData(user);
             } else {
-                this.userPlan = { isPro: false, planName: 'PLAN GRATUITO', expiresAt: null };
                 this.updateUI();
             }
         });
@@ -95,12 +98,42 @@ const AuthSubscription = {
         if (btnLogout) {
             btnLogout.addEventListener('click', () => this.signOut());
         }
+
+        // Pricing Plan Buttons
+        const btnSubscribePro = document.getElementById('btn-subscribe-pro');
+        if (btnSubscribePro) {
+            btnSubscribePro.addEventListener('click', () => this.setPlan('pro'));
+        }
+
+        const btnSelectFree = document.getElementById('btn-select-free');
+        if (btnSelectFree) {
+            btnSelectFree.addEventListener('click', () => this.setPlan('free'));
+        }
+    },
+
+    setPlan(planType) {
+        if (planType === 'pro') {
+            this.userPlan = { isPro: true, planName: 'PLAN PRO', expiresAt: '2026-12-31' };
+            localStorage.setItem('emitia_user_plan', JSON.stringify(this.userPlan));
+            this.updateUI();
+            this.applyPlanRestrictions();
+            this.closeModal('modal-pricing');
+            showToast('💎 ¡Plan PRO Activado! Todas las plantillas y funciones están desbloqueadas.', 'success');
+        } else {
+            this.userPlan = { isPro: false, planName: 'PLAN GRATUITO', expiresAt: null };
+            localStorage.setItem('emitia_user_plan', JSON.stringify(this.userPlan));
+            this.updateUI();
+            this.applyPlanRestrictions();
+            this.closeModal('modal-pricing');
+            showToast('Has cambiado al Plan Gratuito.', 'info');
+        }
     },
 
     signUpWithEmail(email, password) {
         if (typeof firebase !== 'undefined' && firebase.auth) {
             firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then(cred => {
+                    this.setPlan('pro');
                     showToast(`¡Cuenta creada con éxito! Bienvenido ${cred.user.email}`, 'success');
                     this.closeModal('modal-auth');
                 })
@@ -108,13 +141,10 @@ const AuthSubscription = {
                     showToast(`Error al crear cuenta: ${err.message}`, 'error');
                 });
         } else {
-            // Local Demo Fallback
             this.currentUser = { email: email, displayName: email.split('@')[0] };
-            this.userPlan = { isPro: true, planName: 'PLAN PRO (Demo)', expiresAt: null };
             localStorage.setItem('emitia_demo_user', JSON.stringify(this.currentUser));
-            showToast(`¡Bienvenido/a a Emitia Pro, ${email}!`, 'success');
+            this.setPlan('pro');
             this.closeModal('modal-auth');
-            this.updateUI();
         }
     },
 
@@ -129,13 +159,10 @@ const AuthSubscription = {
                     showToast(`Error de inicio de sesión: ${err.message}`, 'error');
                 });
         } else {
-            // Local Demo Fallback
             this.currentUser = { email: email, displayName: email.split('@')[0] };
-            this.userPlan = { isPro: true, planName: 'PLAN PRO (Demo)', expiresAt: null };
             localStorage.setItem('emitia_demo_user', JSON.stringify(this.currentUser));
-            showToast(`Sesión iniciada correctamente`, 'success');
+            this.setPlan('pro');
             this.closeModal('modal-auth');
-            this.updateUI();
         }
     },
 
@@ -144,20 +171,17 @@ const AuthSubscription = {
             const provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider)
                 .then(result => {
-                    showToast(`Bienvenido/a ${result.user.displayName}`, 'success');
+                    this.setPlan('pro');
                     this.closeModal('modal-auth');
                 })
                 .catch(err => {
                     showToast(`Error con Google Auth: ${err.message}`, 'error');
                 });
         } else {
-            // Demo Google Auth
             this.currentUser = { email: 'demo@emitia.pro', displayName: 'Usuario Demo Google', photoURL: '' };
-            this.userPlan = { isPro: true, planName: 'PLAN PRO (Demo)', expiresAt: null };
             localStorage.setItem('emitia_demo_user', JSON.stringify(this.currentUser));
-            showToast(`Sesión iniciada con Google Demo`, 'success');
+            this.setPlan('pro');
             this.closeModal('modal-auth');
-            this.updateUI();
         }
     },
 
@@ -166,11 +190,11 @@ const AuthSubscription = {
             firebase.auth().signOut().then(() => {
                 showToast('Sesión cerrada', 'info');
                 this.closeModal('modal-account');
+                this.currentUser = null;
                 this.updateUI();
             });
         } else {
             this.currentUser = null;
-            this.userPlan = { isPro: false, planName: 'PLAN GRATUITO', expiresAt: null };
             localStorage.removeItem('emitia_demo_user');
             showToast('Sesión cerrada', 'info');
             this.closeModal('modal-account');
@@ -179,8 +203,6 @@ const AuthSubscription = {
     },
 
     loadUserData(user) {
-        // Load Plan Status from Firestore or Default
-        this.userPlan = { isPro: true, planName: 'PLAN PRO ACTIVO', expiresAt: '2026-12-31' };
         this.updateUI();
     },
 
@@ -210,6 +232,81 @@ const AuthSubscription = {
         }
     },
 
+    applyPlanRestrictions() {
+        // 1. Templates Restriction (2 basic for Free, 8 for PRO)
+        const templateSelect = document.getElementById('doc-template');
+        if (templateSelect) {
+            const proTemplates = ['dark', 'classic', 'minimal', 'colorful', 'corporate', 'neon'];
+            Array.from(templateSelect.options).forEach(opt => {
+                if (proTemplates.includes(opt.value)) {
+                    if (this.userPlan.isPro) {
+                        opt.disabled = false;
+                        opt.textContent = opt.textContent.replace(' 🔒 (Plan PRO)', '');
+                    } else {
+                        opt.disabled = true;
+                        if (!opt.textContent.includes('🔒')) {
+                            opt.textContent += ' 🔒 (Plan PRO)';
+                        }
+                    }
+                }
+            });
+            if (!this.userPlan.isPro && proTemplates.includes(templateSelect.value)) {
+                templateSelect.value = 'modern';
+                if (typeof EditorModule !== 'undefined') EditorModule.recalculateAndRender();
+            }
+        }
+
+        // 2. Multi-Language Restriction (Spanish only for Free, EN/PT for PRO)
+        const langSelect = document.getElementById('doc-language');
+        if (langSelect) {
+            Array.from(langSelect.options).forEach(opt => {
+                if (opt.value !== 'es') {
+                    if (this.userPlan.isPro) {
+                        opt.disabled = false;
+                        opt.textContent = opt.textContent.replace(' 🔒 (Plan PRO)', '');
+                    } else {
+                        opt.disabled = true;
+                        if (!opt.textContent.includes('🔒')) {
+                            opt.textContent += ' 🔒 (Plan PRO)';
+                        }
+                    }
+                }
+            });
+            if (!this.userPlan.isPro && langSelect.value !== 'es') {
+                langSelect.value = 'es';
+                if (typeof EditorModule !== 'undefined') EditorModule.recalculateAndRender();
+            }
+        }
+
+        // 3. Dashboard Tab Indicator
+        const tabDashboard = document.getElementById('tab-btn-dashboard');
+        if (tabDashboard) {
+            if (this.userPlan.isPro) {
+                tabDashboard.classList.remove('tab-locked');
+                tabDashboard.querySelector('span').textContent = 'Dashboard';
+            } else {
+                tabDashboard.classList.add('tab-locked');
+                tabDashboard.querySelector('span').textContent = 'Dashboard 🔒';
+            }
+        }
+
+        // 4. PDF and Print Buttons Lock Indicator
+        const btnExportPdf = document.getElementById('btn-export-pdf');
+        const btnPrintDirect = document.getElementById('btn-print-direct');
+
+        if (btnExportPdf) {
+            const btnText = btnExportPdf.querySelector('.btn-text');
+            if (btnText) {
+                btnText.textContent = this.userPlan.isPro ? 'PDF' : 'PDF 🔒';
+            }
+        }
+        if (btnPrintDirect) {
+            btnPrintDirect.innerHTML = this.userPlan.isPro 
+                ? '<i class="fa-solid fa-print"></i> Imprimir / PDF'
+                : '<i class="fa-solid fa-lock"></i> Imprimir / PDF 🔒';
+        }
+    },
+
     showLoginModal() {
         const modal = document.getElementById('modal-auth');
         if (modal) modal.classList.remove('hidden');
@@ -218,7 +315,7 @@ const AuthSubscription = {
     showAccountModal() {
         const modal = document.getElementById('modal-account');
         if (modal) {
-            document.getElementById('modal-account-email').textContent = this.currentUser ? this.currentUser.email : '';
+            document.getElementById('modal-account-email').textContent = this.currentUser ? this.currentUser.email : 'usuario@emitia.pro';
             document.getElementById('modal-account-plan').textContent = this.userPlan.planName;
             modal.classList.remove('hidden');
         }
@@ -254,14 +351,19 @@ const AuthSubscription = {
     }
 };
 
-// Check local demo user on load
-document.addEventListener('DOMContentLoaded', () => {
+// Safe Initialization
+const initAuthModule = () => {
     const savedDemo = localStorage.getItem('emitia_demo_user');
     if (savedDemo) {
         try {
             AuthSubscription.currentUser = JSON.parse(savedDemo);
-            AuthSubscription.userPlan = { isPro: true, planName: 'PLAN PRO (Demo)', expiresAt: null };
         } catch (e) {}
     }
     AuthSubscription.init();
-});
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAuthModule);
+} else {
+    initAuthModule();
+}

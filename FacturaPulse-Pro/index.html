@@ -819,11 +819,11 @@
                         <ul class="pricing-features">
                             <li><i class="fa-solid fa-check text-success"></i> Hasta 3 facturas/mes</li>
                             <li><i class="fa-solid fa-check text-success"></i> 2 plantillas básicas</li>
-                            <li><i class="fa-solid fa-check text-success"></i> Exportación a PDF</li>
+                            <li class="disabled"><i class="fa-solid fa-xmark"></i> Descarga a PDF e impresión</li>
                             <li class="disabled"><i class="fa-solid fa-xmark"></i> Dashboard avanzado</li>
                             <li class="disabled"><i class="fa-solid fa-xmark"></i> Multi-idioma (EN/PT)</li>
                         </ul>
-                        <button type="button" class="btn btn-outline btn-full margin-top-16" data-close="modal-pricing">Plan Actual</button>
+                        <button type="button" class="btn btn-outline btn-full margin-top-16" id="btn-select-free">Usar Plan Gratuito</button>
                     </div>
 
                     <!-- PLAN PRO MENSUAL -->
@@ -842,8 +842,8 @@
                             <li><i class="fa-solid fa-check text-success"></i> Multi-idioma (ES / EN / PT)</li>
                             <li><i class="fa-solid fa-check text-success"></i> Respaldo JSON y Exportación CSV</li>
                         </ul>
-                        <button type="button" class="btn btn-primary btn-full margin-top-16" onclick="showToast('Redirigiendo a pasarela de pago (Mercado Pago / Webpay / Stripe)...', 'info')">
-                            <i class="fa-solid fa-bolt"></i> Suscribirme con Webpay / MP
+                        <button type="button" class="btn btn-primary btn-full margin-top-16" id="btn-subscribe-pro">
+                            <i class="fa-solid fa-bolt"></i> Activar Plan PRO Mensual
                         </button>
                     </div>
                 </div>
@@ -869,8 +869,13 @@
     <!-- PWA Service Worker Registration -->
     <script>
         if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                for (let registration of registrations) {
+                    registration.update();
+                }
+            });
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch(() => {});
+                navigator.serviceWorker.register('sw.js?v=2').catch(() => {});
             });
         }
     </script>

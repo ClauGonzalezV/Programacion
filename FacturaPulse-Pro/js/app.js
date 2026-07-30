@@ -2,9 +2,15 @@
    MAIN APP CONTROLLER - TAB ROUTING, MODALS & EVENT HANDLERS
    ========================================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+const initAppModule = () => {
     App.init();
-});
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAppModule);
+} else {
+    initAppModule();
+}
 
 function showToast(message, type = 'info') {
     const container = document.getElementById('toast-container');
@@ -60,6 +66,12 @@ const App = {
             tab.addEventListener('click', () => {
                 const targetTab = tab.dataset.tab;
 
+                if (targetTab === 'dashboard' && typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
+                    showToast('🔒 El Dashboard Avanzado es exclusivo del PLAN PRO. ¡Suscríbete para acceder a tus analíticas!', 'error');
+                    AuthSubscription.showPricingModal();
+                    return;
+                }
+
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
 
@@ -85,6 +97,14 @@ const App = {
 
         // Save Draft
         document.getElementById('btn-save-draft').addEventListener('click', () => {
+            if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
+                const history = StorageManager.getHistory();
+                if (history.length >= 3) {
+                    showToast('Límite de 3 documentos del Plan Gratuito alcanzado. ¡Actualiza a PLAN PRO para guardar ilimitados!', 'error');
+                    AuthSubscription.showPricingModal();
+                    return;
+                }
+            }
             const data = EditorModule.getCollectFormData();
             StorageManager.saveDocumentToHistory(data);
             EditorModule.incrementDocCounter(data.docType);
@@ -175,6 +195,18 @@ const App = {
         if (btnEmail) {
             btnEmail.addEventListener('click', () => this.sendByEmail());
         }
+
+        // Intercept Ctrl+P to prevent browser print on Free Plan
+        window.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
+                if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showToast('🔒 La descarga a PDF e impresión es exclusiva del PLAN PRO.', 'error');
+                    AuthSubscription.showPricingModal();
+                }
+            }
+        });
     },
 
     loadClientIntoEditor(client) {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'emitia-pro-v1';
+const CACHE_NAME = 'emitia-pro-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -11,17 +11,40 @@ const ASSETS_TO_CACHE = [
   './js/editor.js',
   './js/export.js',
   './js/dashboard.js',
+  './js/auth-subscription.js',
   './js/app.js'
 ];
 
 self.addEventListener('install', event => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS_TO_CACHE))
   );
 });
 
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+      );
+    }).then(() => self.clients.claim())
+  );
+});
+
+// Network First strategy (Always get latest version when online, use cache when offline)
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
+    fetch(event.request)
+      .then(networkResponse => {
+        if (networkResponse && networkResponse.status === 200) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => caches.match(event.request))
   );
 });

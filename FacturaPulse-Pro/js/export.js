@@ -4,6 +4,14 @@
 
 const ExportModule = {
     exportToPDF(docData) {
+        if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
+            if (typeof showToast === 'function') {
+                showToast('🔒 La descarga a PDF es exclusiva del PLAN PRO. ¡Suscríbete para descargar tus documentos!', 'error');
+            }
+            if (AuthSubscription.showPricingModal) AuthSubscription.showPricingModal();
+            return;
+        }
+
         const element = document.getElementById('document-paper');
         if (!element) return;
 
@@ -28,15 +36,21 @@ const ExportModule = {
                 }
             }).catch(err => {
                 console.error('PDF error:', err);
-                window.print();
+                this.printDocument();
             });
         } else {
-            // Fallback to browser print dialog
-            window.print();
+            this.printDocument();
         }
     },
 
     printDocument() {
+        if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
+            if (typeof showToast === 'function') {
+                showToast('🔒 La impresión de documentos es exclusiva del PLAN PRO. ¡Suscríbete para imprimir!', 'error');
+            }
+            if (AuthSubscription.showPricingModal) AuthSubscription.showPricingModal();
+            return;
+        }
         window.print();
     }
 };
