@@ -1,0 +1,42 @@
+/* ==========================================================================
+   PRINT & PDF EXPORT OPTIMIZATION STYLESHEET
+   ========================================================================== */
+
+@media print {
+    /* Hide all UI elements except the document paper */
+    .app-header,
+    .customizer-bar,
+    .editor-pane,
+    .preview-header-bar,
+    .modal-backdrop,
+    .toast-container,
+    .header-tabs,
+    .header-actions {
+        display: none !important;
+    }
+
+    body, .app-layout, .app-workspace, .tab-content, .workspace-grid, .preview-pane, .paper-container-wrapper {
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .document-paper {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 10mm 12mm !important;
+        width: 100% !important;
+        margin: 0 !important;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+
+    @page {
+        size: A4;
+        margin: 0;
+    }
+}

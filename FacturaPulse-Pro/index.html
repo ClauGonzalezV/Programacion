@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FacturaPulse Pro - Generador comercial de cotizaciones, presupuestos y facturas en PDF. Diseños profesionales y cálculo automático.">
+    <title>FacturaPulse Pro | Generador de Cotizaciones y Facturas</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2pdf library for client-side PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Application Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/document.css">
+    <link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+    <div id="app" class="app-layout">
+        <!-- Top Navigation Header -->
+        <header class="app-header" id="app-header">
+            <div class="header-brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-bolt-lightning"></i>
+                </div>
+                <div class="brand-info">
+                    <h1 class="brand-title">FacturaPulse <span class="badge-pro">PRO</span></h1>
+                    <p class="brand-subtitle">Cotizaciones & Facturas Profesionales</p>
+                </div>
+            </div>
+
+            <!-- Main Navigation Tabs -->
+            <nav class="header-tabs">
+                <button class="nav-tab active" id="tab-btn-editor" data-tab="editor">
+                    <i class="fa-solid fa-file-signature"></i>
+                    <span>Creador</span>
+                </button>
+                <button class="nav-tab" id="tab-btn-clients" data-tab="clients">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Clientes</span>
+                </button>
+                <button class="nav-tab" id="tab-btn-catalog" data-tab="catalog">
+                    <i class="fa-solid fa-box-archive"></i>
+                    <span>Servicios</span>
+                </button>
+                <button class="nav-tab" id="tab-btn-history" data-tab="history">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Historial</span>
+                    <span class="badge-count" id="history-count">0</span>
+                </button>
+            </nav>
+
+            <!-- Quick Action Toolbar -->
+            <div class="header-actions">
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-sample-data" title="Llenar con datos de prueba">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span class="btn-text">Cargar Ejemplo</span>
+                </button>
+                <button type="button" class="btn btn-outline btn-sm" id="btn-save-draft" title="Guardar borrador en memoria">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span class="btn-text">Guardar</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" id="btn-export-pdf" title="Descargar en PDF">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span class="btn-text">Exportar PDF</span>
+                </button>
+                <button type="button" class="icon-btn" id="btn-theme-toggle" title="Cambiar Tema Oscuro/Claro">
+                    <i class="fa-solid fa-moon" id="theme-icon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace Area -->
+        <main class="app-workspace">
+            <!-- TAB 1: EDITOR & LIVE PREVIEW -->
+            <section class="tab-content active" id="tab-editor">
+                <!-- Control Toolbar for Document Customization -->
+                <div class="customizer-bar" id="customizer-bar">
+                    <div class="control-group">
+                        <label for="doc-type"><i class="fa-solid fa-file-invoice"></i> Tipo:</label>
+                        <select id="doc-type" class="form-select">
+                            <option value="COTIZACIÓN">Cotización</option>
+                            <option value="PRESUPUESTO">Presupuesto</option>
+                            <option value="FACTURA">Factura Proforma</option>
+                            <option value="RECIBO">Recibo de Pago</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="doc-currency"><i class="fa-solid fa-coins"></i> Moneda:</label>
+                        <select id="doc-currency" class="form-select">
+                            <option value="USD" data-symbol="$">USD ($)</option>
+                            <option value="EUR" data-symbol="€">EUR (€)</option>
+                            <option value="MXN" data-symbol="$">MXN ($)</option>
+                            <option value="COP" data-symbol="$">COP ($)</option>
+                            <option value="CLP" data-symbol="$">CLP ($)</option>
+                            <option value="ARS" data-symbol="$">ARS ($)</option>
+                            <option value="PEN" data-symbol="S/.">PEN (S/.)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="doc-template"><i class="fa-solid fa-palette"></i> Plantilla:</label>
+                        <select id="doc-template" class="form-select">
+                            <option value="modern">Moderna Neo-Glass</option>
+                            <option value="executive">Ejecutiva Minimal</option>
+                            <option value="dark">Dark Executive</option>
+                            <option value="classic">Clásica Imprenta</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label><i class="fa-solid fa-droplet"></i> Color Acento:</label>
+                        <div class="color-picker-group">
+                            <button type="button" class="color-dot active" data-color="#4f46e5" style="background-color: #4f46e5;" title="Índigo"></button>
+                            <button type="button" class="color-dot" data-color="#0284c7" style="background-color: #0284c7;" title="Azul Océano"></button>
+                            <button type="button" class="color-dot" data-color="#059669" style="background-color: #059669;" title="Esmeralda"></button>
+                            <button type="button" class="color-dot" data-color="#7c3aed" style="background-color: #7c3aed;" title="Violeta"></button>
+                            <button type="button" class="color-dot" data-color="#ea580c" style="background-color: #ea580c;" title="Naranja Sunset"></button>
+                            <input type="color" id="custom-accent-color" value="#4f46e5" title="Color personalizado">
+                        </div>
+                    </div>
+
+                    <div class="control-group actions-right">
+                        <button type="button" class="btn btn-ghost btn-sm" id="btn-reset-form">
+                            <i class="fa-solid fa-rotate-left"></i> Limpiar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Two-Column Workspace Layout -->
+                <div class="workspace-grid">
+                    <!-- Left Column: Interactive Form Editor -->
+                    <div class="editor-pane" id="editor-pane">
+                        <form id="invoice-form" onsubmit="event.preventDefault();">
+                            <!-- Section: Document Header Info -->
+                            <div class="card-box">
+                                <div class="card-box-header">
+                                    <h3><i class="fa-solid fa-sliders"></i> Información del Documento</h3>
+                                </div>
+                                <div class="card-box-body grid-2">
+                                    <div class="form-group">
+                                        <label for="input-doc-number">Número / Folio</label>
+                                        <input type="text" id="input-doc-number" class="form-input" value="COT-2026-001" placeholder="Ej: COT-001">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-doc-status">Estado</label>
+                                        <select id="input-doc-status" class="form-select">
+                                            <option value="Borrador">Borrador</option>
+                                            <option value="Pendiente" selected>Pendiente</option>
+                                            <option value="Aprobada">Aprobada</option>
+                                            <option value="Pagada">Pagada</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-doc-date">Fecha de Emisión</label>
+                                        <input type="date" id="input-doc-date" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-doc-duedate">Vencimiento / Validez</label>
+                                        <input type="date" id="input-doc-duedate" class="form-input">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Emitter (My Business) -->
+                            <div class="card-box">
+                                <div class="card-box-header">
+                                    <h3><i class="fa-solid fa-building"></i> Mis Datos (Emisor)</h3>
+                                </div>
+                                <div class="card-box-body">
+                                    <div class="logo-upload-zone" id="logo-dropzone">
+                                        <input type="file" id="input-logo-file" accept="image/*" class="file-input-hidden">
+                                        <div class="logo-preview-wrapper" id="logo-preview-wrapper">
+                                            <img id="logo-preview-img" src="" alt="Logo" class="hidden">
+                                            <div class="logo-placeholder" id="logo-placeholder">
+                                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                                <span>Subir Logotipo (PNG/JPG/SVG)</span>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-xs btn-ghost hidden" id="btn-remove-logo"><i class="fa-solid fa-trash"></i> Eliminar Logo</button>
+                                    </div>
+
+                                    <div class="grid-2 margin-top-12">
+                                        <div class="form-group">
+                                            <label for="input-emitter-name">Nombre Comercial / Empresa *</label>
+                                            <input type="text" id="input-emitter-name" class="form-input" placeholder="Ej: Nexus Digital Studio" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="input-emitter-taxid">Identificación Fiscal (RUT/NIF/RFC)</label>
+                                            <input type="text" id="input-emitter-taxid" class="form-input" placeholder="Ej: 123456789-0">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="input-emitter-email">Correo Electrónico</label>
+                                            <input type="email" id="input-emitter-email" class="form-input" placeholder="contacto@nexusstudio.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="input-emitter-phone">Teléfono / WhatsApp</label>
+                                            <input type="text" id="input-emitter-phone" class="form-input" placeholder="+56 9 1234 5678">
+                                        </div>
+                                    </div>
+                                    <div class="form-group margin-top-8">
+                                        <label for="input-emitter-address">Dirección Fiscal / Ciudad</label>
+                                        <input type="text" id="input-emitter-address" class="form-input" placeholder="Av. Providencia 1234, Of 502, Santiago">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Receiver (Client) -->
+                            <div class="card-box">
+                                <div class="card-box-header space-between">
+                                    <h3><i class="fa-solid fa-user-tag"></i> Datos del Cliente</h3>
+                                    <div class="header-tools">
+                                        <button type="button" class="btn btn-xs btn-outline" id="btn-load-saved-client">
+                                            <i class="fa-solid fa-folder-open"></i> Cargar Guardado
+                                        </button>
+                                        <button type="button" class="btn btn-xs btn-ghost" id="btn-quick-save-client">
+                                            <i class="fa-solid fa-bookmark"></i> Guardar Cliente
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-box-body grid-2">
+                                    <div class="form-group">
+                                        <label for="input-client-name">Nombre / Razon Social *</label>
+                                        <input type="text" id="input-client-name" class="form-input" placeholder="Ej: Innova Tech Corp" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-client-taxid">Identificación Fiscal / RUT</label>
+                                        <input type="text" id="input-client-taxid" class="form-input" placeholder="Ej: 76.543.210-K">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-client-email">Correo Electrónico</label>
+                                        <input type="email" id="input-client-email" class="form-input" placeholder="facturacion@innovatech.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-client-phone">Teléfono de Contacto</label>
+                                        <input type="text" id="input-client-phone" class="form-input" placeholder="+56 9 8765 4321">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="input-client-address">Dirección de Envío / Facturación</label>
+                                        <input type="text" id="input-client-address" class="form-input" placeholder="Las Condes 500, Santiago">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Items Table -->
+                            <div class="card-box">
+                                <div class="card-box-header space-between">
+                                    <h3><i class="fa-solid fa-list-check"></i> Conceptos y Servicios</h3>
+                                    <button type="button" class="btn btn-xs btn-outline" id="btn-open-catalog-modal">
+                                        <i class="fa-solid fa-plus"></i> Desde Catálogo
+                                    </button>
+                                </div>
+                                <div class="card-box-body no-padding">
+                                    <div class="table-responsive">
+                                        <table class="editor-items-table" id="items-editor-table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 42%;">Descripción del Concepto / Servicio</th>
+                                                    <th style="width: 14%;">Cant.</th>
+                                                    <th style="width: 20%;">Precio Unit.</th>
+                                                    <th style="width: 18%;">Importe</th>
+                                                    <th style="width: 6%;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="items-tbody">
+                                                <!-- Dynamic Rows Inserted by JS -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="table-footer-actions">
+                                        <button type="button" class="btn btn-secondary btn-sm" id="btn-add-item">
+                                            <i class="fa-solid fa-circle-plus"></i> Añadir Ítem
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Tax & Totals Breakdown Settings -->
+                            <div class="card-box">
+                                <div class="card-box-header">
+                                    <h3><i class="fa-solid fa-calculator"></i> Ajustes de Impuestos y Descuentos</h3>
+                                </div>
+                                <div class="card-box-body grid-3">
+                                    <div class="form-group">
+                                        <label for="input-tax-rate">Impuesto / IVA (%)</label>
+                                        <div class="input-suffix">
+                                            <input type="number" id="input-tax-rate" class="form-input" value="19" min="0" max="100" step="0.1">
+                                            <span>%</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-discount-val">Descuento Global</label>
+                                        <div class="input-group-row">
+                                            <input type="number" id="input-discount-val" class="form-input" value="0" min="0" step="0.1">
+                                            <select id="input-discount-type" class="form-select-compact">
+                                                <option value="percent">%</option>
+                                                <option value="fixed">Fijo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-shipping-fee">Gastos Envío / Adicionales</label>
+                                        <input type="number" id="input-shipping-fee" class="form-input" value="0" min="0" step="1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Notes, Payment Info & Terms -->
+                            <div class="card-box">
+                                <div class="card-box-header">
+                                    <h3><i class="fa-solid fa-file-contract"></i> Términos, Datos Bancarios y Notas</h3>
+                                </div>
+                                <div class="card-box-body grid-2">
+                                    <div class="form-group">
+                                        <label for="input-bank-details">Datos Bancarios para Transferencia</label>
+                                        <textarea id="input-bank-details" class="form-textarea" rows="3" placeholder="Banco: Banco Estado&#10;Tipo: Cuenta Corriente N° 12345678&#10;Titular: Nexus Digital Studio LTDA"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-terms-conditions">Condiciones y Términos de Entrega</label>
+                                        <textarea id="input-terms-conditions" class="form-textarea" rows="3" placeholder="Cotización válida por 15 días.&#10;50% de anticipo al iniciar y 50% al finalizar entrega."></textarea>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="input-custom-notes">Nota Adicional / Agradecimiento</label>
+                                        <input type="text" id="input-custom-notes" class="form-input" placeholder="¡Gracias por confiar en nuestros servicios!">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Right Column: Live Document Render Canvas -->
+                    <div class="preview-pane" id="preview-pane">
+                        <div class="preview-header-bar">
+                            <div class="preview-title">
+                                <i class="fa-solid fa-eye"></i> Vista Previa en Tiempo Real
+                            </div>
+                            <div class="preview-actions">
+                                <button type="button" class="btn btn-xs btn-ghost" id="btn-zoom-fit" title="Ajustar vista">
+                                    <i class="fa-solid fa-expand"></i>
+                                </button>
+                                <button type="button" class="btn btn-xs btn-primary" id="btn-print-direct">
+                                    <i class="fa-solid fa-print"></i> Imprimir / PDF
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Document Paper Wrap (A4 proportions) -->
+                        <div class="paper-container-wrapper">
+                            <div id="document-paper" class="document-paper template-modern" data-accent="#4f46e5">
+                                <!-- Dynamic Document Engine renders here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: CLIENTS MANAGEMENT -->
+            <section class="tab-content" id="tab-clients">
+                <div class="container-padded">
+                    <div class="section-header-row">
+                        <div>
+                            <h2><i class="fa-solid fa-address-book"></i> Directorio de Clientes</h2>
+                            <p class="section-desc">Guarda la información de tus clientes habituales para generar cotizaciones en 1 segundo.</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="btn-new-client-modal">
+                            <i class="fa-solid fa-user-plus"></i> Nuevo Cliente
+                        </button>
+                    </div>
+
+                    <div class="search-filter-bar">
+                        <div class="search-input-wrap">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-client-input" class="form-input" placeholder="Buscar cliente por nombre, RUT o email...">
+                        </div>
+                    </div>
+
+                    <div class="clients-grid" id="clients-cards-list">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: SERVICES & PRODUCTS CATALOG -->
+            <section class="tab-content" id="tab-catalog">
+                <div class="container-padded">
+                    <div class="section-header-row">
+                        <div>
+                            <h2><i class="fa-solid fa-boxes-stacked"></i> Catálogo de Servicios y Productos</h2>
+                            <p class="section-desc">Mantén un inventario de tus tarifas y servicios para añadirlos a tus facturas sin reescribir.</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="btn-new-catalog-item-modal">
+                            <i class="fa-solid fa-plus"></i> Nuevo Servicio
+                        </button>
+                    </div>
+
+                    <div class="search-filter-bar">
+                        <div class="search-input-wrap">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-catalog-input" class="form-input" placeholder="Buscar servicio o concepto...">
+                        </div>
+                    </div>
+
+                    <div class="catalog-table-wrap card-box">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Concepto / Servicio</th>
+                                    <th>Precio Sugerido</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="catalog-table-body">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: DOCUMENT HISTORY -->
+            <section class="tab-content" id="tab-history">
+                <div class="container-padded">
+                    <div class="section-header-row">
+                        <div>
+                            <h2><i class="fa-solid fa-clock-rotate-left"></i> Historial de Documentos</h2>
+                            <p class="section-desc">Revisa, edita, duplica o vuelve a descargar tus cotizaciones y facturas guardadas.</p>
+                        </div>
+                        <div class="flex-gap-8">
+                            <button type="button" class="btn btn-outline" id="btn-export-backup">
+                                <i class="fa-solid fa-download"></i> Respaldar JSON
+                            </button>
+                            <button type="button" class="btn btn-danger-outline" id="btn-clear-history">
+                                <i class="fa-solid fa-trash-can"></i> Vaciar Historial
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="history-table-wrap card-box">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>N° Folio</th>
+                                    <th>Tipo</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-table-body">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL: ADD / EDIT CLIENT -->
+    <div class="modal-backdrop hidden" id="modal-client">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-client-title"><i class="fa-solid fa-user-plus"></i> Guardar Cliente</h3>
+                <button type="button" class="modal-close" data-close="modal-client">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-modal-client">
+                    <input type="hidden" id="modal-client-id">
+                    <div class="form-group">
+                        <label for="modal-client-name">Nombre / Razón Social *</label>
+                        <input type="text" id="modal-client-name" class="form-input" required>
+                    </div>
+                    <div class="grid-2 margin-top-8">
+                        <div class="form-group">
+                            <label for="modal-client-taxid">Identificación Fiscal (RUT/NIF)</label>
+                            <input type="text" id="modal-client-taxid" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="modal-client-email">Correo Electrónico</label>
+                            <input type="email" id="modal-client-email" class="form-input">
+                        </div>
+                    </div>
+                    <div class="grid-2 margin-top-8">
+                        <div class="form-group">
+                            <label for="modal-client-phone">Teléfono</label>
+                            <input type="text" id="modal-client-phone" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="modal-client-address">Dirección</label>
+                            <input type="text" id="modal-client-address" class="form-input">
+                        </div>
+                    </div>
+                    <div class="modal-footer margin-top-16">
+                        <button type="button" class="btn btn-ghost" data-close="modal-client">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cliente</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD / EDIT CATALOG ITEM -->
+    <div class="modal-backdrop hidden" id="modal-catalog">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-catalog-title"><i class="fa-solid fa-box-archive"></i> Nuevo Servicio en Catálogo</h3>
+                <button type="button" class="modal-close" data-close="modal-catalog">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-modal-catalog">
+                    <input type="hidden" id="modal-catalog-id">
+                    <div class="form-group">
+                        <label for="modal-catalog-name">Descripción del Servicio / Producto *</label>
+                        <input type="text" id="modal-catalog-name" class="form-input" required placeholder="Ej: Diseño de Logotipo Corporativo">
+                    </div>
+                    <div class="form-group margin-top-8">
+                        <label for="modal-catalog-price">Precio Unitario Sugerido *</label>
+                        <input type="number" id="modal-catalog-price" class="form-input" required min="0" step="0.01">
+                    </div>
+                    <div class="modal-footer margin-top-16">
+                        <button type="button" class="btn btn-ghost" data-close="modal-catalog">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar en Catálogo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: SELECT CATALOG ITEMS TO INSERT -->
+    <div class="modal-backdrop hidden" id="modal-select-catalog">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-list-check"></i> Seleccionar de Catálogo</h3>
+                <button type="button" class="modal-close" data-close="modal-select-catalog">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Selecciona los servicios que deseas insertar en tu documento actual:</p>
+                <div class="catalog-select-list" id="modal-catalog-select-list">
+                    <!-- Dynamic check list -->
+                </div>
+                <div class="modal-footer margin-top-16">
+                    <button type="button" class="btn btn-ghost" data-close="modal-select-catalog">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-insert-selected-catalog">Insertar Seleccionados</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Element -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- JavaScript Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/templates.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

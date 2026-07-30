@@ -1,0 +1,321 @@
+/* ==========================================================================
+   DOCUMENT PREVIEW & TEMPLATES STYLESHEET
+   ========================================================================== */
+
+.document-paper {
+    width: 210mm;
+    min-height: 297mm;
+    background-color: #ffffff;
+    color: #1e293b;
+    padding: 12mm 15mm;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.4;
+    position: relative;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+/* Base Template Structure */
+.doc-header-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.doc-emitter-logo {
+    max-height: 65px;
+    max-width: 180px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.doc-emitter-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.doc-emitter-sub {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.doc-type-badge {
+    text-align: right;
+}
+
+.doc-type-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent-color, #4f46e5);
+}
+
+.doc-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #334155;
+    margin-top: 4px;
+}
+
+.doc-status-tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 6px;
+}
+
+/* Two-column Parties Info (Emisor vs Cliente) */
+.doc-parties-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    border: 1px solid #e2e8f0;
+}
+
+.party-title {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-color, #4f46e5);
+    margin-bottom: 6px;
+}
+
+.party-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #0f172a;
+}
+
+.party-detail {
+    font-size: 0.825rem;
+    color: #475569;
+}
+
+/* Dates Bar */
+.doc-meta-dates {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+}
+
+.doc-meta-item span {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+/* Rendered Items Table */
+.doc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+.doc-table th {
+    background-color: var(--accent-color, #4f46e5);
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+.doc-table th.text-right,
+.doc-table td.text-right {
+    text-align: right;
+}
+
+.doc-table th.text-center,
+.doc-table td.text-center {
+    text-align: center;
+}
+
+.doc-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 0.875rem;
+}
+
+.doc-table tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Totals Summary Table */
+.doc-summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.doc-notes-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.note-box {
+    background-color: #f8fafc;
+    border-left: 3px solid var(--accent-color, #4f46e5);
+    padding: 10px 12px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.8rem;
+}
+
+.note-box-title {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.doc-totals-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.doc-totals-table td {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+}
+
+.doc-totals-table td.label {
+    color: #64748b;
+    font-weight: 600;
+}
+
+.doc-totals-table td.val {
+    text-align: right;
+    font-weight: 700;
+    color: #0f172a;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.doc-totals-table tr.grand-total td {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--accent-color, #4f46e5);
+    border-top: 2px solid #cbd5e1;
+    border-bottom: 2px double #cbd5e1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Footer / Signature Area */
+.doc-footer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 16px;
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+.signature-line {
+    border-top: 1px solid #94a3b8;
+    width: 200px;
+    text-align: center;
+    padding-top: 4px;
+    font-weight: 600;
+    color: #475569;
+}
+
+/* --- TEMPLATE VARIATIONS --- */
+
+/* 1. EXECUTIVE MINIMAL */
+.template-executive {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+}
+
+.template-executive .doc-header-grid {
+    border-bottom: 3px solid #0f172a;
+}
+
+.template-executive .doc-type-title {
+    color: #0f172a;
+}
+
+.template-executive .doc-table th {
+    background-color: #0f172a;
+    color: #ffffff;
+}
+
+.template-executive .party-title {
+    color: #0f172a;
+}
+
+/* 2. DARK EXECUTIVE TEMPLATE */
+.template-dark {
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
+.template-dark .doc-emitter-name,
+.template-dark .party-name,
+.template-dark .doc-totals-table td.val {
+    color: #ffffff;
+}
+
+.template-dark .doc-emitter-sub,
+.template-dark .party-detail,
+.template-dark .doc-table td,
+.template-dark .doc-totals-table td.label {
+    color: #94a3b8;
+}
+
+.template-dark .doc-parties-grid,
+.template-dark .note-box {
+    background-color: #1e293b;
+    border-color: #334155;
+}
+
+.template-dark .doc-table td {
+    border-bottom-color: #334155;
+}
+
+.template-dark .doc-table tbody tr:nth-child(even) {
+    background-color: #1e293b;
+}
+
+/* 3. CLASSIC PRINT TEMPLATE */
+.template-classic {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.template-classic .doc-type-title {
+    font-family: 'Times New Roman', Times, serif;
+    color: #000000;
+}
+
+.template-classic .doc-table th {
+    background-color: #f1f5f9;
+    color: #000000;
+    border-bottom: 2px solid #000000;
+}
