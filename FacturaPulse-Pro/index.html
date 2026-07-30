@@ -65,9 +65,18 @@
 
             <!-- Quick Action Toolbar -->
             <div class="header-actions">
+                <span id="user-plan-badge" class="badge-plan badge-plan--pro">PLAN PRO</span>
+                <button type="button" class="btn btn-outline btn-sm" id="btn-show-pricing" title="Ver Planes de Suscripción">
+                    <i class="fa-solid fa-gem font-accent"></i>
+                    <span class="btn-text">Planes</span>
+                </button>
+                <button type="button" class="btn btn-outline btn-sm" id="btn-auth-user" title="Cuenta de Usuario">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="btn-text">Iniciar Sesión</span>
+                </button>
                 <button type="button" class="btn btn-secondary btn-sm" id="btn-sample-data" title="Llenar con datos de prueba">
                     <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    <span class="btn-text">Cargar Ejemplo</span>
+                    <span class="btn-text">Ejemplo</span>
                 </button>
                 <button type="button" class="btn btn-outline btn-sm" id="btn-save-draft" title="Guardar borrador en memoria">
                     <i class="fa-solid fa-floppy-disk"></i>
@@ -75,7 +84,7 @@
                 </button>
                 <button type="button" class="btn btn-primary btn-sm" id="btn-export-pdf" title="Descargar en PDF">
                     <i class="fa-solid fa-file-pdf"></i>
-                    <span class="btn-text">Exportar PDF</span>
+                    <span class="btn-text">PDF</span>
                 </button>
                 <button type="button" class="icon-btn" id="btn-theme-toggle" title="Cambiar Tema Oscuro/Claro">
                     <i class="fa-solid fa-moon" id="theme-icon"></i>
@@ -727,6 +736,126 @@
         </div>
     </div>
 
+    <!-- MODAL: LOGIN / REGISTER (AUTH) -->
+    <div class="modal-backdrop hidden" id="modal-auth">
+        <div class="modal-card" style="max-width: 440px;">
+            <div class="modal-header">
+                <h3 id="modal-auth-title"><i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión</h3>
+                <button type="button" class="modal-close" data-close="modal-auth">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-modal-auth">
+                    <input type="hidden" id="modal-auth-is-register" value="false">
+                    <div class="form-group">
+                        <label for="modal-auth-email">Correo Electrónico *</label>
+                        <input type="email" id="modal-auth-email" class="form-input" placeholder="tu@empresa.com" required>
+                    </div>
+                    <div class="form-group margin-top-8">
+                        <label for="modal-auth-password">Contraseña *</label>
+                        <input type="password" id="modal-auth-password" class="form-input" placeholder="••••••••" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full margin-top-16" id="modal-auth-submit">
+                        Ingresar a Emitia Pro
+                    </button>
+                </form>
+
+                <div class="auth-divider margin-top-16"><span>o bien</span></div>
+
+                <button type="button" class="btn btn-outline btn-full margin-top-12" id="btn-auth-google">
+                    <i class="fa-brands fa-google" style="color: #ea4335;"></i> Continuar con Google
+                </button>
+
+                <div class="text-center margin-top-16">
+                    <button type="button" class="btn-link" id="btn-toggle-auth-mode">¿No tienes cuenta? Regístrate aquí</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: USER ACCOUNT PROFILE -->
+    <div class="modal-backdrop hidden" id="modal-account">
+        <div class="modal-card" style="max-width: 440px;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-circle-user"></i> Tu Cuenta Emitia Pro</h3>
+                <button type="button" class="modal-close" data-close="modal-account">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="account-avatar-circle margin-top-8"><i class="fa-solid fa-user-tie"></i></div>
+                <h4 id="modal-account-email" class="margin-top-8">usuario@empresa.com</h4>
+                <div class="margin-top-8">
+                    <span id="modal-account-plan" class="badge-plan badge-plan--pro">PLAN PRO ACTIVO</span>
+                </div>
+                <div class="account-features-list margin-top-16">
+                    <div><i class="fa-solid fa-check text-success"></i> Documentos ilimitados</div>
+                    <div><i class="fa-solid fa-check text-success"></i> Respaldo automático en la nube</div>
+                    <div><i class="fa-solid fa-check text-success"></i> Acceso a las 8 plantillas y marcas de agua</div>
+                </div>
+                <div class="modal-footer margin-top-20" style="justify-content: center;">
+                    <button type="button" class="btn btn-danger-outline" id="btn-auth-logout">
+                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: PRICING / PLANES DE SUSCRIPCIÓN SAAS -->
+    <div class="modal-backdrop hidden" id="modal-pricing">
+        <div class="modal-card" style="max-width: 720px;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-gem font-accent"></i> Planes de Suscripción Emitia Pro</h3>
+                <button type="button" class="modal-close" data-close="modal-pricing">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc text-center">Elige el plan ideal para automatizar las finanzas de tu negocio:</p>
+                <div class="pricing-grid margin-top-16">
+                    <!-- PLAN GRATIS -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h4>Plan Gratuito</h4>
+                            <div class="pricing-price">$ 0 <span>/ mes</span></div>
+                            <p class="pricing-sub">Para probar la plataforma</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fa-solid fa-check text-success"></i> Hasta 3 facturas/mes</li>
+                            <li><i class="fa-solid fa-check text-success"></i> 2 plantillas básicas</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Exportación a PDF</li>
+                            <li class="disabled"><i class="fa-solid fa-xmark"></i> Dashboard avanzado</li>
+                            <li class="disabled"><i class="fa-solid fa-xmark"></i> Multi-idioma (EN/PT)</li>
+                        </ul>
+                        <button type="button" class="btn btn-outline btn-full margin-top-16" data-close="modal-pricing">Plan Actual</button>
+                    </div>
+
+                    <!-- PLAN PRO MENSUAL -->
+                    <div class="pricing-card pricing-card--featured">
+                        <div class="pricing-badge">RECOMENDADO</div>
+                        <div class="pricing-header">
+                            <h4>Plan PRO Mensual</h4>
+                            <div class="pricing-price">$ 9.990 <span>CLP / mes</span></div>
+                            <p class="pricing-sub">o $9.99 USD / mes para empresas</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fa-solid fa-check text-success"></i> Facturas e Historial ILIMITADOS</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Las 8 plantillas profesionales</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Dashboard de ventas y gráficos</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Marcas de agua y QR de pago</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Multi-idioma (ES / EN / PT)</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Respaldo JSON y Exportación CSV</li>
+                        </ul>
+                        <button type="button" class="btn btn-primary btn-full margin-top-16" onclick="showToast('Redirigiendo a pasarela de pago (Mercado Pago / Webpay / Stripe)...', 'info')">
+                            <i class="fa-solid fa-bolt"></i> Suscribirme con Webpay / MP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Compat Web SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
     <!-- JavaScript Scripts -->
     <script src="js/storage.js"></script>
     <script src="js/i18n.js"></script>
@@ -734,6 +863,7 @@
     <script src="js/editor.js"></script>
     <script src="js/export.js"></script>
     <script src="js/dashboard.js"></script>
+    <script src="js/auth-subscription.js"></script>
     <script src="js/app.js"></script>
 
     <!-- PWA Service Worker Registration -->
