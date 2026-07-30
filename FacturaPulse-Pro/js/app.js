@@ -137,6 +137,30 @@ const App = {
             showToast('Respaldo descargado', 'success');
         });
 
+        // Backup Import
+        const btnImportTrigger = document.getElementById('btn-import-backup-trigger');
+        const inputImport = document.getElementById('input-import-backup');
+        if (btnImportTrigger && inputImport) {
+            btnImportTrigger.addEventListener('click', () => inputImport.click());
+            inputImport.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                        const result = StorageManager.importBackupJSON(evt.target.result);
+                        if (result.success) {
+                            this.renderAllViews();
+                            showToast('Respaldo restaurado con éxito', 'success');
+                        } else {
+                            showToast('Error al procesar el archivo JSON de respaldo', 'error');
+                        }
+                        inputImport.value = '';
+                    };
+                    reader.readAsText(file);
+                }
+            });
+        }
+
         // Clear History
         document.getElementById('btn-clear-history').addEventListener('click', () => {
             if (confirm('¿Estás seguro de vaciar el historial de facturas?')) {

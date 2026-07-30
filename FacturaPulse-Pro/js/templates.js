@@ -175,6 +175,11 @@ const TemplatesEngine = {
                             <td class="val">${formatMoney(data.totals.grandTotal)}</td>
                         </tr>
                     </table>
+                    
+                    <!-- Amount in words line -->
+                    <div class="doc-amount-words">
+                        <i class="fa-solid fa-file-invoice-dollar"></i> ${this.numberToWordsSpanish(data.totals.grandTotal, data.currency)}
+                    </div>
                 </div>
             </div>
 
@@ -186,6 +191,59 @@ const TemplatesEngine = {
         `;
 
         container.innerHTML = html;
+    },
+
+    numberToWordsSpanish(num, currency = 'USD') {
+        if (num === null || num === undefined || isNaN(num)) return '';
+        const units = ['', 'UN', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE'];
+        const tens = ['', 'DIEZ', 'VEINTE', 'TREINTA', 'CUARENTA', 'CINCUENTA', 'SESENTA', 'SETENTA', 'OCHENTA', 'NOVENTA'];
+        const teens = ['DIEZ', 'ONCE', 'DOCE', 'TRECE', 'CATORCE', 'QUINCE', 'DIECISÉIS', 'DIECISIETE', 'DIECIOCHO', 'DIECINUEVE'];
+        const hundreds = ['', 'CIENTO', 'DOSCIENTOS', 'TRESCIENTOS', 'CUATROCIENTOS', 'QUINIENTOS', 'SEISCIENTOS', 'SETECIENTOS', 'OCHOCIENTOS', 'NOVECIENTOS'];
+
+        const convertGroup = (n) => {
+            let output = '';
+            if (n === 100) return 'CIEN';
+            if (n > 100) {
+                output += hundreds[Math.floor(n / 100)] + ' ';
+                n %= 100;
+            }
+            if (n >= 10 && n <= 19) {
+                output += teens[n - 10] + ' ';
+            } else if (n >= 20 && n <= 29) {
+                if (n === 20) output += 'VEINTE ';
+                else output += 'VEINTI' + units[n - 20] + ' ';
+            } else if (n >= 30) {
+                output += tens[Math.floor(n / 10)];
+                if (n % 10 !== 0) output += ' Y ' + units[n % 10];
+                output += ' ';
+            } else if (n > 0) {
+                output += units[n] + ' ';
+            }
+            return output;
+        };
+
+        let integerPart = Math.floor(Math.abs(num));
+        const cents = Math.round((Math.abs(num) - integerPart) * 100);
+        const centsStr = (cents < 10 ? '0' : '') + cents;
+
+        if (integerPart === 0) return `SON: CERO CON ${centsStr}/100 ${currency}`;
+
+        let words = '';
+        if (integerPart >= 1000000) {
+            const millions = Math.floor(integerPart / 1000000);
+            integerPart %= 1000000;
+            words += (millions === 1 ? 'UN MILLÓN ' : convertGroup(millions) + 'MILLONES ');
+        }
+        if (integerPart >= 1000) {
+            const thousands = Math.floor(integerPart / 1000);
+            integerPart %= 1000;
+            words += (thousands === 1 ? 'UN MIL ' : convertGroup(thousands) + 'MIL ');
+        }
+        if (integerPart > 0) {
+            words += convertGroup(integerPart);
+        }
+
+        return `SON: ${words.trim()} CON ${centsStr}/100 ${currency}`;
     },
 
     escapeHtml(str) {

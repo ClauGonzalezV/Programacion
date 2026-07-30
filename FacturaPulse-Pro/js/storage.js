@@ -171,6 +171,28 @@ const StorageManager = {
         a.download = `FacturaPulse_Backup_${new Date().toISOString().slice(0, 10)}.json`;
         a.click();
         URL.revokeObjectURL(url);
+    },
+
+    importBackupJSON(jsonData) {
+        try {
+            const data = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
+            if (Array.isArray(data.clients)) {
+                this.saveClients(data.clients);
+            }
+            if (Array.isArray(data.catalog)) {
+                this.saveCatalog(data.catalog);
+            }
+            if (Array.isArray(data.history)) {
+                this.saveHistory(data.history);
+            }
+            if (data.emitter) {
+                this.saveEmitterProfile(data.emitter);
+            }
+            return { success: true };
+        } catch (err) {
+            console.error('Error al importar backup JSON:', err);
+            return { success: false, error: err.message };
+        }
     }
 };
 
