@@ -66,7 +66,10 @@ const TemplatesEngine = {
             <!-- Document Header -->
             <div class="doc-header-grid">
                 <div class="doc-emitter-info">
-                    ${data.emitter.logo ? `<img src="${data.emitter.logo}" class="doc-emitter-logo" alt="Logo">` : ''}
+                    ${data.emitter.logo
+                ? `<img src="${data.emitter.logo}" class="doc-emitter-logo" alt="Logo">`
+                : `<div class="doc-emitter-initials">${this.getInitials(data.emitter.name)}</div>`
+            }
                     <h2 class="doc-emitter-name">${this.escapeHtml(data.emitter.name || 'Mi Empresa / Freelancer')}</h2>
                     ${data.emitter.taxId ? `<div class="doc-emitter-sub"><strong>RUT/NIF:</strong> ${this.escapeHtml(data.emitter.taxId)}</div>` : ''}
                     ${data.emitter.email ? `<div class="doc-emitter-sub"><i class="fa-regular fa-envelope"></i> ${this.escapeHtml(data.emitter.email)}</div>` : ''}
@@ -128,8 +131,22 @@ const TemplatesEngine = {
                         <div class="note-box">
                             <div class="note-box-title"><i class="fa-solid fa-building-columns"></i> Datos de Pago:</div>
                             <div style="white-space: pre-line;">${this.escapeHtml(data.bankDetails)}</div>
+                            ${data.qrUrl ? `
+                                <div class="qr-payment-wrapper">
+                                    <div class="qr-label"><i class="fa-solid fa-qrcode"></i> Escanea para pagar</div>
+                                    <div id="doc-qr-container" class="doc-qr-box"></div>
+                                </div>
+                            ` : ''}
                         </div>
-                    ` : ''}
+                    ` : (data.qrUrl ? `
+                        <div class="note-box">
+                            <div class="note-box-title"><i class="fa-solid fa-qrcode"></i> QR de Pago:</div>
+                            <div class="qr-payment-wrapper">
+                                <div class="qr-label">Escanea para pagar</div>
+                                <div id="doc-qr-container" class="doc-qr-box"></div>
+                            </div>
+                        </div>
+                    ` : '')}
                     
                     ${data.terms ? `
                         <div class="note-box">
@@ -185,12 +202,50 @@ const TemplatesEngine = {
 
             <!-- Footer Signature -->
             <div class="doc-footer">
-                <div>Documento generado con FacturaPulse Pro</div>
-                <div class="signature-line">Firma y Sello del Emisor</div>
+                <div class="doc-footer-brand">
+                    <div class="doc-footer-logo-text">${this.escapeHtml(data.emitter.name || 'FacturaPulse Pro')}</div>
+                    ${data.emitter.email ? `<div class="doc-footer-contact">${this.escapeHtml(data.emitter.email)}</div>` : ''}
+                    ${data.emitter.phone ? `<div class="doc-footer-contact">${this.escapeHtml(data.emitter.phone)}</div>` : ''}
+                    <div class="doc-footer-generated">Generado con FacturaPulse Pro</div>
+                </div>
+                <div class="doc-signature-block">
+                    ${data.signature ? `
+                        <div class="doc-signature-img-wrap">
+                            <img src="${data.signature}" class="doc-signature-img" alt="Firma">
+                        </div>
+                    ` : '<div class="doc-signature-blank"></div>'}
+                    <div class="doc-signature-line"></div>
+                    <div class="doc-signature-name">${data.signerName ? this.escapeHtml(data.signerName) : 'Firma y Sello del Emisor'}</div>
+                </div>
             </div>
         `;
 
         container.innerHTML = html;
+
+        // Render QR code if URL provided (deferred so DOM is ready)
+        if (data.qrUrl) {
+            setTimeout(() => {
+                const qrEl = container.querySelector('#doc-qr-container');
+                if (qrEl && typeof QRCode !== 'undefined') {
+                    qrEl.innerHTML = '';
+                    new QRCode(qrEl, {
+                        text: data.qrUrl,
+                        width: 90,
+                        height: 90,
+                        colorDark: '#1e293b',
+                        colorLight: '#ffffff',
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
+                }
+            }, 50);
+        }
+    },
+
+    getInitials(name) {
+        if (!name) return '?';
+        const words = name.trim().split(/\s+/);
+        if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
+        return (words[0][0] + words[1][0]).toUpperCase();
     },
 
     numberToWordsSpanish(num, currency = 'USD') {

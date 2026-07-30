@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- html2pdf library for client-side PDF export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- QRCode.js for QR payment generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <!-- Application Stylesheets -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/document.css">
@@ -86,19 +88,53 @@
                             <option value="PRESUPUESTO">Presupuesto</option>
                             <option value="FACTURA">Factura Proforma</option>
                             <option value="RECIBO">Recibo de Pago</option>
+                            <option value="NOTA DE CRÉDITO">Nota de Crédito</option>
+                            <option value="NOTA DE DÉBITO">Nota de Débito</option>
+                            <option value="ORDEN DE COMPRA">Orden de Compra</option>
+                            <option value="PROFORMA">Proforma Comercial</option>
+                            <option value="CONTRATO">Contrato de Servicios</option>
                         </select>
                     </div>
 
                     <div class="control-group">
                         <label for="doc-currency"><i class="fa-solid fa-coins"></i> Moneda:</label>
                         <select id="doc-currency" class="form-select">
-                            <option value="USD" data-symbol="$">USD ($)</option>
-                            <option value="EUR" data-symbol="€">EUR (€)</option>
-                            <option value="MXN" data-symbol="$">MXN ($)</option>
-                            <option value="COP" data-symbol="$">COP ($)</option>
-                            <option value="CLP" data-symbol="$">CLP ($)</option>
-                            <option value="ARS" data-symbol="$">ARS ($)</option>
-                            <option value="PEN" data-symbol="S/.">PEN (S/.)</option>
+                            <optgroup label="── América ──">
+                                <option value="USD" data-symbol="$">USD — Dólar EE.UU. ($)</option>
+                                <option value="MXN" data-symbol="$">MXN — Peso Mexicano ($)</option>
+                                <option value="COP" data-symbol="$">COP — Peso Colombiano ($)</option>
+                                <option value="CLP" data-symbol="$">CLP — Peso Chileno ($)</option>
+                                <option value="ARS" data-symbol="$">ARS — Peso Argentino ($)</option>
+                                <option value="PEN" data-symbol="S/.">PEN — Sol Peruano (S/.)</option>
+                                <option value="BRL" data-symbol="R$">BRL — Real Brasileño (R$)</option>
+                                <option value="BOB" data-symbol="Bs.">BOB — Boliviano (Bs.)</option>
+                                <option value="PYG" data-symbol="₲">PYG — Guaraní Paraguayo (₲)</option>
+                                <option value="UYU" data-symbol="$U">UYU — Peso Uruguayo ($U)</option>
+                                <option value="VES" data-symbol="Bs.D">VES — Bolívar Digital (Bs.D)</option>
+                                <option value="GTQ" data-symbol="Q">GTQ — Quetzal Guatemalteco (Q)</option>
+                                <option value="HNL" data-symbol="L">HNL — Lempira Hondureño (L)</option>
+                                <option value="NIO" data-symbol="C$">NIO — Córdoba Nicaragüense (C$)</option>
+                                <option value="DOP" data-symbol="RD$">DOP — Peso Dominicano (RD$)</option>
+                                <option value="PAB" data-symbol="B/.">PAB — Balboa Panameño (B/.)</option>
+                                <option value="CAD" data-symbol="CA$">CAD — Dólar Canadiense (CA$)</option>
+                            </optgroup>
+                            <optgroup label="── Europa ──">
+                                <option value="EUR" data-symbol="€">EUR — Euro (€)</option>
+                                <option value="GBP" data-symbol="£">GBP — Libra Esterlina (£)</option>
+                                <option value="CHF" data-symbol="CHF">CHF — Franco Suizo (CHF)</option>
+                                <option value="NOK" data-symbol="kr">NOK — Corona Noruega (kr)</option>
+                                <option value="SEK" data-symbol="kr">SEK — Corona Sueca (kr)</option>
+                                <option value="PLN" data-symbol="zł">PLN — Esloti Polaco (zł)</option>
+                            </optgroup>
+                            <optgroup label="── Asia / Oceanía ──">
+                                <option value="JPY" data-symbol="¥">JPY — Yen Japonés (¥)</option>
+                                <option value="CNY" data-symbol="¥">CNY — Yuan Chino (¥)</option>
+                                <option value="INR" data-symbol="₹">INR — Rupia India (₹)</option>
+                                <option value="KRW" data-symbol="₩">KRW — Won Coreano (₩)</option>
+                                <option value="SAR" data-symbol="﷼">SAR — Riyal Saudí (﷼)</option>
+                                <option value="AED" data-symbol="د.إ">AED — Dírham EAU (د.إ)</option>
+                                <option value="AUD" data-symbol="A$">AUD — Dólar Australiano (A$)</option>
+                            </optgroup>
                         </select>
                     </div>
 
@@ -309,6 +345,20 @@
                                 </div>
                             </div>
 
+                            <!-- Section: QR Payment URL -->
+                            <div class="card-box">
+                                <div class="card-box-header">
+                                    <h3><i class="fa-solid fa-qrcode"></i> QR de Pago (Opcional)</h3>
+                                </div>
+                                <div class="card-box-body">
+                                    <div class="form-group">
+                                        <label for="input-qr-url">URL / Enlace de Pago</label>
+                                        <input type="text" id="input-qr-url" class="form-input" placeholder="https://paypal.me/tuusuario  o  https://yape.pe/tuusuario  o  IBAN/datos bancarios">
+                                        <small style="color: var(--text-muted); margin-top: 4px; display: block;"><i class="fa-solid fa-circle-info"></i> El QR aparecerá automáticamente en el documento junto a los datos bancarios.</small>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Section: Notes, Payment Info & Terms -->
                             <div class="card-box">
                                 <div class="card-box-header">
@@ -326,6 +376,28 @@
                                     <div class="form-group full-width">
                                         <label for="input-custom-notes">Nota Adicional / Agradecimiento</label>
                                         <input type="text" id="input-custom-notes" class="form-input" placeholder="¡Gracias por confiar en nuestros servicios!">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Digital Signature -->
+                            <div class="card-box">
+                                <div class="card-box-header space-between">
+                                    <h3><i class="fa-solid fa-pen-nib"></i> Firma Digital del Emisor</h3>
+                                    <div class="header-tools">
+                                        <button type="button" class="btn btn-xs btn-ghost" id="btn-clear-signature">
+                                            <i class="fa-solid fa-eraser"></i> Limpiar
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-box-body">
+                                    <div class="signature-canvas-wrapper">
+                                        <canvas id="signature-canvas" width="560" height="120"></canvas>
+                                        <div class="signature-hint" id="signature-hint"><i class="fa-solid fa-pen-nib"></i> Dibuja tu firma aquí</div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <label for="input-signer-name">Nombre del Firmante</label>
+                                        <input type="text" id="input-signer-name" class="form-input" placeholder="Ej: Juan García — Representante Legal">
                                     </div>
                                 </div>
                             </div>
@@ -558,6 +630,28 @@
 
     <!-- Toast Notification Element -->
     <div id="toast-container" class="toast-container"></div>
+
+    <!-- MODAL: SELECT CLIENT (replaces browser prompt) -->
+    <div class="modal-backdrop hidden" id="modal-load-client">
+        <div class="modal-card" style="max-width: 520px;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-folder-open"></i> Cargar Cliente Guardado</h3>
+                <button type="button" class="modal-close" data-close="modal-load-client">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="search-input-wrap" style="margin-bottom: 12px;">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="modal-load-client-search" class="form-input" placeholder="Buscar cliente...">
+                </div>
+                <div id="modal-load-client-list" class="client-picker-list">
+                    <!-- Dynamic list -->
+                </div>
+            </div>
+            <div class="modal-footer margin-top-16">
+                <button type="button" class="btn btn-ghost" data-close="modal-load-client">Cancelar</button>
+            </div>
+        </div>
+    </div>
 
     <!-- JavaScript Scripts -->
     <script src="js/storage.js"></script>

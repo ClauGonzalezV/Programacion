@@ -6,7 +6,9 @@ const EditorModule = {
     state: {
         logoDataUrl: '',
         accentColor: '#4f46e5',
-        currencySymbol: '$'
+        currencySymbol: '$',
+        signatureDataUrl: '',
+        signatureIsDrawing: false
     },
 
     init() {
@@ -33,7 +35,8 @@ const EditorModule = {
             'input-emitter-email', 'input-emitter-phone', 'input-emitter-address',
             'input-client-name', 'input-client-taxid', 'input-client-email', 'input-client-phone',
             'input-client-address', 'input-tax-rate', 'input-discount-val', 'input-discount-type',
-            'input-shipping-fee', 'input-bank-details', 'input-terms-conditions', 'input-custom-notes'
+            'input-shipping-fee', 'input-bank-details', 'input-terms-conditions', 'input-custom-notes',
+            'input-qr-url', 'input-signer-name'
         ];
 
         inputsToListen.forEach(id => {
@@ -114,6 +117,71 @@ const EditorModule = {
 
         // Reset Button
         document.getElementById('btn-reset-form').addEventListener('click', () => this.resetForm());
+
+        // Signature Canvas
+        this.initSignatureCanvas();
+    },
+
+    initSignatureCanvas() {
+        const canvas = document.getElementById('signature-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const hint = document.getElementById('signature-hint');
+
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 2.5;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        const getPos = (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const src = e.touches ? e.touches[0] : e;
+            return {
+                x: (src.clientX - rect.left) * scaleX,
+                y: (src.clientY - rect.top) * scaleY
+            };
+        };
+
+        const startDraw = (e) => {
+            e.preventDefault();
+            this.state.signatureIsDrawing = true;
+            if (hint) hint.style.display = 'none';
+            const pos = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        };
+
+        const draw = (e) => {
+            e.preventDefault();
+            if (!this.state.signatureIsDrawing) return;
+            const pos = getPos(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        };
+
+        const endDraw = () => {
+            if (!this.state.signatureIsDrawing) return;
+            this.state.signatureIsDrawing = false;
+            this.state.signatureDataUrl = canvas.toDataURL('image/png');
+            this.recalculateAndRender();
+        };
+
+        canvas.addEventListener('mousedown', startDraw);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', endDraw);
+        canvas.addEventListener('mouseleave', endDraw);
+        canvas.addEventListener('touchstart', startDraw, { passive: false });
+        canvas.addEventListener('touchmove', draw, { passive: false });
+        canvas.addEventListener('touchend', endDraw);
+
+        document.getElementById('btn-clear-signature').addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            this.state.signatureDataUrl = '';
+            if (hint) hint.style.display = 'flex';
+            this.recalculateAndRender();
+        });
     },
 
     renderInitialItemRows() {
@@ -225,6 +293,9 @@ const EditorModule = {
             bankDetails: document.getElementById('input-bank-details').value,
             terms: document.getElementById('input-terms-conditions').value,
             customNotes: document.getElementById('input-custom-notes').value,
+            qrUrl: document.getElementById('input-qr-url') ? document.getElementById('input-qr-url').value : '',
+            signerName: document.getElementById('input-signer-name') ? document.getElementById('input-signer-name').value : '',
+            signature: this.state.signatureDataUrl,
             totals: {
                 subtotal,
                 discountVal,
@@ -277,6 +348,14 @@ const EditorModule = {
         document.getElementById('items-tbody').innerHTML = '';
         this.renderInitialItemRows();
         this.setDefaultDates();
+        // Clear signature canvas
+        const canvas = document.getElementById('signature-canvas');
+        if (canvas) {
+            canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+            this.state.signatureDataUrl = '';
+            const hint = document.getElementById('signature-hint');
+            if (hint) hint.style.display = 'flex';
+        }
         this.recalculateAndRender();
         if (typeof showToast === 'function') {
             showToast('Formulario limpiado', 'info');

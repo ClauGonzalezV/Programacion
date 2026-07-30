@@ -102,15 +102,7 @@ const App = {
                 showToast('No tienes clientes guardados aún', 'info');
                 return;
             }
-            // Quick load first or show prompt select
-            const clientNames = clients.map((c, i) => `${i + 1}. ${c.name}`).join('\n');
-            const choice = prompt(`Selecciona el número del cliente a cargar:\n${clientNames}`, '1');
-            if (choice) {
-                const idx = parseInt(choice, 10) - 1;
-                if (clients[idx]) {
-                    this.loadClientIntoEditor(clients[idx]);
-                }
-            }
+            this.openClientPickerModal();
         });
 
         // Quick Save Client from Editor button
@@ -190,6 +182,18 @@ const App = {
             });
         });
 
+        // Client Picker Modal: live search filter
+        const searchInput = document.getElementById('modal-load-client-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                const q = searchInput.value.toLowerCase();
+                document.querySelectorAll('.client-picker-item').forEach(el => {
+                    const text = el.textContent.toLowerCase();
+                    el.style.display = text.includes(q) ? '' : 'none';
+                });
+            });
+        }
+
         // Open Client Modal
         document.getElementById('btn-new-client-modal').addEventListener('click', () => {
             document.getElementById('form-modal-client').reset();
@@ -267,6 +271,42 @@ const App = {
             document.getElementById('modal-select-catalog').classList.add('hidden');
             showToast(`${checkboxes.length} ítem(s) insertados en la cotización`, 'success');
         });
+    },
+
+    openClientPickerModal() {
+        const clients = StorageManager.getClients();
+        const listEl = document.getElementById('modal-load-client-list');
+        const searchInput = document.getElementById('modal-load-client-search');
+        if (searchInput) searchInput.value = '';
+
+        if (clients.length === 0) {
+            listEl.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No hay clientes guardados.</p>';
+        } else {
+            listEl.innerHTML = clients.map(c => `
+                <div class="client-picker-item" data-id="${c.id}">
+                    <div class="client-picker-info">
+                        <div class="client-picker-name">${c.name}</div>
+                        ${c.taxId ? `<div class="client-picker-detail">${c.taxId}</div>` : ''}
+                        ${c.email ? `<div class="client-picker-detail">${c.email}</div>` : ''}
+                    </div>
+                    <button type="button" class="btn btn-xs btn-primary btn-load-this-client" data-id="${c.id}">
+                        <i class="fa-solid fa-check"></i> Cargar
+                    </button>
+                </div>
+            `).join('');
+
+            listEl.querySelectorAll('.btn-load-this-client').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const client = clients.find(c => c.id === btn.dataset.id);
+                    if (client) {
+                        this.loadClientIntoEditor(client);
+                        document.getElementById('modal-load-client').classList.add('hidden');
+                    }
+                });
+            });
+        }
+
+        document.getElementById('modal-load-client').classList.remove('hidden');
     },
 
     renderAllViews() {
@@ -442,9 +482,14 @@ const App = {
             }
 
             document.getElementById('input-tax-rate').value = doc.taxRate || 0;
+            document.getElementById('input-discount-val').value = doc.discountVal || 0;
+            document.getElementById('input-discount-type').value = doc.discountType || 'percent';
+            document.getElementById('input-shipping-fee').value = (doc.totals && doc.totals.shippingFee) ? doc.totals.shippingFee : 0;
             document.getElementById('input-bank-details').value = doc.bankDetails || '';
             document.getElementById('input-terms-conditions').value = doc.terms || '';
             document.getElementById('input-custom-notes').value = doc.customNotes || '';
+            if (document.getElementById('input-qr-url')) document.getElementById('input-qr-url').value = doc.qrUrl || '';
+            if (document.getElementById('input-signer-name')) document.getElementById('input-signer-name').value = doc.signerName || '';
 
             EditorModule.recalculateAndRender();
             document.getElementById('tab-btn-editor').click();

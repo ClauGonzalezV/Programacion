@@ -2,7 +2,21 @@
    DOCUMENT PREVIEW & TEMPLATES STYLESHEET
    ========================================================================== */
 
+/* Multi-page document wrapper (transparent, stacks pages vertically) */
 .document-paper {
+    width: 210mm;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* visual gap between pages */
+    box-sizing: border-box;
+}
+
+/* Individual A4 page sheet */
+.doc-page {
     width: 210mm;
     min-height: 297mm;
     background-color: #ffffff;
@@ -14,7 +28,7 @@
     line-height: 1.4;
     position: relative;
     box-sizing: border-box;
-    transition: all 0.3s ease;
+    transition: box-shadow 0.3s ease;
 }
 
 /* Base Template Structure */
@@ -245,95 +259,351 @@
 
 /* Footer / Signature Area */
 .doc-footer {
-    margin-top: 40px;
+    margin-top: 32px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    border-top: 1px solid #e2e8f0;
+    border-top: 2px solid #e2e8f0;
     padding-top: 16px;
     font-size: 0.75rem;
     color: #94a3b8;
 }
 
-.signature-line {
-    border-top: 1px solid #94a3b8;
-    width: 200px;
-    text-align: center;
-    padding-top: 4px;
-    font-weight: 600;
-    color: #475569;
+/* Page continuation indicator */
+.doc-page-continues {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 8px 12px;
+    border-top: 1px dashed #cbd5e1;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.doc-page-num-right {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--accent-color, #4f46e5);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+}
+
+/* Continuation page header */
+.doc-continuation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+    border-bottom: 2px solid var(--accent-color, #4f46e5);
+    gap: 12px;
+}
+
+.doc-continuation-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.doc-cont-logo {
+    max-height: 32px;
+    max-width: 80px;
+    object-fit: contain;
+}
+
+.doc-cont-emitter {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.doc-cont-client {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.doc-continuation-right {
+    text-align: right;
+}
+
+.doc-type-title--sm {
+    font-size: 1rem !important;
+}
+
+.doc-cont-page {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Small initials for continuation header */
+.doc-emitter-initials--sm {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 8px !important;
+    font-size: 0.75rem !important;
+    margin-bottom: 0 !important;
+}
+
+/* Table continuation (no bottom margin when not last page) */
+.doc-table--continues {
+    margin-bottom: 0 !important;
 }
 
 /* --- TEMPLATE VARIATIONS --- */
 
 /* 1. EXECUTIVE MINIMAL */
-.template-executive {
+.template-executive .doc-page {
     font-family: 'Inter', sans-serif;
     background-color: #ffffff;
 }
 
-.template-executive .doc-header-grid {
+.template-executive .doc-page .doc-header-grid,
+.template-executive .doc-page .doc-continuation-header {
     border-bottom: 3px solid #0f172a;
 }
 
-.template-executive .doc-type-title {
+.template-executive .doc-page .doc-type-title {
     color: #0f172a;
 }
 
-.template-executive .doc-table th {
+.template-executive .doc-page .doc-table th {
     background-color: #0f172a;
     color: #ffffff;
 }
 
-.template-executive .party-title {
+.template-executive .doc-page .party-title {
     color: #0f172a;
 }
 
 /* 2. DARK EXECUTIVE TEMPLATE */
-.template-dark {
+.template-dark .doc-page {
     background-color: #0f172a;
     color: #f8fafc;
 }
 
-.template-dark .doc-emitter-name,
-.template-dark .party-name,
-.template-dark .doc-totals-table td.val {
+.template-dark .doc-page .doc-emitter-name,
+.template-dark .doc-page .party-name,
+.template-dark .doc-page .doc-totals-table td.val,
+.template-dark .doc-page .doc-cont-emitter {
     color: #ffffff;
 }
 
-.template-dark .doc-emitter-sub,
-.template-dark .party-detail,
-.template-dark .doc-table td,
-.template-dark .doc-totals-table td.label {
+.template-dark .doc-page .doc-emitter-sub,
+.template-dark .doc-page .party-detail,
+.template-dark .doc-page .doc-table td,
+.template-dark .doc-page .doc-totals-table td.label,
+.template-dark .doc-page .doc-cont-client {
     color: #94a3b8;
 }
 
-.template-dark .doc-parties-grid,
-.template-dark .note-box {
+.template-dark .doc-page .doc-parties-grid,
+.template-dark .doc-page .note-box {
     background-color: #1e293b;
     border-color: #334155;
 }
 
-.template-dark .doc-table td {
+.template-dark .doc-page .doc-table td {
     border-bottom-color: #334155;
 }
 
-.template-dark .doc-table tbody tr:nth-child(even) {
+.template-dark .doc-page .doc-table tbody tr:nth-child(even) {
     background-color: #1e293b;
 }
 
 /* 3. CLASSIC PRINT TEMPLATE */
-.template-classic {
+.template-classic .doc-page {
     font-family: 'Times New Roman', Times, serif;
 }
 
-.template-classic .doc-type-title {
+.template-classic .doc-page .doc-type-title {
     font-family: 'Times New Roman', Times, serif;
     color: #000000;
 }
 
-.template-classic .doc-table th {
+.template-classic .doc-page .doc-table th {
     background-color: #f1f5f9;
     color: #000000;
     border-bottom: 2px solid #000000;
+}
+
+/* ============================================
+   NEW v2.0 STYLES
+   ============================================ */
+
+/* Company Initials Avatar (fallback for no-logo) */
+.doc-emitter-initials {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent-color, #4f46e5), #7c3aed);
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+}
+
+.template-dark .doc-emitter-initials {
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.5);
+}
+
+/* QR Payment Wrapper */
+.qr-payment-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed #cbd5e1;
+}
+
+.qr-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    max-width: 60px;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.doc-qr-box {
+    width: 90px;
+    height: 90px;
+    background: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.doc-qr-box img,
+.doc-qr-box canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Improved Footer v2.0 */
+.doc-footer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 2px solid #e2e8f0;
+    padding-top: 20px;
+    gap: 20px;
+}
+
+.doc-footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.doc-footer-logo-text {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.doc-footer-contact {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.doc-footer-generated {
+    font-size: 0.65rem;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+/* Digital Signature Block in Footer */
+.doc-signature-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 160px;
+}
+
+.doc-signature-img-wrap {
+    height: 50px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.doc-signature-img {
+    max-height: 50px;
+    max-width: 160px;
+    object-fit: contain;
+}
+
+.doc-signature-blank {
+    height: 50px;
+}
+
+.doc-signature-line {
+    width: 160px;
+    height: 1px;
+    background-color: #94a3b8;
+}
+
+.doc-signature-name {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #475569;
+    text-align: center;
+}
+
+/* Dark template footer adjustments */
+.template-dark .doc-page .doc-footer {
+    border-top-color: #334155;
+}
+
+.template-dark .doc-page .doc-footer-logo-text {
+    color: #f8fafc;
+}
+
+.template-dark .doc-page .doc-footer-contact,
+.template-dark .doc-page .doc-signature-name {
+    color: #94a3b8;
+}
+
+.template-dark .doc-page .doc-signature-line {
+    background-color: #475569;
+}
+
+.template-dark .doc-page .qr-payment-wrapper {
+    border-top-color: #334155;
+}
+
+.template-dark .doc-page .doc-qr-box {
+    border-color: #334155;
+    background: #1e293b;
+}
+
+.template-dark .doc-page .doc-amount-words {
+    background-color: #1e293b;
+    color: #cbd5e1;
+}
+
+.template-dark .doc-page .doc-page-continues {
+    border-top-color: #334155;
+}
+
+.template-dark .doc-page .doc-continuation-header {
+    border-bottom-color: var(--accent-color, #4f46e5);
 }
