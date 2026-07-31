@@ -1,4 +1,4 @@
-const CACHE_NAME = 'emitia-pro-v28';
+const CACHE_NAME = 'emitia-pro-v43';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

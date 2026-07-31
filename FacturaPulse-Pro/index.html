@@ -80,6 +80,10 @@
                     <i class="fa-solid fa-user"></i>
                     <span class="btn-text">Iniciar Sesión</span>
                 </button>
+                <button type="button" class="icon-btn" id="btn-nav-admin-panel" title="Panel Desarrollador & Pruebas (Ctrl + Shift + A)"
+                    onclick="AuthSubscription.showAdminPanel()">
+                    <i class="fa-solid fa-screwdriver-wrench font-accent"></i>
+                </button>
                 <button type="button" class="icon-btn" id="btn-force-reload" title="Forzar Actualización de la App"
                     onclick="if('caches' in window){caches.keys().then(names=>{for(let n of names)caches.delete(n);});} window.location.reload(true);">
                     <i class="fa-solid fa-arrows-rotate"></i>
@@ -937,6 +941,10 @@
                             <span style="color: #a5b4fc; font-weight: 500;">Plan PRO activa Dashboard, Clientes y 8 Plantillas</span>
                         </div>
                     </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1); font-size: 0.8rem; color: #94a3b8;">
+                        <span>Vencimiento de Suscripción:</span>
+                        <strong id="modal-account-exp-date" style="color: #a5b4fc;">Ilimitado</strong>
+                    </div>
                 </div>
 
                 <!-- Upgrade Button -->
@@ -945,7 +953,10 @@
                 </button>
 
                 <!-- Logout Action -->
-                <div style="margin-top: 16px; text-align: center;">
+                <div style="margin-top: 16px; display:flex; flex-direction:column; gap:10px; text-align: center;">
+                    <button type="button" class="btn btn-outline" id="btn-open-admin-panel" style="width: 100%; border-radius: 12px; padding: 10px; border-color: var(--accent-color); color: var(--accent-color);" onclick="AuthSubscription.showAdminPanel()">
+                        <i class="fa-solid fa-screwdriver-wrench" style="margin-right: 6px;"></i> Panel Desarrollador & Pruebas
+                    </button>
                     <button type="button" class="btn btn-danger-outline" id="btn-auth-logout" style="width: 100%; border-radius: 12px; padding: 10px; border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; background: rgba(239, 68, 68, 0.05); font-weight: 600;">
                         <i class="fa-solid fa-right-from-bracket" style="margin-right: 6px;"></i> Cerrar Sesión
                     </button>
@@ -1016,27 +1027,172 @@
         </div>
     </div>
 
+    <!-- MODAL SELECTOR DE PASARELAS DE PAGO -->
+    <div id="modal-payment-gateways" class="modal-overlay hidden">
+        <div class="modal-card" style="max-width: 600px; padding: 24px;">
+            <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="margin:0; font-size:1.3rem; color: var(--text-color);">
+                    <i class="fa-solid fa-credit-card font-accent"></i> Elige tu Método de Pago
+                </h3>
+                <button type="button" class="btn-modal-close" onclick="PaymentsModule.closePaymentModal()">&times;</button>
+            </div>
+            <div class="modal-body margin-top-16">
+                <p style="color: var(--text-muted); margin-bottom: 20px; font-size:0.9rem;">
+                    Selecciona tu medio de pago preferido para activar tu suscripción <strong>PLAN PRO Ilimitado ($9.990 CLP / $9.99 USD)</strong>:
+                </p>
+
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <!-- Mercado Pago -->
+                    <button type="button" class="btn btn-outline" style="justify-content: space-between; padding: 14px 18px; border-color: #009ee3; background: rgba(0,158,227,0.05);" onclick="PaymentsModule.payWithMercadoPago()">
+                        <div style="display:flex; align-items:center; gap: 12px;">
+                            <i class="fa-solid fa-wallet" style="color: #009ee3; font-size: 1.4rem;"></i>
+                            <div style="text-align:left;">
+                                <strong style="display:block; color: var(--text-color);">Mercado Pago (Chile)</strong>
+                                <span style="font-size:0.8rem; color: var(--text-muted);">Débito, Crédito, CuentaRUT o Saldo CLP</span>
+                            </div>
+                        </div>
+                        <span class="badge" style="background:#009ee3; color:#fff;">$9.990 CLP</span>
+                    </button>
+
+                    <!-- Webpay Flow -->
+                    <button type="button" class="btn btn-outline" style="justify-content: space-between; padding: 14px 18px; border-color: #0ea5e9; background: rgba(14,165,233,0.05);" onclick="PaymentsModule.payWithWebpay()">
+                        <div style="display:flex; align-items:center; gap: 12px;">
+                            <i class="fa-solid fa-bolt" style="color: #0ea5e9; font-size: 1.4rem;"></i>
+                            <div style="text-align:left;">
+                                <strong style="display:block; color: var(--text-color);">Webpay Plus / Flow (Chile)</strong>
+                                <span style="font-size:0.8rem; color: var(--text-muted);">Tarjetas de Crédito y Redcompra Transbank</span>
+                            </div>
+                        </div>
+                        <span class="badge" style="background:#0ea5e9; color:#fff;">$9.990 CLP</span>
+                    </button>
+
+                    <!-- Stripe USD -->
+                    <button type="button" class="btn btn-outline" style="justify-content: space-between; padding: 14px 18px; border-color: #635bff; background: rgba(99,91,255,0.05);" onclick="PaymentsModule.payWithStripe()">
+                        <div style="display:flex; align-items:center; gap: 12px;">
+                            <i class="fa-brands fa-stripe" style="color: #635bff; font-size: 1.6rem;"></i>
+                            <div style="text-align:left;">
+                                <strong style="display:block; color: var(--text-color);">Stripe / Tarjeta Internacional</strong>
+                                <span style="font-size:0.8rem; color: var(--text-muted);">Pago en USD para empresas en todo el mundo</span>
+                            </div>
+                        </div>
+                        <span class="badge" style="background:#635bff; color:#fff;">$9.99 USD</span>
+                    </button>
+
+                    <!-- WhatsApp / Bank Transfer -->
+                    <button type="button" class="btn btn-outline" style="justify-content: space-between; padding: 14px 18px; border-color: #25d366; background: rgba(37,211,102,0.05);" onclick="PaymentsModule.payWithWhatsApp()">
+                        <div style="display:flex; align-items:center; gap: 12px;">
+                            <i class="fa-brands fa-whatsapp" style="color: #25d366; font-size: 1.6rem;"></i>
+                            <div style="text-align:left;">
+                                <strong style="display:block; color: var(--text-color);">Transferencia Bancaria (WhatsApp)</strong>
+                                <span style="font-size:0.8rem; color: var(--text-muted);">Transferencia a Cuenta Corriente y activación asistida</span>
+                            </div>
+                        </div>
+                        <span class="badge" style="background:#25d366; color:#fff;">Directo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE ADMINISTRADOR Y HERRAMIENTAS DE PRUEBA -->
+    <div id="modal-admin-panel" class="modal-overlay hidden">
+        <div class="modal-card" style="max-width: 620px; padding: 24px; border: 1px solid rgba(99, 102, 241, 0.3);">
+            <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="margin:0; font-size:1.3rem; color: var(--accent-color);">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> Panel Desarrollador & Administración
+                </h3>
+                <button type="button" class="btn-modal-close" onclick="AuthSubscription.closeModal('modal-admin-panel')">&times;</button>
+            </div>
+            <div class="modal-body margin-top-16">
+                <div style="background: rgba(99, 102, 241, 0.1); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 0.85rem; color: #cbd5e1;">
+                    <i class="fa-solid fa-circle-info font-accent"></i> Este apartado te permite alternar entre el <strong>Entorno de Pruebas (Sandbox)</strong> y el <strong>Entorno de Producción (En vivo con clientes)</strong>.
+                </div>
+
+                <!-- Entorno Activo -->
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight:600; display:block; margin-bottom:8px; font-size:0.9rem;">Entorno de Ejecución Actual:</label>
+                    <div style="display:flex; gap: 12px;">
+                        <button type="button" id="btn-env-sandbox" class="btn btn-sm btn-outline" style="flex:1;" onclick="PaymentsModule.setEnvironment('sandbox')">
+                            <i class="fa-solid fa-vial"></i> Modo Pruebas (Sandbox)
+                        </button>
+                        <button type="button" id="btn-env-live" class="btn btn-sm btn-primary" style="flex:1;" onclick="PaymentsModule.setEnvironment('live')">
+                            <i class="fa-solid fa-globe"></i> Modo Producción (En Vivo)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Herramientas de Prueba -->
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight:600; display:block; margin-bottom:8px; font-size:0.9rem;">Acciones Rápidas de Prueba:</label>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <button type="button" class="btn btn-xs btn-outline" onclick="AuthSubscription.setPlan('pro', 1); showToast('Plan PRO activado por 30 días', 'success');">
+                            <i class="fa-solid fa-bolt text-warning"></i> Activar Plan PRO 30 Días
+                        </button>
+                        <button type="button" class="btn btn-xs btn-outline" onclick="AuthSubscription.setPlan('free'); showToast('Plan cambiado a Gratuito', 'info');">
+                            <i class="fa-solid fa-user"></i> Cambiar a Plan Gratuito
+                        </button>
+                        <button type="button" class="btn btn-xs btn-outline" onclick="AuthSubscription.userPlan.expiresAt='2020-01-01'; AuthSubscription.checkPlanExpiration();">
+                            <i class="fa-solid fa-clock"></i> Simular Expiración de Plan
+                        </button>
+                        <button type="button" class="btn btn-xs btn-outline" onclick="window.location.href='?payment_success=true'">
+                            <i class="fa-solid fa-rotate-left"></i> Simular Retorno Flow
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Credenciales API Flow -->
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 0.8rem;">
+                    <div style="font-weight: 700; color: #10b981; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa-solid fa-key"></i> Credenciales de Integración API Flow:
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom: 4px;">
+                        <span style="color:#94a3b8;">API Key:</span>
+                        <code style="color:#6ee7b7; background:rgba(0,0,0,0.3); padding: 2px 6px; border-radius:4px;">59A13F6C-6D8A-4772-BD2C-718D350L27AA</code>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:#94a3b8;">Secret Key:</span>
+                        <code style="color:#6ee7b7; background:rgba(0,0,0,0.3); padding: 2px 6px; border-radius:4px;">4c8d54e57ad52821e7a406d030af0da6c5e78ad8</code>
+                    </div>
+                </div>
+
+                <!-- Diagnóstico de Estado -->
+                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; font-size: 0.8rem; font-family: monospace;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                        <span>Versión Cliente:</span> <strong style="color:var(--accent-color);">Emitia Pro v36</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                        <span>Estado Firebase:</span> <strong id="admin-diag-firebase" style="color:#10b981;">Conectado Cloud Firestore</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span>Usuario Activo:</span> <span id="admin-diag-user" style="color:var(--text-muted);">Guest / Local</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Firebase Compat Web SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <!-- JavaScript Scripts -->
-    <script src="js/storage.js?v=28"></script>
-    <script src="js/i18n.js?v=28"></script>
-    <script src="js/templates.js?v=28"></script>
-    <script src="js/editor.js?v=28"></script>
-    <script src="js/export.js?v=28"></script>
-    <script src="js/dashboard.js?v=28"></script>
-    <script src="js/cloud-sync.js?v=28"></script>
-    <script src="js/auth-subscription.js?v=28"></script>
-    <script src="js/app.js?v=28"></script>
+    <script src="js/storage.js?v=43"></script>
+    <script src="js/i18n.js?v=43"></script>
+    <script src="js/templates.js?v=43"></script>
+    <script src="js/editor.js?v=43"></script>
+    <script src="js/export.js?v=43"></script>
+    <script src="js/dashboard.js?v=43"></script>
+    <script src="js/cloud-sync.js?v=43"></script>
+    <script src="js/auth-subscription.js?v=43"></script>
+    <script src="js/payments.js?v=43"></script>
+    <script src="js/app.js?v=43"></script>
 
     <!-- PWA Service Worker Cleanup & Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js?v=28').catch(err => console.log('SW reg error:', err));
+                navigator.serviceWorker.register('./sw.js?v=43').catch(err => console.log('SW reg error:', err));
             });
         }
     </script>

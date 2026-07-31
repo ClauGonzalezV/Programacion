@@ -94,6 +94,9 @@ const StorageManager = {
         let clients = this.getClients();
         clients = clients.filter(c => c.id !== id);
         this.saveClients(clients);
+        if (typeof CloudSync !== 'undefined' && CloudSync.deleteClient) {
+            CloudSync.deleteClient(id);
+        }
     },
 
     // --- CATALOG ---
@@ -124,6 +127,9 @@ const StorageManager = {
         let catalog = this.getCatalog();
         catalog = catalog.filter(i => i.id !== id);
         this.saveCatalog(catalog);
+        if (typeof CloudSync !== 'undefined' && CloudSync.deleteCatalogItem) {
+            CloudSync.deleteCatalogItem(id);
+        }
     },
 
     // --- HISTORY ---

@@ -15,15 +15,39 @@ const AuthSubscription = {
 
     currentUser: null,
     userPlan: { isPro: false, planName: 'PLAN GRATUITO', expiresAt: null },
+    adminEmails: ['gonzalezclaudioxdxd@gmail.com'],
+
+    isAdminUser() {
+        if (!this.currentUser) {
+            const savedDemo = localStorage.getItem('emitia_demo_user');
+            if (savedDemo) {
+                try {
+                    const parsed = JSON.parse(savedDemo);
+                    if (parsed && parsed.email && this.adminEmails.includes(parsed.email.toLowerCase().trim())) {
+                        return true;
+                    }
+                } catch (e) {}
+            }
+            return false;
+        }
+        const email = typeof this.currentUser === 'object' ? (this.currentUser.email || '') : String(this.currentUser);
+        return this.adminEmails.includes(email.toLowerCase().trim());
+    },
 
     isDemoConfig() {
         return !this.firebaseConfig.apiKey || this.firebaseConfig.apiKey.startsWith('AIzaSyDemoKey');
     },
 
     init() {
-        const savedPlan = localStorage.getItem('emitia_user_plan');
-        if (savedPlan) {
-            try { this.userPlan = JSON.parse(savedPlan); } catch (e) {}
+        if (this.isAdminUser()) {
+            this.userPlan = { isPro: true, planName: 'PLAN ADMIN PRO 👑', expiresAt: '2099-12-31' };
+            localStorage.setItem('emitia_user_plan', JSON.stringify(this.userPlan));
+        } else {
+            const savedPlan = localStorage.getItem('emitia_user_plan');
+            if (savedPlan) {
+                try { this.userPlan = JSON.parse(savedPlan); } catch (e) {}
+            }
+            this.checkPlanExpiration();
         }
 
         if (!this.isDemoConfig() && typeof firebase !== 'undefined' && !firebase.apps.length) {
@@ -38,6 +62,7 @@ const AuthSubscription = {
             }
         }
         this.bindUIEvents();
+        this.checkUrlPaymentReturn();
         this.updateUI();
         this.applyPlanRestrictions();
     },
@@ -107,10 +132,16 @@ const AuthSubscription = {
             btnLogout.addEventListener('click', () => this.signOut());
         }
 
-        // Pricing Plan Buttons
         const btnSubscribePro = document.getElementById('btn-subscribe-pro');
         if (btnSubscribePro) {
-            btnSubscribePro.addEventListener('click', () => this.setPlan('pro'));
+            btnSubscribePro.addEventListener('click', () => {
+                this.closeModal('modal-pricing');
+                if (typeof PaymentsModule !== 'undefined' && PaymentsModule.payWithWebpay) {
+                    PaymentsModule.payWithWebpay();
+                } else {
+                    window.open("https://www.flow.cl/uri/tWKV0dM6v", "_blank");
+                }
+            });
         }
 
         const btnSelectFree = document.getElementById('btn-select-free');
@@ -122,28 +153,126 @@ const AuthSubscription = {
         if (btnAccountUpgrade) {
             btnAccountUpgrade.addEventListener('click', () => {
                 this.closeModal('modal-account');
-                this.showPricingModal();
+                if (typeof PaymentsModule !== 'undefined' && PaymentsModule.showPaymentModal) {
+                    PaymentsModule.showPaymentModal();
+                } else {
+                    this.showPricingModal();
+                }
+            });
+        }
+
+        // Global Developer Keyboard Shortcut: Ctrl + Shift + A (Restricted to gonzalezclaudioxdxd@gmail.com)
+        if (typeof document !== 'undefined' && document.addEventListener) {
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
+                    e.preventDefault();
+                    if (this.isAdminUser()) {
+                        this.showAdminPanel();
+                        if (typeof showToast === 'function') showToast('🛠️ Panel Desarrollador activado (Ctrl + Shift + A)', 'info');
+                    } else {
+                        if (typeof showToast === 'function') showToast('🔒 Acceso denegado: Solo gonzalezclaudioxdxd@gmail.com tiene permisos de Administrador.', 'error');
+                    }
+                }
             });
         }
     },
 
-    setPlan(planType) {
+    setPlan(planType, months = 1, paymentMethod = 'Flow / Webpay') {
+        const now = new Date();
+        const subscribedAtIso = now.toISOString();
+
         if (planType === 'pro') {
-            this.userPlan = { isPro: true, planName: 'PLAN PRO', expiresAt: '2026-12-31' };
+            const expDate = new Date();
+            expDate.setMonth(expDate.getMonth() + months);
+            const expiresAtIso = expDate.toISOString().split('T')[0];
+
+            this.userPlan = {
+                isPro: true,
+                planName: 'PLAN PRO',
+                paymentStatus: 'PAID',
+                subscribedAt: subscribedAtIso,
+                expiresAt: expiresAtIso,
+                lastPaymentMethod: paymentMethod
+            };
             localStorage.setItem('emitia_user_plan', JSON.stringify(this.userPlan));
             if (this.currentUser) this.saveUserProfileToCloud(this.currentUser);
             this.updateUI();
             this.applyPlanRestrictions();
             this.closeModal('modal-pricing');
-            showToast('💎 ¡Plan PRO Activado! Todas las plantillas y funciones están desbloqueadas.', 'success');
+            if (typeof showToast === 'function') {
+                showToast(`💎 ¡Plan PRO Activado! Contratado el ${now.toLocaleDateString()} — Válido hasta el ${expiresAtIso}.`, 'success');
+            }
         } else {
-            this.userPlan = { isPro: false, planName: 'PLAN GRATUITO', expiresAt: null };
+            this.userPlan = {
+                isPro: false,
+                planName: 'PLAN GRATUITO',
+                paymentStatus: 'UNPAID',
+                subscribedAt: null,
+                expiresAt: null,
+                lastPaymentMethod: null
+            };
             localStorage.setItem('emitia_user_plan', JSON.stringify(this.userPlan));
             if (this.currentUser) this.saveUserProfileToCloud(this.currentUser);
             this.updateUI();
             this.applyPlanRestrictions();
             this.closeModal('modal-pricing');
-            showToast('Has cambiado al Plan Gratuito.', 'info');
+            if (typeof showToast === 'function') {
+                showToast('Has cambiado al Plan Gratuito.', 'info');
+            }
+        }
+    },
+
+    checkPlanExpiration() {
+        if (this.isAdminUser()) {
+            this.userPlan = {
+                isPro: true,
+                planName: 'PLAN ADMIN PRO 👑',
+                paymentStatus: 'ADMIN_FREE',
+                subscribedAt: '2026-01-01T00:00:00.000Z',
+                expiresAt: '2099-12-31',
+                lastPaymentMethod: 'Acceso Administrador'
+            };
+            return;
+        }
+        if (this.userPlan && this.userPlan.isPro && this.userPlan.expiresAt) {
+            const today = new Date().toISOString().split('T')[0];
+            if (today > this.userPlan.expiresAt) {
+                console.log(`AuthSubscription: Plan PRO venció el ${this.userPlan.expiresAt}. Reconvirtiendo a Plan Gratuito.`);
+                this.userPlan = {
+                    isPro: false,
+                    planName: 'PLAN GRATUITO',
+                    paymentStatus: 'EXPIRED',
+                    subscribedAt: this.userPlan.subscribedAt || null,
+                    expiresAt: null,
+                    expiredAt: today
+                };
+                localStorage.setItem('emitia_user_plan', JSON.stringify(this.userPlan));
+                if (this.currentUser) this.saveUserProfileToCloud(this.currentUser);
+                this.updateUI();
+                this.applyPlanRestrictions();
+                if (typeof showToast === 'function') {
+                    showToast('⚠️ Tu suscripción Plan PRO mensual ha vencido. Por favor renueva tu plan para continuar.', 'warning');
+                }
+            }
+        }
+    },
+
+    checkUrlPaymentReturn() {
+        try {
+            if (typeof window !== 'undefined' && typeof URLSearchParams !== 'undefined' && window.location && window.location.search) {
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('payment_success') || urlParams.get('status') === 'approved' || urlParams.get('plan') === 'pro' || urlParams.has('token')) {
+                    this.setPlan('pro', 1);
+                    if (typeof showToast === 'function') {
+                        showToast('🎉 ¡Pago procesado con éxito en Flow/Webpay! Tu Plan PRO Mensual se activó por 30 días.', 'success');
+                    }
+                    if (window.history && window.history.replaceState) {
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                    }
+                }
+            }
+        } catch (e) {
+            console.log('Error checking payment return URL:', e);
         }
     },
 
@@ -235,8 +364,18 @@ const AuthSubscription = {
                     email: user.email,
                     displayName: user.displayName || user.email.split('@')[0],
                     plan: this.userPlan,
+                    subscriptionAudit: {
+                        isPro: !!this.userPlan.isPro,
+                        planName: this.userPlan.planName || 'PLAN GRATUITO',
+                        paymentStatus: this.userPlan.paymentStatus || (this.userPlan.isPro ? 'PAID' : 'UNPAID'),
+                        subscribedAt: this.userPlan.subscribedAt || null,
+                        expiresAt: this.userPlan.expiresAt || null,
+                        lastPaymentMethod: this.userPlan.lastPaymentMethod || null,
+                        lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                    },
                     lastLogin: firebase.firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
+                console.log('AuthSubscription: User subscription profile synced to Cloud Firestore.');
             } catch (e) {
                 console.log('Error saving user profile to Cloud:', e);
             }
@@ -263,6 +402,16 @@ const AuthSubscription = {
     },
 
     loadUserData(user) {
+        if (this.isAdminUser()) {
+            this.userPlan = { isPro: true, planName: 'PLAN ADMIN PRO 👑', expiresAt: '2099-12-31' };
+            localStorage.setItem('emitia_user_plan', JSON.stringify(this.userPlan));
+            this.updateUI();
+            this.applyPlanRestrictions();
+            if (typeof CloudSync !== 'undefined' && CloudSync.syncAllOnLogin) {
+                CloudSync.syncAllOnLogin();
+            }
+            return;
+        }
         if (typeof firebase !== 'undefined' && firebase.firestore && user) {
             try {
                 const db = firebase.firestore();
@@ -316,6 +465,11 @@ const AuthSubscription = {
             } else {
                 badgePlan.className = 'badge-plan badge-plan--free';
             }
+        }
+
+        const navAdminBtn = document.getElementById('btn-nav-admin-panel');
+        if (navAdminBtn) {
+            navAdminBtn.style.display = this.isAdminUser() ? 'inline-flex' : 'none';
         }
     },
 
@@ -424,7 +578,7 @@ const AuthSubscription = {
         if (modal) {
             const emailElem = document.getElementById('modal-account-email');
             if (emailElem) emailElem.textContent = this.currentUser ? this.currentUser.email : 'usuario@emitia.pro';
-            
+
             const planBadge = document.getElementById('modal-account-plan');
             if (planBadge) {
                 planBadge.textContent = this.userPlan.planName;
@@ -434,6 +588,28 @@ const AuthSubscription = {
             if (btnUpgrade) {
                 btnUpgrade.style.display = this.userPlan.isPro ? 'none' : 'inline-flex';
             }
+
+            // Update Subscription Expiration Date UI
+            const expElem = document.getElementById('modal-account-exp-date');
+            if (expElem) {
+                if (this.isAdminUser()) {
+                    expElem.textContent = 'Sin vencimiento (Admin Infinito)';
+                    expElem.style.color = '#10b981';
+                } else if (this.userPlan.isPro && this.userPlan.expiresAt) {
+                    expElem.textContent = `${this.userPlan.expiresAt} (Mensual)`;
+                    expElem.style.color = '#6366f1';
+                } else {
+                    expElem.textContent = 'Sin suscripción activa';
+                    expElem.style.color = '#94a3b8';
+                }
+            }
+
+            // Show Admin Panel button ONLY if user is gonzalezclaudioxdxd@gmail.com
+            const btnAdmin = document.getElementById('btn-open-admin-panel');
+            if (btnAdmin) {
+                btnAdmin.style.display = this.isAdminUser() ? 'inline-flex' : 'none';
+            }
+
             modal.classList.remove('hidden');
         }
     },
@@ -441,6 +617,25 @@ const AuthSubscription = {
     showPricingModal() {
         const modal = document.getElementById('modal-pricing');
         if (modal) modal.classList.remove('hidden');
+    },
+
+    showAdminPanel() {
+        if (!this.isAdminUser()) {
+            if (typeof showToast === 'function') {
+                showToast('🔒 Acceso denegado: Solo el administrador (gonzalezclaudioxdxd@gmail.com) tiene acceso al Panel Desarrollador.', 'error');
+            }
+            return;
+        }
+        const modal = document.getElementById('modal-admin-panel');
+        if (modal) {
+            const diagUser = document.getElementById('admin-diag-user');
+            if (diagUser) diagUser.textContent = `${this.currentUser.email} (${this.currentUser.uid})`;
+
+            if (typeof PaymentsModule !== 'undefined' && PaymentsModule.updateEnvironmentUI) {
+                PaymentsModule.updateEnvironmentUI();
+            }
+            modal.classList.remove('hidden');
+        }
     },
 
     toggleAuthMode() {

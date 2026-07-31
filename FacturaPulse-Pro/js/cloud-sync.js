@@ -96,7 +96,7 @@ const CloudSync = {
         if (!uid || !this.db) return;
 
         try {
-            const clientId = clientData.taxId || clientData.name ? clientData.name.replace(/[^a-zA-Z0-9]/g, '_') : `CLIENT_${Date.now()}`;
+            const clientId = clientData.id || (clientData.taxId || clientData.name ? clientData.name.replace(/[^a-zA-Z0-9]/g, '_') : `CLIENT_${Date.now()}`);
             await this.db.collection('users').doc(uid).collection('clients').doc(clientId).set({
                 ...clientData,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -104,6 +104,19 @@ const CloudSync = {
             console.log(`CloudSync: Client ${clientId} synced to cloud.`);
         } catch (err) {
             console.log('CloudSync client sync info:', err.message);
+        }
+    },
+
+    // Delete Client from Firestore Cloud
+    async deleteClient(clientId) {
+        const uid = this.userUid;
+        if (!uid || !this.db || !clientId) return;
+
+        try {
+            await this.db.collection('users').doc(uid).collection('clients').doc(clientId).delete();
+            console.log(`CloudSync: Client ${clientId} deleted from cloud.`);
+        } catch (err) {
+            console.log('CloudSync delete client info:', err.message);
         }
     },
 
@@ -129,7 +142,7 @@ const CloudSync = {
         if (!uid || !this.db) return;
 
         try {
-            const itemId = itemData.description ? itemData.description.replace(/[^a-zA-Z0-9]/g, '_') : `ITEM_${Date.now()}`;
+            const itemId = itemData.id || (itemData.name ? itemData.name.replace(/[^a-zA-Z0-9]/g, '_') : `ITEM_${Date.now()}`);
             await this.db.collection('users').doc(uid).collection('catalog').doc(itemId).set({
                 ...itemData,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -137,6 +150,19 @@ const CloudSync = {
             console.log(`CloudSync: Item ${itemId} synced to cloud.`);
         } catch (err) {
             console.log('CloudSync catalog sync info:', err.message);
+        }
+    },
+
+    // Delete Catalog Item from Firestore Cloud
+    async deleteCatalogItem(itemId) {
+        const uid = this.userUid;
+        if (!uid || !this.db || !itemId) return;
+
+        try {
+            await this.db.collection('users').doc(uid).collection('catalog').doc(itemId).delete();
+            console.log(`CloudSync: Item ${itemId} deleted from cloud.`);
+        } catch (err) {
+            console.log('CloudSync delete catalog info:', err.message);
         }
     },
 
