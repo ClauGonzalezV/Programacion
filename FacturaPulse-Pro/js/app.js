@@ -172,6 +172,7 @@ const App = {
                 }
                 const data = EditorModule.getCollectFormData();
                 StorageManager.saveDocumentToHistory(data);
+                EditorModule.incrementDocCounter(data.docType);
                 this.updateHistoryBadge();
                 ExportModule.exportToPDF(data);
             });

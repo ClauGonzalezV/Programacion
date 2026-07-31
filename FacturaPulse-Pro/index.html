@@ -70,7 +70,7 @@
 
             <!-- Quick Action Toolbar -->
             <div class="header-actions">
-                <span id="user-plan-badge" class="badge-plan badge-plan--pro">PLAN PRO</span>
+                <span id="user-plan-badge" class="badge-plan badge-plan--free">PLAN GRATUITO</span>
                 <button type="button" class="btn btn-outline btn-sm" id="btn-show-pricing"
                     title="Ver Planes de Suscripción">
                     <i class="fa-solid fa-gem font-accent"></i>
@@ -889,28 +889,65 @@
 
     <!-- MODAL: USER ACCOUNT PROFILE -->
     <div class="modal-backdrop hidden" id="modal-account">
-        <div class="modal-card" style="max-width: 440px;">
-            <div class="modal-header">
-                <h3><i class="fa-solid fa-circle-user"></i> Tu Cuenta Emitia Pro</h3>
-                <button type="button" class="modal-close" data-close="modal-account">&times;</button>
+        <div class="modal-card" style="max-width: 440px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); overflow: hidden; background: #131722;">
+            <div class="modal-header" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(16, 185, 129, 0.1)); padding: 20px 24px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <h3 style="font-size: 1.15rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px; margin: 0;">
+                    <i class="fa-solid fa-user-shield" style="color: #6366f1;"></i> Perfil de Cuenta
+                </h3>
+                <button type="button" class="modal-close" data-close="modal-account" style="color: #94a3b8; font-size: 1.5rem;">&times;</button>
             </div>
-            <div class="modal-body text-center">
-                <div class="account-avatar-circle margin-top-8"><i class="fa-solid fa-user-tie"></i></div>
-                <h4 id="modal-account-email" class="margin-top-8">usuario@empresa.com</h4>
-                <div class="margin-top-8">
-                    <span id="modal-account-plan" class="badge-plan badge-plan--pro">PLAN PRO ACTIVO</span>
+            
+            <div class="modal-body" style="padding: 24px;">
+                <!-- User Avatar & Identity Header -->
+                <div class="text-center" style="margin-bottom: 20px;">
+                    <div style="width: 72px; height: 72px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #10b981); padding: 3px; box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);">
+                        <div style="width: 100%; height: 100%; border-radius: 50%; background: #0f172a; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-user-large" style="font-size: 1.8rem; color: #a5b4fc;"></i>
+                        </div>
+                    </div>
+                    
+                    <h4 id="modal-account-email" style="margin-top: 14px; margin-bottom: 6px; font-size: 1.05rem; font-weight: 600; color: #f8fafc; word-break: break-all;">
+                        usuario@empresa.com
+                    </h4>
+
+                    <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #10b981; background: rgba(16, 185, 129, 0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.25);">
+                        <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
+                        Cloud Sync Activo
+                    </div>
                 </div>
-                <div class="account-features-list margin-top-16">
-                    <div><i class="fa-solid fa-check text-success"></i> Documentos e Historial ilimitados</div>
-                    <div><i class="fa-solid fa-check text-success"></i> Respaldo automático en la nube</div>
-                    <div><i class="fa-solid fa-check text-success"></i> Acceso a las 8 plantillas y marcas de agua</div>
+
+                <!-- Plan Status Card -->
+                <div style="background: rgba(30, 41, 59, 0.7); border-radius: 14px; padding: 18px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <span style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Plan Actual</span>
+                        <span id="modal-account-plan" class="badge-plan badge-plan--free" style="padding: 4px 14px; font-size: 0.75rem; font-weight: 700; border-radius: 12px; letter-spacing: 0.5px;">PLAN GRATUITO</span>
+                    </div>
+
+                    <div class="account-features-list" style="display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: #cbd5e1; text-align: left;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>
+                            <span>Creador de Cotizaciones e Historial</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>
+                            <span>Respaldo automático en Firebase</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-gem" style="color: #6366f1;"></i>
+                            <span style="color: #a5b4fc; font-weight: 500;">Plan PRO activa Dashboard, Clientes y 8 Plantillas</span>
+                        </div>
+                    </div>
                 </div>
-                <button type="button" class="btn btn-primary btn-full margin-top-16" id="btn-account-upgrade-pro">
-                    <i class="fa-solid fa-bolt"></i> Actualizar a PLAN PRO ($9.990 CLP/mes)
+
+                <!-- Upgrade Button -->
+                <button type="button" class="btn btn-primary btn-full" id="btn-account-upgrade-pro" style="padding: 12px 20px; font-size: 0.95rem; font-weight: 700; border-radius: 12px; background: linear-gradient(135deg, #6366f1, #4f46e5); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); transition: all 0.2s ease;">
+                    <i class="fa-solid fa-bolt" style="color: #facc15; margin-right: 6px;"></i> Actualizar a PLAN PRO ($9.990 CLP/mes)
                 </button>
-                <div class="modal-footer margin-top-20" style="justify-content: center;">
-                    <button type="button" class="btn btn-danger-outline" id="btn-auth-logout">
-                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+
+                <!-- Logout Action -->
+                <div style="margin-top: 16px; text-align: center;">
+                    <button type="button" class="btn btn-danger-outline" id="btn-auth-logout" style="width: 100%; border-radius: 12px; padding: 10px; border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; background: rgba(239, 68, 68, 0.05); font-weight: 600;">
+                        <i class="fa-solid fa-right-from-bracket" style="margin-right: 6px;"></i> Cerrar Sesión
                     </button>
                 </div>
             </div>
@@ -985,15 +1022,15 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <!-- JavaScript Scripts -->
-    <script src="js/storage.js?v=18"></script>
-    <script src="js/i18n.js?v=18"></script>
-    <script src="js/templates.js?v=18"></script>
-    <script src="js/editor.js?v=18"></script>
-    <script src="js/export.js?v=18"></script>
-    <script src="js/dashboard.js?v=18"></script>
-    <script src="js/cloud-sync.js?v=18"></script>
-    <script src="js/auth-subscription.js?v=18"></script>
-    <script src="js/app.js?v=18"></script>
+    <script src="js/storage.js?v=28"></script>
+    <script src="js/i18n.js?v=28"></script>
+    <script src="js/templates.js?v=28"></script>
+    <script src="js/editor.js?v=28"></script>
+    <script src="js/export.js?v=28"></script>
+    <script src="js/dashboard.js?v=28"></script>
+    <script src="js/cloud-sync.js?v=28"></script>
+    <script src="js/auth-subscription.js?v=28"></script>
+    <script src="js/app.js?v=28"></script>
 
     <!-- PWA Service Worker Cleanup & Registration -->
     <script>

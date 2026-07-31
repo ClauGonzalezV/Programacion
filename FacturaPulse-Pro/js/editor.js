@@ -488,6 +488,7 @@ const EditorModule = {
         document.getElementById('items-tbody').innerHTML = '';
         this.renderInitialItemRows();
         this.setDefaultDates();
+        this.autoSetDocNumber();
         const canvas = document.getElementById('signature-canvas');
         if (canvas) {
             canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
@@ -497,8 +498,15 @@ const EditorModule = {
         }
         this.recalculateAndRender();
         if (typeof showToast === 'function') {
-            showToast('Formulario limpiado', 'info');
+            showToast('Formulario listo para nuevo documento', 'info');
         }
+    },
+
+    getUserCounterKey() {
+        const uid = typeof AuthSubscription !== 'undefined' && AuthSubscription.currentUser 
+            ? AuthSubscription.currentUser.uid || AuthSubscription.currentUser.email 
+            : 'guest';
+        return `facturapulse_counters_${uid.replace(/[^a-zA-Z0-9]/g, '_')}`;
     },
 
     // Feature 5: Auto-numbering
@@ -510,18 +518,60 @@ const EditorModule = {
             'ORDEN DE COMPRA': 'OC', 'PROFORMA': 'PRO', 'CONTRATO': 'CTR'
         };
         const prefix = prefixes[docType] || 'DOC';
-        const counters = JSON.parse(localStorage.getItem('facturapulse_counters') || '{}');
-        const nextNum = (counters[docType] || 0) + 1;
-        const padded = String(nextNum).padStart(4, '0');
+        const counterKey = this.getUserCounterKey();
+        const counters = JSON.parse(localStorage.getItem(counterKey) || '{}');
+        const history = typeof StorageManager !== 'undefined' ? StorageManager.getHistory() : [];
+        
+        let maxNum = counters[docType] || 0;
+        history.forEach(doc => {
+            if (doc.docType === docType && doc.number) {
+                const match = doc.number.match(/(\d+)(?=[^\d]*$)/);
+                if (match) {
+                    const num = parseInt(match[1], 10);
+                    if (num > maxNum) maxNum = num;
+                }
+            }
+        });
+
+        const nextNum = Math.max(1, maxNum > 0 ? maxNum : 1);
+        const padded = String(nextNum).padStart(3, '0');
         const year = new Date().getFullYear();
         document.getElementById('input-doc-number').value = `${prefix}-${year}-${padded}`;
         this.recalculateAndRender();
     },
 
-    // Increment counter after saving
+    // Increment counter after saving and set input field to next folio (e.g. COT-2026-002)
     incrementDocCounter(docType) {
-        const counters = JSON.parse(localStorage.getItem('facturapulse_counters') || '{}');
-        counters[docType] = (counters[docType] || 0) + 1;
-        localStorage.setItem('facturapulse_counters', JSON.stringify(counters));
+        const docTypeVal = docType || document.getElementById('doc-type').value;
+        const prefixes = {
+            'COTIZACIÓN': 'COT', 'PRESUPUESTO': 'PRE', 'FACTURA': 'FAC',
+            'RECIBO': 'REC', 'NOTA DE CRÉDITO': 'NC', 'NOTA DE DÉBITO': 'ND',
+            'ORDEN DE COMPRA': 'OC', 'PROFORMA': 'PRO', 'CONTRATO': 'CTR'
+        };
+        const prefix = prefixes[docTypeVal] || 'DOC';
+        const counterKey = this.getUserCounterKey();
+        const counters = JSON.parse(localStorage.getItem(counterKey) || '{}');
+        const history = typeof StorageManager !== 'undefined' ? StorageManager.getHistory() : [];
+        
+        let maxNum = counters[docTypeVal] || 0;
+        history.forEach(doc => {
+            if (doc.docType === docTypeVal && doc.number) {
+                const match = doc.number.match(/(\d+)(?=[^\d]*$)/);
+                if (match) {
+                    const num = parseInt(match[1], 10);
+                    if (num > maxNum) maxNum = num;
+                }
+            }
+        });
+
+        const nextNum = maxNum + 1;
+        counters[docTypeVal] = nextNum;
+        localStorage.setItem(counterKey, JSON.stringify(counters));
+
+        const padded = String(nextNum).padStart(3, '0');
+        const year = new Date().getFullYear();
+        const nextFolio = `${prefix}-${year}-${padded}`;
+        document.getElementById('input-doc-number').value = nextFolio;
+        this.recalculateAndRender();
     }
 };

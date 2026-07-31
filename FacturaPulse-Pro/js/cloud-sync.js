@@ -48,15 +48,41 @@ const CloudSync = {
         }
     },
 
+    async deleteDocument(docId) {
+        const uid = this.userUid;
+        if (!uid || !this.db) return;
+        try {
+            await this.db.collection('users').doc(uid).collection('documents').doc(docId).delete();
+            console.log(`CloudSync: Document ${docId} deleted from cloud.`);
+        } catch (err) {
+            console.log('CloudSync document delete info:', err.message);
+        }
+    },
+
+    async clearHistory() {
+        const uid = this.userUid;
+        if (!uid || !this.db) return;
+        try {
+            const snapshot = await this.db.collection('users').doc(uid).collection('documents').get();
+            const batch = this.db.batch();
+            snapshot.forEach(doc => batch.delete(doc.ref));
+            await batch.commit();
+            console.log('CloudSync: All history documents deleted from cloud.');
+        } catch (err) {
+            console.log('CloudSync clear history info:', err.message);
+        }
+    },
+
     // 2. Fetch History from Cloud
     async fetchHistory() {
         const uid = this.userUid;
         if (!uid || !this.db) return null;
 
         try {
-            const snapshot = await this.db.collection('users').doc(uid).collection('documents').orderBy('updatedAt', 'desc').get();
+            const snapshot = await this.db.collection('users').doc(uid).collection('documents').get();
             const cloudDocs = [];
             snapshot.forEach(doc => cloudDocs.push(doc.data()));
+            cloudDocs.sort((a, b) => (b.number || '').localeCompare(a.number || ''));
             return cloudDocs;
         } catch (err) {
             console.log('CloudSync fetch history info:', err.message);
@@ -135,18 +161,10 @@ const CloudSync = {
         const uid = this.userUid;
         if (!uid) return;
 
-        if (typeof showToast === 'function') {
-            showToast('Sincronizando datos con tu cuenta Cloud...', 'info');
-        }
-
         // Pull cloud history
         const cloudDocs = await this.fetchHistory();
         if (cloudDocs && cloudDocs.length > 0) {
             localStorage.setItem(StorageManager.KEYS.HISTORY, JSON.stringify(cloudDocs));
-            if (typeof App !== 'undefined' && App.renderHistoryTab) {
-                App.renderHistoryTab();
-                App.updateHistoryBadge();
-            }
         } else {
             // Push local history to cloud
             const localHistory = StorageManager.getHistory();
@@ -169,6 +187,11 @@ const CloudSync = {
         } else {
             const localCatalog = StorageManager.getCatalog();
             localCatalog.forEach(i => this.syncCatalogItem(i));
+        }
+
+        // Re-render UI views with pulled Cloud Data
+        if (typeof App !== 'undefined' && App.renderAllViews) {
+            App.renderAllViews();
         }
     }
 };

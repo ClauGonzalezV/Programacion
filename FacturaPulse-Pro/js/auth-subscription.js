@@ -131,6 +131,7 @@ const AuthSubscription = {
         if (planType === 'pro') {
             this.userPlan = { isPro: true, planName: 'PLAN PRO', expiresAt: '2026-12-31' };
             localStorage.setItem('emitia_user_plan', JSON.stringify(this.userPlan));
+            if (this.currentUser) this.saveUserProfileToCloud(this.currentUser);
             this.updateUI();
             this.applyPlanRestrictions();
             this.closeModal('modal-pricing');
@@ -138,6 +139,7 @@ const AuthSubscription = {
         } else {
             this.userPlan = { isPro: false, planName: 'PLAN GRATUITO', expiresAt: null };
             localStorage.setItem('emitia_user_plan', JSON.stringify(this.userPlan));
+            if (this.currentUser) this.saveUserProfileToCloud(this.currentUser);
             this.updateUI();
             this.applyPlanRestrictions();
             this.closeModal('modal-pricing');
@@ -151,11 +153,18 @@ const AuthSubscription = {
                 .then(cred => {
                     this.currentUser = cred.user;
                     this.setPlan('free');
-                    showToast(`¡Cuenta registrada en Plan Gratuito! Bienvenido/a ${cred.user.email}`, 'success');
+                    this.saveUserProfileToCloud(cred.user);
+                    showToast(`¡Cuenta registrada con éxito en Firebase! Bienvenido/a ${cred.user.email}`, 'success');
                     this.closeModal('modal-auth');
                 })
                 .catch(err => {
-                    showToast(`Error al crear cuenta: ${err.message}`, 'error');
+                    let msg = err.message;
+                    if (err.code === 'auth/email-already-in-use') {
+                        msg = 'Este correo ya está registrado en Firebase. Haz clic abajo en "¿Ya tienes cuenta? Inicia Sesión" para ingresar.';
+                    } else if (err.code === 'auth/weak-password') {
+                        msg = 'La contraseña debe tener al menos 6 caracteres.';
+                    }
+                    showToast(`Error al crear cuenta: ${msg}`, 'error');
                 });
         } else {
             // Local Demo Session - Starts on Free Plan
@@ -172,13 +181,16 @@ const AuthSubscription = {
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then(cred => {
                     this.currentUser = cred.user;
-                    this.updateUI();
-                    this.applyPlanRestrictions();
-                    showToast(`Sesión iniciada como ${cred.user.email}`, 'success');
+                    this.loadUserData(cred.user);
+                    showToast(`Sesión iniciada correctamente como ${cred.user.email}`, 'success');
                     this.closeModal('modal-auth');
                 })
                 .catch(err => {
-                    showToast(`Error de inicio de sesión: ${err.message}`, 'error');
+                    let msg = err.message;
+                    if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+                        msg = 'Correo o contraseña incorrectos. Si no tienes cuenta, haz clic en "¿No tienes cuenta? Regístrate aquí".';
+                    }
+                    showToast(`Error de inicio de sesión: ${msg}`, 'error');
                 });
         } else {
             // Local Demo Session
@@ -197,8 +209,7 @@ const AuthSubscription = {
             firebase.auth().signInWithPopup(provider)
                 .then(result => {
                     this.currentUser = result.user;
-                    this.updateUI();
-                    this.applyPlanRestrictions();
+                    this.loadUserData(result.user);
                     showToast(`Bienvenido/a ${result.user.displayName}`, 'success');
                     this.closeModal('modal-auth');
                 })
@@ -216,25 +227,67 @@ const AuthSubscription = {
         }
     },
 
+    saveUserProfileToCloud(user) {
+        if (typeof firebase !== 'undefined' && firebase.firestore && user) {
+            try {
+                const db = firebase.firestore();
+                db.collection('users').doc(user.uid).set({
+                    email: user.email,
+                    displayName: user.displayName || user.email.split('@')[0],
+                    plan: this.userPlan,
+                    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+            } catch (e) {
+                console.log('Error saving user profile to Cloud:', e);
+            }
+        }
+    },
+
     signOut() {
+        if (typeof StorageManager !== 'undefined' && StorageManager.clearAllSessionData) {
+            StorageManager.clearAllSessionData();
+        }
         if (!this.isDemoConfig() && typeof firebase !== 'undefined' && firebase.auth) {
             firebase.auth().signOut().then(() => {
-                showToast('Sesión cerrada', 'info');
+                showToast('Sesión cerrada correctamente', 'info');
                 this.closeModal('modal-account');
                 this.currentUser = null;
-                this.updateUI();
+                window.location.reload();
             });
         } else {
             this.currentUser = null;
-            localStorage.removeItem('emitia_demo_user');
-            showToast('Sesión cerrada', 'info');
+            showToast('Sesión cerrada correctamente', 'info');
             this.closeModal('modal-account');
-            this.updateUI();
+            window.location.reload();
         }
     },
 
     loadUserData(user) {
-        this.updateUI();
+        if (typeof firebase !== 'undefined' && firebase.firestore && user) {
+            try {
+                const db = firebase.firestore();
+                db.collection('users').doc(user.uid).get().then(doc => {
+                    if (doc.exists && doc.data().plan) {
+                        this.userPlan = doc.data().plan;
+                        localStorage.setItem('emitia_user_plan', JSON.stringify(this.userPlan));
+                    } else {
+                        this.saveUserProfileToCloud(user);
+                    }
+                    this.updateUI();
+                    this.applyPlanRestrictions();
+                }).catch(e => {
+                    this.updateUI();
+                    this.applyPlanRestrictions();
+                });
+            } catch (e) {
+                this.updateUI();
+                this.applyPlanRestrictions();
+            }
+        } else {
+            this.updateUI();
+            this.applyPlanRestrictions();
+        }
+
         if (typeof CloudSync !== 'undefined' && CloudSync.syncAllOnLogin) {
             CloudSync.syncAllOnLogin();
         }
@@ -293,7 +346,7 @@ const AuthSubscription = {
                 }
             }
 
-            // 2. Multi-Language Restriction (Spanish only for Free, EN/PT for PRO)
+            // 2. Multi-Language Restriction (Spanish only for Free, EN/PT/etc for PRO)
             const langSelect = document.getElementById('doc-language');
             if (langSelect && langSelect.options) {
                 Array.from(langSelect.options).forEach(opt => {
@@ -369,7 +422,9 @@ const AuthSubscription = {
     showAccountModal() {
         const modal = document.getElementById('modal-account');
         if (modal) {
-            document.getElementById('modal-account-email').textContent = this.currentUser ? this.currentUser.email : 'usuario@emitia.pro';
+            const emailElem = document.getElementById('modal-account-email');
+            if (emailElem) emailElem.textContent = this.currentUser ? this.currentUser.email : 'usuario@emitia.pro';
+            
             const planBadge = document.getElementById('modal-account-plan');
             if (planBadge) {
                 planBadge.textContent = this.userPlan.planName;

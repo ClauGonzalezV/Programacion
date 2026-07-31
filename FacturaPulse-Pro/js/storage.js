@@ -12,6 +12,21 @@ const StorageManager = {
     },
 
     // Initialize seed data if empty
+    clearAllSessionData() {
+        localStorage.removeItem(this.KEYS.CLIENTS);
+        localStorage.removeItem(this.KEYS.CATALOG);
+        localStorage.removeItem(this.KEYS.HISTORY);
+        localStorage.removeItem(this.KEYS.EMITTER);
+        localStorage.removeItem('emitia_user_plan');
+        localStorage.removeItem('emitia_demo_user');
+        localStorage.removeItem('facturapulse_counters');
+        Object.keys(localStorage).forEach(key => {
+            if (key.startsWith('facturapulse_counters')) {
+                localStorage.removeItem(key);
+            }
+        });
+    },
+
     init() {
         if (!localStorage.getItem(this.KEYS.CLIENTS)) {
             const seedClients = [
@@ -145,10 +160,21 @@ const StorageManager = {
         let history = this.getHistory();
         history = history.filter(h => h.number !== number);
         this.saveHistory(history);
+        if (typeof CloudSync !== 'undefined' && CloudSync.deleteDocument) {
+            CloudSync.deleteDocument(number);
+        }
     },
 
     clearHistory() {
         this.saveHistory([]);
+        if (typeof CloudSync !== 'undefined' && CloudSync.clearHistory) {
+            CloudSync.clearHistory();
+        }
+        if (typeof EditorModule !== 'undefined' && EditorModule.getUserCounterKey) {
+            const key = EditorModule.getUserCounterKey();
+            localStorage.removeItem(key);
+            if (EditorModule.autoSetDocNumber) EditorModule.autoSetDocNumber();
+        }
     },
 
     // --- EMITTER PROFILE ---
@@ -188,12 +214,21 @@ const StorageManager = {
             const data = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
             if (Array.isArray(data.clients)) {
                 this.saveClients(data.clients);
+                if (typeof CloudSync !== 'undefined' && CloudSync.syncClient) {
+                    data.clients.forEach(c => CloudSync.syncClient(c));
+                }
             }
             if (Array.isArray(data.catalog)) {
                 this.saveCatalog(data.catalog);
+                if (typeof CloudSync !== 'undefined' && CloudSync.syncCatalogItem) {
+                    data.catalog.forEach(item => CloudSync.syncCatalogItem(item));
+                }
             }
             if (Array.isArray(data.history)) {
                 this.saveHistory(data.history);
+                if (typeof CloudSync !== 'undefined' && CloudSync.syncDocument) {
+                    data.history.forEach(doc => CloudSync.syncDocument(doc));
+                }
             }
             if (data.emitter) {
                 this.saveEmitterProfile(data.emitter);
