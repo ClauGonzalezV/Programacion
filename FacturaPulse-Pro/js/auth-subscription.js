@@ -169,8 +169,6 @@ const AuthSubscription = {
                     if (this.isAdminUser()) {
                         this.showAdminPanel();
                         if (typeof showToast === 'function') showToast('🛠️ Panel Desarrollador activado (Ctrl + Shift + A)', 'info');
-                    } else {
-                        if (typeof showToast === 'function') showToast('🔒 Acceso denegado: Solo gonzalezclaudioxdxd@gmail.com tiene permisos de Administrador.', 'error');
                     }
                 }
             });
@@ -563,6 +561,21 @@ const AuthSubscription = {
                     ? '<i class="fa-solid fa-print"></i> Imprimir / PDF'
                     : '<i class="fa-solid fa-lock"></i> Imprimir / PDF';
             }
+
+            // 5. Watermark Control Restriction
+            const watermarkSelect = document.getElementById('doc-watermark');
+            if (watermarkSelect) {
+                if (this.userPlan.isPro) {
+                    watermarkSelect.disabled = false;
+                    watermarkSelect.title = "Selecciona una marca de agua";
+                } else {
+                    watermarkSelect.disabled = true;
+                    watermarkSelect.title = "Marcas de agua personalizadas solo disponibles en PLAN PRO 🔒";
+                }
+                if (typeof EditorModule !== 'undefined' && EditorModule.recalculateAndRender) {
+                    EditorModule.recalculateAndRender();
+                }
+            }
         } catch (err) {
             console.warn('applyPlanRestrictions non-fatal info:', err);
         }
@@ -621,9 +634,6 @@ const AuthSubscription = {
 
     showAdminPanel() {
         if (!this.isAdminUser()) {
-            if (typeof showToast === 'function') {
-                showToast('🔒 Acceso denegado: Solo el administrador (gonzalezclaudioxdxd@gmail.com) tiene acceso al Panel Desarrollador.', 'error');
-            }
             return;
         }
         const modal = document.getElementById('modal-admin-panel');
@@ -646,14 +656,14 @@ const AuthSubscription = {
 
         if (isRegisterInput.value === 'true') {
             isRegisterInput.value = 'false';
-            title.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión';
+            title.innerHTML = '<i class="fa-solid fa-right-to-bracket" style="color: #818cf8;"></i> Iniciar Sesión';
             submitBtn.textContent = 'Ingresar a Emitia Pro';
             toggleBtn.textContent = '¿No tienes cuenta? Regístrate aquí';
         } else {
             isRegisterInput.value = 'true';
-            title.innerHTML = '<i class="fa-solid fa-user-plus"></i> Crear Cuenta Pro';
+            title.innerHTML = '<i class="fa-solid fa-user-plus" style="color: #818cf8;"></i> Crear Cuenta Pro';
             submitBtn.textContent = 'Registrarse Gratis';
-            toggleBtn.textContent = '¿Ya tienes cuenta? Inicia Sesión';
+            toggleBtn.textContent = '¿Ya tienes cuenta? Inicia sesión aquí';
         }
     },
 

@@ -854,38 +854,71 @@
 
     <!-- MODAL: LOGIN / REGISTER (AUTH) -->
     <div class="modal-backdrop hidden" id="modal-auth">
-        <div class="modal-card" style="max-width: 440px;">
-            <div class="modal-header">
-                <h3 id="modal-auth-title"><i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión</h3>
-                <button type="button" class="modal-close" data-close="modal-auth">&times;</button>
+        <div class="modal-card auth-card-glass" style="max-width: 440px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(20px) saturate(180%); box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.25); overflow: hidden; position: relative;">
+            <!-- Ambient Gradient Glow Background -->
+            <div style="position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 240px; height: 160px; background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(147, 51, 234, 0.15) 70%, transparent 100%); filter: blur(40px); pointer-events: none;"></div>
+
+            <div class="modal-header" style="background: transparent; padding: 26px 28px 10px 28px; border-bottom: none; position: relative; z-index: 2; display: flex; align-items: flex-start; justify-content: space-between;">
+                <div>
+                    <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 20px; font-size: 0.72rem; font-weight: 700; color: #a5b4fc; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 10px;">
+                        <i class="fa-solid fa-shield-halved" style="color: #6366f1;"></i> Acceso Seguro Emitia Pro
+                    </div>
+                    <h3 id="modal-auth-title" style="font-size: 1.45rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; margin: 0; display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-right-to-bracket" style="color: #818cf8;"></i> Iniciar Sesión
+                    </h3>
+                </div>
+                <button type="button" class="modal-close" data-close="modal-auth" style="color: #94a3b8; font-size: 1.5rem; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); border: none; cursor: pointer; transition: all 0.2s ease;">&times;</button>
             </div>
-            <div class="modal-body">
+
+            <div class="modal-body" style="padding: 16px 28px 28px 28px; position: relative; z-index: 2;">
                 <form id="form-modal-auth">
                     <input type="hidden" id="modal-auth-is-register" value="false">
-                    <div class="form-group">
-                        <label for="modal-auth-email">Correo Electrónico *</label>
-                        <input type="email" id="modal-auth-email" class="form-input" placeholder="tu@empresa.com"
-                            required>
-                    </div>
+                    
                     <div class="form-group margin-top-8">
-                        <label for="modal-auth-password">Contraseña *</label>
-                        <input type="password" id="modal-auth-password" class="form-input" placeholder="••••••••"
-                            required minlength="6">
+                        <label for="modal-auth-email" style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #94a3b8; margin-bottom: 6px; display: block;">
+                            Correo Electrónico
+                        </label>
+                        <div style="position: relative;">
+                            <i class="fa-solid fa-envelope" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #64748b; font-size: 0.95rem;"></i>
+                            <input type="email" id="modal-auth-email" class="form-input custom-auth-input" placeholder="tu@empresa.com" required style="padding-left: 44px; height: 48px; font-size: 0.92rem; border-radius: 12px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.12); color: #fff; width: 100%; transition: all 0.2s ease;">
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-full margin-top-16" id="modal-auth-submit">
+
+                    <div class="form-group margin-top-16">
+                        <label for="modal-auth-password" style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #94a3b8; margin-bottom: 6px; display: block;">
+                            Contraseña
+                        </label>
+                        <div style="position: relative;">
+                            <i class="fa-solid fa-lock" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #64748b; font-size: 0.95rem;"></i>
+                            <input type="password" id="modal-auth-password" class="form-input custom-auth-input" placeholder="••••••••" required minlength="6" style="padding-left: 44px; height: 48px; font-size: 0.92rem; border-radius: 12px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.12); color: #fff; width: 100%; transition: all 0.2s ease;">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full margin-top-20" id="modal-auth-submit" style="height: 50px; font-size: 0.98rem; font-weight: 700; border-radius: 14px; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #9333ea 100%); box-shadow: 0 8px 25px -4px rgba(99, 102, 241, 0.5); border: none; cursor: pointer; transition: all 0.2s ease; width: 100%;">
                         Ingresar a Emitia Pro
                     </button>
                 </form>
 
-                <div class="auth-divider margin-top-16"><span>o bien</span></div>
+                <div class="auth-divider" style="display: flex; align-items: center; text-align: center; margin: 22px 0; color: #64748b; font-size: 0.8rem; font-weight: 600;">
+                    <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
+                    <span style="padding: 0 12px; text-transform: lowercase; color: #94a3b8;">o bien</span>
+                    <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
+                </div>
 
-                <button type="button" class="btn btn-outline btn-full margin-top-12" id="btn-auth-google">
-                    <i class="fa-brands fa-google" style="color: #ea4335;"></i> Continuar con Google
+                <button type="button" class="btn btn-full" id="btn-auth-google" style="height: 48px; border-radius: 14px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff; font-size: 0.92rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: all 0.2s ease; width: 100%;">
+                    <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    <span>Continuar con Google</span>
                 </button>
 
-                <div class="text-center margin-top-16">
-                    <button type="button" class="btn-link" id="btn-toggle-auth-mode">¿No tienes cuenta? Regístrate
-                        aquí</button>
+                <div class="text-center margin-top-20">
+                    <button type="button" class="btn-link" id="btn-toggle-auth-mode" style="background: transparent; border: none; color: #a5b4fc; font-size: 0.88rem; font-weight: 600; cursor: pointer; text-decoration: none; padding: 6px 12px; border-radius: 8px; transition: all 0.2s ease;">
+                        ¿No tienes cuenta? Regístrate aquí
+                    </button>
                 </div>
             </div>
         </div>
@@ -1177,22 +1210,22 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <!-- JavaScript Scripts -->
-    <script src="js/storage.js?v=43"></script>
-    <script src="js/i18n.js?v=43"></script>
-    <script src="js/templates.js?v=43"></script>
-    <script src="js/editor.js?v=43"></script>
-    <script src="js/export.js?v=43"></script>
-    <script src="js/dashboard.js?v=43"></script>
-    <script src="js/cloud-sync.js?v=43"></script>
-    <script src="js/auth-subscription.js?v=43"></script>
-    <script src="js/payments.js?v=43"></script>
-    <script src="js/app.js?v=43"></script>
+    <script src="js/storage.js?v=47"></script>
+    <script src="js/i18n.js?v=47"></script>
+    <script src="js/templates.js?v=47"></script>
+    <script src="js/editor.js?v=47"></script>
+    <script src="js/export.js?v=47"></script>
+    <script src="js/dashboard.js?v=47"></script>
+    <script src="js/cloud-sync.js?v=47"></script>
+    <script src="js/auth-subscription.js?v=47"></script>
+    <script src="js/payments.js?v=47"></script>
+    <script src="js/app.js?v=47"></script>
 
     <!-- PWA Service Worker Cleanup & Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js?v=43').catch(err => console.log('SW reg error:', err));
+                navigator.serviceWorker.register('./sw.js?v=47').catch(err => console.log('SW reg error:', err));
             });
         }
     </script>

@@ -39,9 +39,15 @@ const TemplatesEngine = {
         const pages = this._splitItemsIntoPages(allItems);
         const totalPages = pages.length;
 
-        // Watermark HTML
-        const watermarkHtml = data.watermark
-            ? `<div class="doc-watermark">${this.escapeHtml(data.watermark)}</div>`
+        // Watermark HTML: If Free user, force mandatory prominent Watermark "VERSIÓN GRATUITA - EMITIA PRO"
+        const isPro = typeof AuthSubscription !== 'undefined' && AuthSubscription.userPlan ? AuthSubscription.userPlan.isPro : false;
+        let effectiveWatermark = data.watermark;
+        if (!isPro) {
+            effectiveWatermark = 'VERSIÓN GRATUITA - EMITIA PRO';
+        }
+
+        const watermarkHtml = effectiveWatermark
+            ? `<div class="doc-watermark ${!isPro ? 'doc-watermark--free' : ''}">${this.escapeHtml(effectiveWatermark)}</div>`
             : '';
 
         let fullHtml = '';
