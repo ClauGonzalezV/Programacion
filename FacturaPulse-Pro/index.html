@@ -1035,16 +1035,9 @@
     <!-- PWA Service Worker Cleanup & Registration -->
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(registrations => {
-                for (let registration of registrations) {
-                    registration.unregister();
-                }
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js?v=28').catch(err => console.log('SW reg error:', err));
             });
-            if ('caches' in window) {
-                caches.keys().then(names => {
-                    for (let name of names) caches.delete(name);
-                });
-            }
         }
     </script>
 </body>

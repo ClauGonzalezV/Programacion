@@ -346,7 +346,7 @@ const EditorModule = {
             const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
             const price = parseFloat(row.querySelector('.item-price').value) || 0;
             const rowTotal = qty * price;
-            const img = row.dataset.image || '';
+            const img = (row.dataset && row.dataset.image) ? row.dataset.image : '';
 
             row.querySelector('.item-row-total').textContent = `${this.state.currencySymbol} ${rowTotal.toLocaleString('es-CL', { minimumFractionDigits: 2 })}`;
 

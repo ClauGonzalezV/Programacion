@@ -314,6 +314,10 @@ const TemplatesEngine = {
         return `SON: ${wordsText.trim()} ${centsText} ${currencyText}`.replace(/\s+/g, ' ');
     },
 
+    numeroALetras(num, currency = 'USD') {
+        return this.numberToWordsSpanish(num, currency);
+    },
+
     escapeHtml(str) {
         if (!str) return '';
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
