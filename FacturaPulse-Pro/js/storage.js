@@ -69,6 +69,9 @@ const StorageManager = {
         client.id = 'cli-' + Date.now();
         clients.push(client);
         this.saveClients(clients);
+        if (typeof CloudSync !== 'undefined' && CloudSync.syncClient) {
+            CloudSync.syncClient(client);
+        }
         return client;
     },
 
@@ -96,6 +99,9 @@ const StorageManager = {
         item.id = 'cat-' + Date.now();
         catalog.push(item);
         this.saveCatalog(catalog);
+        if (typeof CloudSync !== 'undefined' && CloudSync.syncCatalogItem) {
+            CloudSync.syncCatalogItem(item);
+        }
         return item;
     },
 
@@ -129,6 +135,10 @@ const StorageManager = {
             history.unshift(docData);
         }
         this.saveHistory(history);
+
+        if (typeof CloudSync !== 'undefined' && CloudSync.syncDocument) {
+            CloudSync.syncDocument(docData);
+        }
     },
 
     deleteHistoryDocument(number) {

@@ -180,7 +180,7 @@
 /* Totals Summary Table */
 .doc-summary-grid {
     display: grid;
-    grid-template-columns: 1fr 270px;
+    grid-template-columns: 1fr 290px;
     gap: 16px;
     margin-bottom: 16px;
 }
@@ -227,6 +227,7 @@
     font-weight: 700;
     color: #0f172a;
     font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap !important;
 }
 
 .doc-totals-table tr.grand-total td {

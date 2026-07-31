@@ -4,16 +4,21 @@
 
 const AuthSubscription = {
     firebaseConfig: {
-        apiKey: "AIzaSyDemoKeyEmitiaProForDevelopmentOnly12345",
+        apiKey: "AIzaSyDAzVbDu1ApYhu46_D5d-6k_31XX7yyWAg",
         authDomain: "emitia-pro.firebaseapp.com",
         projectId: "emitia-pro",
-        storageBucket: "emitia-pro.appspot.com",
-        messagingSenderId: "123456789012",
-        appId: "1:123456789012:web:demoappid123456"
+        storageBucket: "emitia-pro.firebasestorage.app",
+        messagingSenderId: "740879126374",
+        appId: "1:740879126374:web:44eb5b07f0c1d0fa3142a7",
+        measurementId: "G-BWNRJRBK7H"
     },
 
     currentUser: null,
     userPlan: { isPro: false, planName: 'PLAN GRATUITO', expiresAt: null },
+
+    isDemoConfig() {
+        return !this.firebaseConfig.apiKey || this.firebaseConfig.apiKey.startsWith('AIzaSyDemoKey');
+    },
 
     init() {
         const savedPlan = localStorage.getItem('emitia_user_plan');
@@ -21,9 +26,12 @@ const AuthSubscription = {
             try { this.userPlan = JSON.parse(savedPlan); } catch (e) {}
         }
 
-        if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+        if (!this.isDemoConfig() && typeof firebase !== 'undefined' && !firebase.apps.length) {
             try {
                 firebase.initializeApp(this.firebaseConfig);
+                if (typeof CloudSync !== 'undefined' && CloudSync.enableOfflinePersistence) {
+                    CloudSync.enableOfflinePersistence();
+                }
                 this.bindFirebaseEvents();
             } catch (err) {
                 console.log('Firebase init demo mode:', err);
@@ -109,6 +117,14 @@ const AuthSubscription = {
         if (btnSelectFree) {
             btnSelectFree.addEventListener('click', () => this.setPlan('free'));
         }
+
+        const btnAccountUpgrade = document.getElementById('btn-account-upgrade-pro');
+        if (btnAccountUpgrade) {
+            btnAccountUpgrade.addEventListener('click', () => {
+                this.closeModal('modal-account');
+                this.showPricingModal();
+            });
+        }
     },
 
     setPlan(planType) {
@@ -130,28 +146,34 @@ const AuthSubscription = {
     },
 
     signUpWithEmail(email, password) {
-        if (typeof firebase !== 'undefined' && firebase.auth) {
+        if (!this.isDemoConfig() && typeof firebase !== 'undefined' && firebase.auth) {
             firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then(cred => {
-                    this.setPlan('pro');
-                    showToast(`¡Cuenta creada con éxito! Bienvenido ${cred.user.email}`, 'success');
+                    this.currentUser = cred.user;
+                    this.setPlan('free');
+                    showToast(`¡Cuenta registrada en Plan Gratuito! Bienvenido/a ${cred.user.email}`, 'success');
                     this.closeModal('modal-auth');
                 })
                 .catch(err => {
                     showToast(`Error al crear cuenta: ${err.message}`, 'error');
                 });
         } else {
-            this.currentUser = { email: email, displayName: email.split('@')[0] };
+            // Local Demo Session - Starts on Free Plan
+            this.currentUser = { email: email, displayName: email.split('@')[0], uid: 'user_' + Date.now() };
             localStorage.setItem('emitia_demo_user', JSON.stringify(this.currentUser));
-            this.setPlan('pro');
+            this.setPlan('free');
+            showToast(`¡Cuenta creada con éxito! Estás en el Plan Gratuito.`, 'success');
             this.closeModal('modal-auth');
         }
     },
 
     signInWithEmail(email, password) {
-        if (typeof firebase !== 'undefined' && firebase.auth) {
+        if (!this.isDemoConfig() && typeof firebase !== 'undefined' && firebase.auth) {
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then(cred => {
+                    this.currentUser = cred.user;
+                    this.updateUI();
+                    this.applyPlanRestrictions();
                     showToast(`Sesión iniciada como ${cred.user.email}`, 'success');
                     this.closeModal('modal-auth');
                 })
@@ -159,34 +181,43 @@ const AuthSubscription = {
                     showToast(`Error de inicio de sesión: ${err.message}`, 'error');
                 });
         } else {
-            this.currentUser = { email: email, displayName: email.split('@')[0] };
+            // Local Demo Session
+            this.currentUser = { email: email, displayName: email.split('@')[0], uid: 'user_' + Date.now() };
             localStorage.setItem('emitia_demo_user', JSON.stringify(this.currentUser));
-            this.setPlan('pro');
+            this.updateUI();
+            this.applyPlanRestrictions();
+            showToast(`Sesión iniciada correctamente`, 'success');
             this.closeModal('modal-auth');
         }
     },
 
     signInWithGoogle() {
-        if (typeof firebase !== 'undefined' && firebase.auth) {
+        if (!this.isDemoConfig() && typeof firebase !== 'undefined' && firebase.auth) {
             const provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider)
                 .then(result => {
-                    this.setPlan('pro');
+                    this.currentUser = result.user;
+                    this.updateUI();
+                    this.applyPlanRestrictions();
+                    showToast(`Bienvenido/a ${result.user.displayName}`, 'success');
                     this.closeModal('modal-auth');
                 })
                 .catch(err => {
                     showToast(`Error con Google Auth: ${err.message}`, 'error');
                 });
         } else {
-            this.currentUser = { email: 'demo@emitia.pro', displayName: 'Usuario Demo Google', photoURL: '' };
+            // Local Demo Session
+            this.currentUser = { email: 'demo@emitia.pro', displayName: 'Usuario Google', uid: 'user_google_demo' };
             localStorage.setItem('emitia_demo_user', JSON.stringify(this.currentUser));
-            this.setPlan('pro');
+            this.updateUI();
+            this.applyPlanRestrictions();
+            showToast(`Sesión iniciada con Google`, 'success');
             this.closeModal('modal-auth');
         }
     },
 
     signOut() {
-        if (typeof firebase !== 'undefined' && firebase.auth) {
+        if (!this.isDemoConfig() && typeof firebase !== 'undefined' && firebase.auth) {
             firebase.auth().signOut().then(() => {
                 showToast('Sesión cerrada', 'info');
                 this.closeModal('modal-account');
@@ -204,6 +235,9 @@ const AuthSubscription = {
 
     loadUserData(user) {
         this.updateUI();
+        if (typeof CloudSync !== 'undefined' && CloudSync.syncAllOnLogin) {
+            CloudSync.syncAllOnLogin();
+        }
     },
 
     updateUI() {
@@ -233,77 +267,97 @@ const AuthSubscription = {
     },
 
     applyPlanRestrictions() {
-        // 1. Templates Restriction (2 basic for Free, 8 for PRO)
-        const templateSelect = document.getElementById('doc-template');
-        if (templateSelect) {
-            const proTemplates = ['dark', 'classic', 'minimal', 'colorful', 'corporate', 'neon'];
-            Array.from(templateSelect.options).forEach(opt => {
-                if (proTemplates.includes(opt.value)) {
-                    if (this.userPlan.isPro) {
-                        opt.disabled = false;
-                        opt.textContent = opt.textContent.replace(' 🔒 (Plan PRO)', '');
-                    } else {
-                        opt.disabled = true;
-                        if (!opt.textContent.includes('🔒')) {
-                            opt.textContent += ' 🔒 (Plan PRO)';
+        try {
+            // 1. Templates Restriction (2 basic for Free, 8 for PRO)
+            const templateSelect = document.getElementById('doc-template');
+            if (templateSelect && templateSelect.options) {
+                const proTemplates = ['dark', 'classic', 'minimal', 'colorful', 'corporate', 'neon'];
+                Array.from(templateSelect.options).forEach(opt => {
+                    if (proTemplates.includes(opt.value)) {
+                        if (this.userPlan.isPro) {
+                            opt.disabled = false;
+                            opt.textContent = opt.textContent.replace(' 🔒 (Plan PRO)', '');
+                        } else {
+                            opt.disabled = true;
+                            if (!opt.textContent.includes('🔒')) {
+                                opt.textContent += ' 🔒 (Plan PRO)';
+                            }
+                        }
+                    }
+                });
+                if (!this.userPlan.isPro && proTemplates.includes(templateSelect.value)) {
+                    templateSelect.value = 'modern';
+                    if (typeof EditorModule !== 'undefined' && EditorModule.recalculateAndRender) {
+                        EditorModule.recalculateAndRender();
+                    }
+                }
+            }
+
+            // 2. Multi-Language Restriction (Spanish only for Free, EN/PT for PRO)
+            const langSelect = document.getElementById('doc-language');
+            if (langSelect && langSelect.options) {
+                Array.from(langSelect.options).forEach(opt => {
+                    if (opt.value !== 'es') {
+                        if (this.userPlan.isPro) {
+                            opt.disabled = false;
+                            opt.textContent = opt.textContent.replace(' 🔒 (Plan PRO)', '');
+                        } else {
+                            opt.disabled = true;
+                            if (!opt.textContent.includes('🔒')) {
+                                opt.textContent += ' 🔒 (Plan PRO)';
+                            }
+                        }
+                    }
+                });
+                if (!this.userPlan.isPro && langSelect.value !== 'es') {
+                    langSelect.value = 'es';
+                    if (typeof EditorModule !== 'undefined' && EditorModule.recalculateAndRender) {
+                        EditorModule.recalculateAndRender();
+                    }
+                }
+            }
+
+            // 3. Navigation Tabs Lock Indicators (Dashboard, Clientes, Servicios, Historial)
+            const lockedTabs = [
+                { id: 'tab-btn-dashboard', label: 'Dashboard' },
+                { id: 'tab-btn-clients', label: 'Clientes' },
+                { id: 'tab-btn-catalog', label: 'Servicios' },
+                { id: 'tab-btn-history', label: 'Historial' }
+            ];
+
+            lockedTabs.forEach(item => {
+                const tabBtn = document.getElementById(item.id);
+                if (tabBtn) {
+                    const span = tabBtn.querySelector('span:not(.badge-count)');
+                    if (span) {
+                        if (this.userPlan.isPro) {
+                            tabBtn.classList.remove('tab-locked');
+                            span.textContent = item.label;
+                        } else {
+                            tabBtn.classList.add('tab-locked');
+                            span.textContent = `${item.label} 🔒`;
                         }
                     }
                 }
             });
-            if (!this.userPlan.isPro && proTemplates.includes(templateSelect.value)) {
-                templateSelect.value = 'modern';
-                if (typeof EditorModule !== 'undefined') EditorModule.recalculateAndRender();
-            }
-        }
 
-        // 2. Multi-Language Restriction (Spanish only for Free, EN/PT for PRO)
-        const langSelect = document.getElementById('doc-language');
-        if (langSelect) {
-            Array.from(langSelect.options).forEach(opt => {
-                if (opt.value !== 'es') {
-                    if (this.userPlan.isPro) {
-                        opt.disabled = false;
-                        opt.textContent = opt.textContent.replace(' 🔒 (Plan PRO)', '');
-                    } else {
-                        opt.disabled = true;
-                        if (!opt.textContent.includes('🔒')) {
-                            opt.textContent += ' 🔒 (Plan PRO)';
-                        }
-                    }
+            // 4. PDF and Print Buttons Lock Indicator
+            const btnExportPdf = document.getElementById('btn-export-pdf');
+            const btnPrintDirect = document.getElementById('btn-print-direct');
+
+            if (btnExportPdf) {
+                const btnText = btnExportPdf.querySelector('.btn-text');
+                if (btnText) {
+                    btnText.textContent = this.userPlan.isPro ? 'PDF' : 'PDF 🔒';
                 }
-            });
-            if (!this.userPlan.isPro && langSelect.value !== 'es') {
-                langSelect.value = 'es';
-                if (typeof EditorModule !== 'undefined') EditorModule.recalculateAndRender();
             }
-        }
-
-        // 3. Dashboard Tab Indicator
-        const tabDashboard = document.getElementById('tab-btn-dashboard');
-        if (tabDashboard) {
-            if (this.userPlan.isPro) {
-                tabDashboard.classList.remove('tab-locked');
-                tabDashboard.querySelector('span').textContent = 'Dashboard';
-            } else {
-                tabDashboard.classList.add('tab-locked');
-                tabDashboard.querySelector('span').textContent = 'Dashboard 🔒';
+            if (btnPrintDirect) {
+                btnPrintDirect.innerHTML = this.userPlan.isPro 
+                    ? '<i class="fa-solid fa-print"></i> Imprimir / PDF'
+                    : '<i class="fa-solid fa-lock"></i> Imprimir / PDF';
             }
-        }
-
-        // 4. PDF and Print Buttons Lock Indicator
-        const btnExportPdf = document.getElementById('btn-export-pdf');
-        const btnPrintDirect = document.getElementById('btn-print-direct');
-
-        if (btnExportPdf) {
-            const btnText = btnExportPdf.querySelector('.btn-text');
-            if (btnText) {
-                btnText.textContent = this.userPlan.isPro ? 'PDF' : 'PDF 🔒';
-            }
-        }
-        if (btnPrintDirect) {
-            btnPrintDirect.innerHTML = this.userPlan.isPro 
-                ? '<i class="fa-solid fa-print"></i> Imprimir / PDF'
-                : '<i class="fa-solid fa-lock"></i> Imprimir / PDF 🔒';
+        } catch (err) {
+            console.warn('applyPlanRestrictions non-fatal info:', err);
         }
     },
 
@@ -316,7 +370,15 @@ const AuthSubscription = {
         const modal = document.getElementById('modal-account');
         if (modal) {
             document.getElementById('modal-account-email').textContent = this.currentUser ? this.currentUser.email : 'usuario@emitia.pro';
-            document.getElementById('modal-account-plan').textContent = this.userPlan.planName;
+            const planBadge = document.getElementById('modal-account-plan');
+            if (planBadge) {
+                planBadge.textContent = this.userPlan.planName;
+                planBadge.className = this.userPlan.isPro ? 'badge-plan badge-plan--pro' : 'badge-plan badge-plan--free';
+            }
+            const btnUpgrade = document.getElementById('btn-account-upgrade-pro');
+            if (btnUpgrade) {
+                btnUpgrade.style.display = this.userPlan.isPro ? 'none' : 'inline-flex';
+            }
             modal.classList.remove('hidden');
         }
     },

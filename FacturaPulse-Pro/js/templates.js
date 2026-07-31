@@ -19,7 +19,9 @@ const TemplatesEngine = {
         const sym = data.currencySymbol || '$';
         const formatMoney = (amount) => {
             const val = parseFloat(amount) || 0;
-            return `${sym} ${val.toLocaleString('es-CL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            const isClp = !data.currency || data.currency === 'CLP' || data.currency.includes('CLP') || sym === '$';
+            const digits = isClp ? 0 : 2;
+            return `${sym} ${val.toLocaleString('es-CL', { minimumFractionDigits: digits, maximumFractionDigits: digits })}`;
         };
         const formatDate = (dateStr) => {
             if (!dateStr) return 'N/A';
@@ -166,8 +168,14 @@ const TemplatesEngine = {
                 const qty = parseFloat(item.quantity) || 0;
                 const price = parseFloat(item.price) || 0;
                 const total = qty * price;
+                const imgHtml = item.image ? `<img src="${item.image}" style="width:26px; height:26px; object-fit:cover; border-radius:4px; margin-right:8px; vertical-align:middle; border:1px solid #cbd5e1; flex-shrink:0;">` : '';
                 return `<tr>
-                    <td><strong>${this.escapeHtml(item.description || 'Concepto')}</strong></td>
+                    <td>
+                        <div style="display:flex; align-items:center;">
+                            ${imgHtml}
+                            <span><strong>${this.escapeHtml(item.description || 'Concepto')}</strong></span>
+                        </div>
+                    </td>
                     <td class="text-center">${qty}</td>
                     <td class="text-right">${formatMoney(price)}</td>
                     <td class="text-right"><strong>${formatMoney(total)}</strong></td>
@@ -192,33 +200,47 @@ const TemplatesEngine = {
 
     _buildSummaryAndFooter(data, formatMoney, L) {
         const t = data.totals;
+        const taxLabelText = t.taxLabel || `${L('tax')} (${data.taxRate}%):`;
+        const taxDisplaySign = t.isRetention ? '-' : '';
+        const taxColorStyle = t.isRetention ? 'style="color:#ef4444;"' : '';
+
+        const attachmentsHtml = (data.attachments && data.attachments.length > 0) ? `
+            <div class="note-box" style="border-left-color:#0284c7; margin-top:8px;">
+                <div class="note-box-title"><i class="fa-solid fa-paperclip"></i> Anexos / Documentos Adjuntos:</div>
+                <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">
+                    ${data.attachments.map(att => `<span style="display:inline-flex; align-items:center; gap:4px; background:#f1f5f9; padding:2px 8px; border-radius:4px; font-size:11px; color:#334155; border:1px solid #cbd5e1;"><i class="fa-solid fa-file"></i> ${this.escapeHtml(att.name)}</span>`).join('')}
+                </div>
+            </div>
+        ` : '';
+
         return `
         <div class="doc-summary-grid">
             <div class="doc-notes-block">
-                ${data.bankDetails ? `
+                ${data.showBankTerms !== false && data.bankDetails ? `
                     <div class="note-box">
                         <div class="note-box-title"><i class="fa-solid fa-building-columns"></i> ${L('paymentData')}</div>
                         <div style="white-space:pre-line;">${this.escapeHtml(data.bankDetails)}</div>
                         ${data.qrUrl ? `<div class="qr-payment-wrapper"><div class="qr-label"><i class="fa-solid fa-qrcode"></i> ${L('scanToPay')}</div><div id="doc-qr-container" class="doc-qr-box"></div></div>` : ''}
                     </div>
-                ` : (data.qrUrl ? `
+                ` : (data.showBankTerms !== false && data.qrUrl ? `
                     <div class="note-box">
                         <div class="note-box-title"><i class="fa-solid fa-qrcode"></i> QR:</div>
                         <div class="qr-payment-wrapper"><div class="qr-label">${L('scanToPay')}</div><div id="doc-qr-container" class="doc-qr-box"></div></div>
                     </div>
                 ` : '')}
-                ${data.terms ? `<div class="note-box"><div class="note-box-title"><i class="fa-solid fa-info-circle"></i> ${L('conditions')}</div><div style="white-space:pre-line;">${this.escapeHtml(data.terms)}</div></div>` : ''}
-                ${data.customNotes ? `<div class="note-box" style="border-left-color:var(--success-color);"><div style="font-weight:600;color:#1e293b;">${this.escapeHtml(data.customNotes)}</div></div>` : ''}
+                ${data.showBankTerms !== false && data.terms ? `<div class="note-box"><div class="note-box-title"><i class="fa-solid fa-info-circle"></i> ${L('conditions')}</div><div style="white-space:pre-line;">${this.escapeHtml(data.terms)}</div></div>` : ''}
+                ${data.showBankTerms !== false && data.customNotes ? `<div class="note-box" style="border-left-color:var(--success-color);"><div style="font-weight:600;color:#1e293b;">${this.escapeHtml(data.customNotes)}</div></div>` : ''}
+                ${attachmentsHtml}
             </div>
             <div>
                 <table class="doc-totals-table">
                     <tr><td class="label">${L('subtotal')}</td><td class="val">${formatMoney(t.subtotal)}</td></tr>
                     ${t.discountAmount > 0 ? `<tr><td class="label">${L('discount')} (${data.discountType === 'percent' ? data.discountVal + '%' : 'Fijo'}):</td><td class="val" style="color:#ef4444;">-${formatMoney(t.discountAmount)}</td></tr>` : ''}
-                    ${data.taxRate > 0 ? `<tr><td class="label">${L('tax')} (${data.taxRate}%):</td><td class="val">${formatMoney(t.taxAmount)}</td></tr>` : ''}
+                    ${data.taxRate > 0 || t.taxAmount > 0 ? `<tr><td class="label">${this.escapeHtml(taxLabelText)}</td><td class="val" ${taxColorStyle}>${taxDisplaySign}${formatMoney(t.taxAmount)}</td></tr>` : ''}
                     ${t.shippingFee > 0 ? `<tr><td class="label">${L('shipping')}</td><td class="val">${formatMoney(t.shippingFee)}</td></tr>` : ''}
                     <tr class="grand-total"><td class="label" style="color:var(--accent-color);">${L('grandTotal')}</td><td class="val">${formatMoney(t.grandTotal)}</td></tr>
                 </table>
-                <div class="doc-amount-words"><i class="fa-solid fa-file-invoice-dollar"></i> ${this.numberToWordsSpanish(t.grandTotal, data.currency)}</div>
+                ${data.showAmountWords !== false ? `<div class="doc-amount-words"><i class="fa-solid fa-file-invoice-dollar"></i> ${this.numberToWordsSpanish(t.grandTotal, data.currency)}</div>` : ''}
             </div>
         </div>
         <div class="doc-footer">
@@ -228,11 +250,13 @@ const TemplatesEngine = {
                 ${data.emitter.phone ? `<div class="doc-footer-contact">${this.escapeHtml(data.emitter.phone)}</div>` : ''}
                 <div class="doc-footer-generated">${L('generatedWith')}</div>
             </div>
-            <div class="doc-signature-block">
-                ${data.signature ? `<div class="doc-signature-img-wrap"><img src="${data.signature}" class="doc-signature-img" alt="Firma"></div>` : '<div class="doc-signature-blank"></div>'}
-                <div class="doc-signature-line"></div>
-                <div class="doc-signature-name">${data.signerName ? this.escapeHtml(data.signerName) : L('signature')}</div>
-            </div>
+            ${data.showSignature !== false ? `
+                <div class="doc-signature-block">
+                    ${data.signature ? `<div class="doc-signature-img-wrap"><img src="${data.signature}" class="doc-signature-img" alt="Firma"></div>` : '<div class="doc-signature-blank"></div>'}
+                    <div class="doc-signature-line"></div>
+                    <div class="doc-signature-name">${data.signerName ? this.escapeHtml(data.signerName) : L('signature')}</div>
+                </div>
+            ` : ''}
         </div>`;
     },
 
@@ -246,27 +270,48 @@ const TemplatesEngine = {
         if (num === null || num === undefined || isNaN(num)) return '';
         const units = ['','UN','DOS','TRES','CUATRO','CINCO','SEIS','SIETE','OCHO','NUEVE'];
         const tens = ['','DIEZ','VEINTE','TREINTA','CUARENTA','CINCUENTA','SESENTA','SETENTA','OCHENTA','NOVENTA'];
-        const teens = ['DIEZ','ONCE','DOCE','TRECE','CATORCE','QUINCE','DIECIS\u00c9IS','DIECISIETE','DIECIOCHO','DIECINUEVE'];
+        const teens = ['DIEZ','ONCE','DOCE','TRECE','CATORCE','QUINCE','DIECISÉIS','DIECISIETE','DIECIOCHO','DIECINUEVE'];
         const hundreds = ['','CIENTO','DOSCIENTOS','TRESCIENTOS','CUATROCIENTOS','QUINIENTOS','SEISCIENTOS','SETECIENTOS','OCHOCIENTOS','NOVECIENTOS'];
+        
         const convertGroup = (n) => {
             let out = '';
             if (n === 100) return 'CIEN';
             if (n > 100) { out += hundreds[Math.floor(n / 100)] + ' '; n %= 100; }
             if (n >= 10 && n <= 19) out += teens[n - 10] + ' ';
-            else if (n >= 20 && n <= 29) { out += n === 20 ? 'VEINTE ' : 'VEINTI' + units[n - 20] + ' '; }
+            else if (n >= 20 && n <= 29) { out += (n === 20 ? 'VEINTE ' : 'VEINTI' + units[n - 20] + ' '); }
             else if (n >= 30) { out += tens[Math.floor(n / 10)]; if (n % 10 !== 0) out += ' Y ' + units[n % 10]; out += ' '; }
             else if (n > 0) out += units[n] + ' ';
             return out;
         };
+
         let intPart = Math.floor(Math.abs(num));
-        const cents = Math.round((Math.abs(num) - intPart) * 100);
+        if (intPart === 0) {
+            let isClp = !currency || currency === 'CLP' || currency.includes('CLP');
+            let currencyText = isClp ? 'PESOS CHILENOS (CLP)' : currency;
+            return `SON: CERO ${currencyText}`;
+        }
+
+        let wordsText = '';
+        if (intPart >= 1000000) {
+            let millions = Math.floor(intPart / 1000000);
+            intPart %= 1000000;
+            wordsText += (millions === 1 ? 'UN MILLÓN ' : convertGroup(millions) + 'MILLONES ');
+        }
+        if (intPart >= 1000) {
+            let thousands = Math.floor(intPart / 1000);
+            intPart %= 1000;
+            wordsText += (thousands === 1 ? 'MIL ' : convertGroup(thousands) + 'MIL ');
+        }
+        if (intPart > 0) {
+            wordsText += convertGroup(intPart);
+        }
+
+        const cents = Math.round((Math.abs(num) - Math.floor(Math.abs(num))) * 100);
         const centsStr = (cents < 10 ? '0' : '') + cents;
-        if (intPart === 0) return `SON: CERO CON ${centsStr}/100 ${currency}`;
-        let words = '';
-        if (intPart >= 1000000) { const m = Math.floor(intPart / 1000000); intPart %= 1000000; words += (m === 1 ? 'UN MILL\u00d3N ' : convertGroup(m) + 'MILLONES '); }
-        if (intPart >= 1000) { const k = Math.floor(intPart / 1000); intPart %= 1000; words += (k === 1 ? 'UN MIL ' : convertGroup(k) + 'MIL '); }
-        if (intPart > 0) words += convertGroup(intPart);
-        return `SON: ${words.trim()} CON ${centsStr}/100 ${currency}`;
+        const isClp = !currency || currency === 'CLP' || currency.includes('CLP');
+        const currencyText = isClp ? 'PESOS CHILENOS (CLP)' : currency;
+        const centsText = (!isClp && cents > 0) ? ` CON ${centsStr}/100` : '';
+        return `SON: ${wordsText.trim()} ${centsText} ${currencyText}`.replace(/\s+/g, ' ');
     },
 
     escapeHtml(str) {

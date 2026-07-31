@@ -1,4 +1,4 @@
-const CACHE_NAME = 'emitia-pro-v2';
+const CACHE_NAME = 'emitia-pro-v18';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -11,6 +11,7 @@ const ASSETS_TO_CACHE = [
   './js/editor.js',
   './js/export.js',
   './js/dashboard.js',
+  './js/cloud-sync.js',
   './js/auth-subscription.js',
   './js/app.js'
 ];

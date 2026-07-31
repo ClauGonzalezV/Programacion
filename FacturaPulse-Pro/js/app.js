@@ -2,15 +2,7 @@
    MAIN APP CONTROLLER - TAB ROUTING, MODALS & EVENT HANDLERS
    ========================================================================== */
 
-const initAppModule = () => {
-    App.init();
-};
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAppModule);
-} else {
-    initAppModule();
-}
 
 function showToast(message, type = 'info') {
     const container = document.getElementById('toast-container');
@@ -35,12 +27,79 @@ function showToast(message, type = 'info') {
 
 const App = {
     init() {
-        EditorModule.init();
-        this.bindTabNavigation();
-        this.bindGlobalActions();
-        this.bindModals();
-        this.renderAllViews();
-        this.initTheme();
+        try { EditorModule.init(); } catch (e) { console.error('EditorModule init error:', e); }
+        try { this.bindTabNavigation(); } catch (e) { console.error('bindTabNavigation error:', e); }
+        try { this.bindGlobalActions(); } catch (e) { console.error('bindGlobalActions error:', e); }
+        try { this.bindModals(); } catch (e) { console.error('bindModals error:', e); }
+        try { this.renderAllViews(); } catch (e) { console.error('renderAllViews error:', e); }
+        try { this.initTheme(); } catch (e) { console.error('initTheme error:', e); }
+        try { this.initResizer(); } catch (e) { console.error('initResizer error:', e); }
+        try { this.initCollapsibleCards(); } catch (e) { console.error('initCollapsibleCards error:', e); }
+    },
+
+    initResizer() {
+        const handle = document.getElementById('resizer-handle');
+        const grid = document.getElementById('workspace-grid');
+        if (!handle || !grid) return;
+
+        let savedWidth = parseInt(localStorage.getItem('emitia_editor_width'), 10);
+        if (isNaN(savedWidth) || savedWidth < 380 || savedWidth > 750) {
+            savedWidth = 480;
+        }
+        grid.style.setProperty('--editor-width', `${savedWidth}px`);
+
+        let isDragging = false;
+
+        handle.addEventListener('mousedown', () => {
+            isDragging = true;
+            handle.classList.add('dragging');
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const gridRect = grid.getBoundingClientRect();
+            let newWidth = e.clientX - gridRect.left;
+            if (isNaN(newWidth) || newWidth < 380) newWidth = 380;
+            if (newWidth > 750) newWidth = 750;
+            grid.style.setProperty('--editor-width', `${newWidth}px`);
+            localStorage.setItem('emitia_editor_width', newWidth);
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                handle.classList.remove('dragging');
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+            }
+        });
+    },
+
+    initCollapsibleCards() {
+        document.querySelectorAll('.card-box-header').forEach(header => {
+            header.style.cursor = 'pointer';
+            if (!header.querySelector('.card-collapse-icon')) {
+                const icon = document.createElement('i');
+                icon.className = 'fa-solid fa-chevron-down card-collapse-icon';
+                header.appendChild(icon);
+            }
+
+            header.addEventListener('click', (e) => {
+                if (e.target.closest('button') || e.target.closest('input') || e.target.closest('label') || e.target.closest('.header-tools')) {
+                    return;
+                }
+                const card = header.closest('.card-box');
+                if (card) {
+                    card.classList.toggle('collapsed');
+                    const icon = header.querySelector('.card-collapse-icon');
+                    if (icon) {
+                        icon.style.transform = card.classList.contains('collapsed') ? 'rotate(-90deg)' : 'rotate(0deg)';
+                    }
+                }
+            });
+        });
     },
 
     initTheme() {
@@ -66,8 +125,15 @@ const App = {
             tab.addEventListener('click', () => {
                 const targetTab = tab.dataset.tab;
 
-                if (targetTab === 'dashboard' && typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
-                    showToast('🔒 El Dashboard Avanzado es exclusivo del PLAN PRO. ¡Suscríbete para acceder a tus analíticas!', 'error');
+                if (targetTab !== 'editor' && typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
+                    const names = {
+                        dashboard: 'El Dashboard de Estadísticas',
+                        clients: 'La Gestión de Clientes',
+                        catalog: 'El Catálogo de Servicios',
+                        history: 'El Historial de Documentos'
+                    };
+                    const title = names[targetTab] || 'Esta sección';
+                    showToast(`🔒 ${title} es exclusiva del PLAN PRO. El Plan Gratuito solo incluye el Creador.`, 'error');
                     AuthSubscription.showPricingModal();
                     return;
                 }
@@ -87,69 +153,118 @@ const App = {
     },
 
     bindGlobalActions() {
-        // PDF Export
-        document.getElementById('btn-export-pdf').addEventListener('click', () => {
-            const data = EditorModule.getCollectFormData();
-            StorageManager.saveDocumentToHistory(data);
-            this.updateHistoryBadge();
-            ExportModule.exportToPDF(data);
-        });
+        // Sample Data Button
+        const btnSample = document.getElementById('btn-sample-data');
+        if (btnSample) {
+            btnSample.addEventListener('click', () => {
+                EditorModule.loadSampleData();
+            });
+        }
 
-        // Save Draft
-        document.getElementById('btn-save-draft').addEventListener('click', () => {
-            if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
-                const history = StorageManager.getHistory();
-                if (history.length >= 3) {
-                    showToast('Límite de 3 documentos del Plan Gratuito alcanzado. ¡Actualiza a PLAN PRO para guardar ilimitados!', 'error');
+        // PDF Export & Print Button in Preview Bar
+        const btnPrintDirect = document.getElementById('btn-print-direct');
+        if (btnPrintDirect) {
+            btnPrintDirect.addEventListener('click', () => {
+                if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
+                    showToast('🔒 La descarga a PDF e impresión es exclusiva del PLAN PRO. ¡Suscríbete para descargar tus documentos!', 'error');
                     AuthSubscription.showPricingModal();
                     return;
                 }
-            }
-            const data = EditorModule.getCollectFormData();
-            StorageManager.saveDocumentToHistory(data);
-            EditorModule.incrementDocCounter(data.docType);
-            this.updateHistoryBadge();
-            showToast('Documento guardado en el historial', 'success');
-        });
+                const data = EditorModule.getCollectFormData();
+                StorageManager.saveDocumentToHistory(data);
+                this.updateHistoryBadge();
+                ExportModule.exportToPDF(data);
+            });
+        }
 
-        // Print Direct
-        document.getElementById('btn-print-direct').addEventListener('click', () => {
-            ExportModule.printDocument();
-        });
+        // Save Draft Button
+        const btnSaveDraft = document.getElementById('btn-save-draft');
+        if (btnSaveDraft) {
+            btnSaveDraft.addEventListener('click', () => {
+                const data = EditorModule.getCollectFormData();
+                if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
+                    const history = StorageManager.getHistory();
+                    const isExisting = history.some(h => h.number === data.number);
+                    if (!isExisting && history.length >= 3) {
+                        showToast('🔒 Límite de 3 documentos del Plan Gratuito alcanzado. ¡Actualiza a PLAN PRO para guardar ilimitados!', 'error');
+                        AuthSubscription.showPricingModal();
+                        return;
+                    }
+                }
+                StorageManager.saveDocumentToHistory(data);
+                EditorModule.incrementDocCounter(data.docType);
+                this.updateHistoryBadge();
+                showToast('Documento guardado en el historial', 'success');
+            });
+        }
+
+        // CSV Export Button
+        const btnCsv = document.getElementById('btn-export-csv');
+        if (btnCsv) {
+            btnCsv.addEventListener('click', () => this.exportCSV());
+        }
+
+        // Email Button
+        const btnEmail = document.getElementById('btn-send-email');
+        if (btnEmail) {
+            btnEmail.addEventListener('click', () => this.sendByEmail());
+        }
+
+        // Zoom/Fit View Button
+        const btnZoom = document.getElementById('btn-zoom-fit');
+        if (btnZoom) {
+            btnZoom.addEventListener('click', () => {
+                const wrapper = document.querySelector('.paper-container-wrapper');
+                if (wrapper) {
+                    wrapper.classList.toggle('full-width');
+                    showToast(wrapper.classList.contains('full-width') ? 'Vista ampliada' : 'Vista estándar', 'info');
+                }
+            });
+        }
 
         // Load Saved Client from Editor button
-        document.getElementById('btn-load-saved-client').addEventListener('click', () => {
-            const clients = StorageManager.getClients();
-            if (clients.length === 0) {
-                showToast('No tienes clientes guardados aún', 'info');
-                return;
-            }
-            this.openClientPickerModal();
-        });
+        const btnLoadClient = document.getElementById('btn-load-saved-client');
+        if (btnLoadClient) {
+            btnLoadClient.addEventListener('click', () => {
+                const clients = StorageManager.getClients();
+                if (clients.length === 0) {
+                    showToast('No tienes clientes guardados aún', 'info');
+                    return;
+                }
+                this.openClientPickerModal();
+            });
+        }
 
         // Quick Save Client from Editor button
-        document.getElementById('btn-quick-save-client').addEventListener('click', () => {
-            const name = document.getElementById('input-client-name').value;
-            if (!name) {
-                showToast('Escribe el nombre del cliente primero', 'error');
-                return;
-            }
-            const client = {
-                name: name,
-                taxId: document.getElementById('input-client-taxid').value,
-                email: document.getElementById('input-client-email').value,
-                phone: document.getElementById('input-client-phone').value,
-                address: document.getElementById('input-client-address').value
-            };
-            StorageManager.addClient(client);
-            showToast(`Cliente '${name}' guardado correctamente`, 'success');
-        });
+        const btnSaveClient = document.getElementById('btn-quick-save-client');
+        if (btnSaveClient) {
+            btnSaveClient.addEventListener('click', () => {
+                const nameInput = document.getElementById('input-client-name');
+                const name = nameInput ? nameInput.value : '';
+                if (!name) {
+                    showToast('Escribe el nombre del cliente primero', 'error');
+                    return;
+                }
+                const client = {
+                    name: name,
+                    taxId: document.getElementById('input-client-taxid') ? document.getElementById('input-client-taxid').value : '',
+                    email: document.getElementById('input-client-email') ? document.getElementById('input-client-email').value : '',
+                    phone: document.getElementById('input-client-phone') ? document.getElementById('input-client-phone').value : '',
+                    address: document.getElementById('input-client-address') ? document.getElementById('input-client-address').value : ''
+                };
+                StorageManager.addClient(client);
+                showToast(`Cliente '${name}' guardado correctamente`, 'success');
+            });
+        }
 
         // Backup Export
-        document.getElementById('btn-export-backup').addEventListener('click', () => {
-            StorageManager.exportBackupJSON();
-            showToast('Respaldo descargado', 'success');
-        });
+        const btnExportBackup = document.getElementById('btn-export-backup');
+        if (btnExportBackup) {
+            btnExportBackup.addEventListener('click', () => {
+                StorageManager.exportBackupJSON();
+                showToast('Respaldo descargado', 'success');
+            });
+        }
 
         // Backup Import
         const btnImportTrigger = document.getElementById('btn-import-backup-trigger');
@@ -176,24 +291,15 @@ const App = {
         }
 
         // Clear History
-        document.getElementById('btn-clear-history').addEventListener('click', () => {
-            if (confirm('¿Estás seguro de vaciar el historial de facturas?')) {
-                StorageManager.clearHistory();
-                this.renderHistoryTab();
-                showToast('Historial vaciado', 'info');
-            }
-        });
-
-        // Feature 10: CSV Export
-        const btnCsv = document.getElementById('btn-export-csv');
-        if (btnCsv) {
-            btnCsv.addEventListener('click', () => this.exportCSV());
-        }
-
-        // Feature 3: Send by Email
-        const btnEmail = document.getElementById('btn-send-email');
-        if (btnEmail) {
-            btnEmail.addEventListener('click', () => this.sendByEmail());
+        const btnClearHistory = document.getElementById('btn-clear-history');
+        if (btnClearHistory) {
+            btnClearHistory.addEventListener('click', () => {
+                if (confirm('¿Estás seguro de vaciar el historial de facturas?')) {
+                    StorageManager.clearHistory();
+                    this.renderHistoryTab();
+                    showToast('Historial vaciado', 'info');
+                }
+            });
         }
 
         // Intercept Ctrl+P to prevent browser print on Free Plan
@@ -224,7 +330,8 @@ const App = {
         document.querySelectorAll('[data-close]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const modalId = btn.dataset.close;
-                document.getElementById(modalId).classList.add('hidden');
+                const modal = document.getElementById(modalId);
+                if (modal) modal.classList.add('hidden');
             });
         });
 
@@ -241,82 +348,114 @@ const App = {
         }
 
         // Open Client Modal
-        document.getElementById('btn-new-client-modal').addEventListener('click', () => {
-            document.getElementById('form-modal-client').reset();
-            document.getElementById('modal-client-id').value = '';
-            document.getElementById('modal-client-title').innerHTML = '<i class="fa-solid fa-user-plus"></i> Nuevo Cliente';
-            document.getElementById('modal-client').classList.remove('hidden');
-        });
+        const btnNewClientModal = document.getElementById('btn-new-client-modal');
+        if (btnNewClientModal) {
+            btnNewClientModal.addEventListener('click', () => {
+                const form = document.getElementById('form-modal-client');
+                if (form) form.reset();
+                const idInput = document.getElementById('modal-client-id');
+                if (idInput) idInput.value = '';
+                const title = document.getElementById('modal-client-title');
+                if (title) title.innerHTML = '<i class="fa-solid fa-user-plus"></i> Nuevo Cliente';
+                const modal = document.getElementById('modal-client');
+                if (modal) modal.classList.remove('hidden');
+            });
+        }
 
         // Save Client Modal Form Submit
-        document.getElementById('form-modal-client').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const client = {
-                name: document.getElementById('modal-client-name').value,
-                taxId: document.getElementById('modal-client-taxid').value,
-                email: document.getElementById('modal-client-email').value,
-                phone: document.getElementById('modal-client-phone').value,
-                address: document.getElementById('modal-client-address').value
-            };
-            StorageManager.addClient(client);
-            document.getElementById('modal-client').classList.add('hidden');
-            this.renderClientsTab();
-            showToast('Cliente guardado con éxito', 'success');
-        });
+        const formClient = document.getElementById('form-modal-client');
+        if (formClient) {
+            formClient.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const client = {
+                    name: document.getElementById('modal-client-name') ? document.getElementById('modal-client-name').value : '',
+                    taxId: document.getElementById('modal-client-taxid') ? document.getElementById('modal-client-taxid').value : '',
+                    email: document.getElementById('modal-client-email') ? document.getElementById('modal-client-email').value : '',
+                    phone: document.getElementById('modal-client-phone') ? document.getElementById('modal-client-phone').value : '',
+                    address: document.getElementById('modal-client-address') ? document.getElementById('modal-client-address').value : ''
+                };
+                StorageManager.addClient(client);
+                const modal = document.getElementById('modal-client');
+                if (modal) modal.classList.add('hidden');
+                this.renderClientsTab();
+                showToast('Cliente guardado con éxito', 'success');
+            });
+        }
 
         // Open Catalog Item Modal
-        document.getElementById('btn-new-catalog-item-modal').addEventListener('click', () => {
-            document.getElementById('form-modal-catalog').reset();
-            document.getElementById('modal-catalog').classList.remove('hidden');
-        });
+        const btnNewCatalogModal = document.getElementById('btn-new-catalog-item-modal');
+        if (btnNewCatalogModal) {
+            btnNewCatalogModal.addEventListener('click', () => {
+                const form = document.getElementById('form-modal-catalog');
+                if (form) form.reset();
+                const modal = document.getElementById('modal-catalog');
+                if (modal) modal.classList.remove('hidden');
+            });
+        }
 
         // Save Catalog Form Submit
-        document.getElementById('form-modal-catalog').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const item = {
-                name: document.getElementById('modal-catalog-name').value,
-                price: parseFloat(document.getElementById('modal-catalog-price').value) || 0
-            };
-            StorageManager.addCatalogItem(item);
-            document.getElementById('modal-catalog').classList.add('hidden');
-            this.renderCatalogTab();
-            showToast('Servicio añadido al catálogo', 'success');
-        });
+        const formCatalog = document.getElementById('form-modal-catalog');
+        if (formCatalog) {
+            formCatalog.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const nameEl = document.getElementById('modal-catalog-name');
+                const priceEl = document.getElementById('modal-catalog-price');
+                const item = {
+                    name: nameEl ? nameEl.value : '',
+                    price: priceEl ? (parseFloat(priceEl.value) || 0) : 0
+                };
+                StorageManager.addCatalogItem(item);
+                const modal = document.getElementById('modal-catalog');
+                if (modal) modal.classList.add('hidden');
+                this.renderCatalogTab();
+                showToast('Servicio añadido al catálogo', 'success');
+            });
+        }
 
         // Open Select Catalog Modal (from Editor)
-        document.getElementById('btn-open-catalog-modal').addEventListener('click', () => {
-            const catalog = StorageManager.getCatalog();
-            const listEl = document.getElementById('modal-catalog-select-list');
-            if (catalog.length === 0) {
-                listEl.innerHTML = '<p style="color: #94a3b8;">No hay servicios en el catálogo. Añade algunos en la pestaña "Servicios".</p>';
-            } else {
-                listEl.innerHTML = catalog.map(item => `
-                    <div class="catalog-select-item">
-                        <label>
-                            <input type="checkbox" class="chk-catalog-select" value="${item.id}" data-name="${item.name}" data-price="${item.price}">
-                            <span>${item.name}</span>
-                        </label>
-                        <strong style="color: var(--accent-color);">$ ${item.price.toFixed(2)}</strong>
-                    </div>
-                `).join('');
-            }
-            document.getElementById('modal-select-catalog').classList.remove('hidden');
-        });
+        const btnOpenCatalogModal = document.getElementById('btn-open-catalog-modal');
+        if (btnOpenCatalogModal) {
+            btnOpenCatalogModal.addEventListener('click', () => {
+                const catalog = StorageManager.getCatalog();
+                const listEl = document.getElementById('modal-catalog-select-list');
+                if (listEl) {
+                    if (catalog.length === 0) {
+                        listEl.innerHTML = '<p style="color: #94a3b8;">No hay servicios en el catálogo. Añade algunos en la pestaña "Servicios".</p>';
+                    } else {
+                        listEl.innerHTML = catalog.map(item => `
+                            <div class="catalog-select-item">
+                                <label>
+                                    <input type="checkbox" class="chk-catalog-select" value="${item.id}" data-name="${item.name}" data-price="${item.price}">
+                                    <span>${item.name}</span>
+                                </label>
+                                <strong style="color: var(--accent-color);">$ ${item.price.toFixed(2)}</strong>
+                            </div>
+                        `).join('');
+                    }
+                }
+                const modal = document.getElementById('modal-select-catalog');
+                if (modal) modal.classList.remove('hidden');
+            });
+        }
 
         // Insert Selected Catalog Items to Editor
-        document.getElementById('btn-insert-selected-catalog').addEventListener('click', () => {
-            const checkboxes = document.querySelectorAll('.chk-catalog-select:checked');
-            if (checkboxes.length === 0) {
-                showToast('Selecciona al menos un servicio', 'info');
-                return;
-            }
-            checkboxes.forEach(chk => {
-                EditorModule.addItemRow(chk.dataset.name, 1, parseFloat(chk.dataset.price));
+        const btnInsertCatalog = document.getElementById('btn-insert-selected-catalog');
+        if (btnInsertCatalog) {
+            btnInsertCatalog.addEventListener('click', () => {
+                const checkboxes = document.querySelectorAll('.chk-catalog-select:checked');
+                if (checkboxes.length === 0) {
+                    showToast('Selecciona al menos un servicio', 'info');
+                    return;
+                }
+                checkboxes.forEach(chk => {
+                    EditorModule.addItemRow(chk.dataset.name, 1, parseFloat(chk.dataset.price));
+                });
+                EditorModule.recalculateAndRender();
+                const modal = document.getElementById('modal-select-catalog');
+                if (modal) modal.classList.add('hidden');
+                showToast(`${checkboxes.length} ítem(s) insertados en la cotización`, 'success');
             });
-            EditorModule.recalculateAndRender();
-            document.getElementById('modal-select-catalog').classList.add('hidden');
-            showToast(`${checkboxes.length} ítem(s) insertados en la cotización`, 'success');
-        });
+        }
     },
 
     openClientPickerModal() {
@@ -364,11 +503,13 @@ const App = {
 
     updateHistoryBadge() {
         const history = StorageManager.getHistory();
-        document.getElementById('history-count').textContent = history.length;
+        const badge = document.getElementById('history-count');
+        if (badge) badge.textContent = history.length;
     },
 
     renderClientsTab() {
         const grid = document.getElementById('clients-cards-list');
+        if (!grid) return;
         const clients = StorageManager.getClients();
 
         if (clients.length === 0) {
@@ -420,6 +561,7 @@ const App = {
 
     renderCatalogTab() {
         const tbody = document.getElementById('catalog-table-body');
+        if (!tbody) return;
         const catalog = StorageManager.getCatalog();
 
         if (catalog.length === 0) {
@@ -463,6 +605,7 @@ const App = {
 
     renderHistoryTab() {
         const tbody = document.getElementById('history-table-body');
+        if (!tbody) return;
         const history = StorageManager.getHistory();
 
         if (history.length === 0) {
@@ -486,6 +629,15 @@ const App = {
 
             const fmtDate = h.dueDate ? h.dueDate.split('-').reverse().join('/') : 'N/A';
 
+            const isClp = !h.currency || h.currency === 'CLP' || h.currency.includes('CLP') || h.currencySymbol === '$';
+            const dec = isClp ? 0 : 2;
+            const fmtTotal = h.totals.grandTotal.toLocaleString('es-CL', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+
+            const isPro = typeof AuthSubscription !== 'undefined' && AuthSubscription.userPlan && AuthSubscription.userPlan.isPro;
+            const pdfIcon = isPro ? 'fa-file-pdf' : 'fa-lock';
+            const pdfClass = isPro ? 'btn-primary' : 'btn-outline';
+            const pdfTitle = isPro ? 'Exportar PDF' : 'PDF 🔒 (Plan PRO)';
+
             return `
             <tr>
                 <td><strong>${h.number}</strong></td>
@@ -493,7 +645,7 @@ const App = {
                 <td>${h.client.name || 'Sin cliente'}</td>
                 <td>${h.date || 'N/A'}</td>
                 <td>${fmtDate} ${dueBadge}</td>
-                <td><strong>${h.currencySymbol} ${h.totals.grandTotal.toLocaleString('es-CL', { minimumFractionDigits: 2 })}</strong></td>
+                <td><strong>${h.currencySymbol} ${fmtTotal}</strong></td>
                 <td><span class="status-pill ${h.status}">${h.status}</span></td>
                 <td>
                     <button type="button" class="btn btn-xs btn-secondary" onclick="App.reloadDocumentFromHistory('${h.number}')" title="Cargar en editor">
@@ -502,8 +654,8 @@ const App = {
                     <button type="button" class="btn btn-xs btn-outline" onclick="App.duplicateDocument('${h.number}')" title="Duplicar">
                         <i class="fa-solid fa-copy"></i>
                     </button>
-                    <button type="button" class="btn btn-xs btn-primary" onclick="App.exportHistoryPDF('${h.number}')" title="PDF">
-                        <i class="fa-solid fa-file-pdf"></i>
+                    <button type="button" class="btn btn-xs ${pdfClass}" onclick="App.exportHistoryPDF('${h.number}')" title="${pdfTitle}">
+                        <i class="fa-solid ${pdfIcon}"></i>
                     </button>
                     <button type="button" class="btn btn-xs btn-ghost" onclick="App.deleteHistoryItem('${h.number}')">
                         <i class="fa-solid fa-trash"></i>
@@ -646,3 +798,14 @@ const App = {
         showToast('Abriendo cliente de correo...', 'info');
     }
 };
+
+// Safe Initialization after App definition
+const initAppModule = () => {
+    App.init();
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAppModule);
+} else {
+    initAppModule();
+}

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Emitia Pro - Plataforma comercial de cotizaciones, presupuestos y facturas en PDF. Diseños profesionales y cálculo automático.">
+    <meta name="description"
+        content="Emitia Pro - Plataforma comercial de cotizaciones, presupuestos y facturas en PDF. Diseños profesionales y cálculo automático.">
     <title>Emitia Pro | Sistema de Facturación y Cotizaciones</title>
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -12,7 +14,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- html2pdf library for client-side PDF export -->
@@ -24,6 +28,7 @@
     <link rel="stylesheet" href="css/document.css">
     <link rel="stylesheet" href="css/print.css">
 </head>
+
 <body>
     <div id="app" class="app-layout">
         <!-- Top Navigation Header -->
@@ -44,21 +49,21 @@
                     <i class="fa-solid fa-file-signature"></i>
                     <span>Creador</span>
                 </button>
-                <button class="nav-tab" id="tab-btn-dashboard" data-tab="dashboard">
+                <button class="nav-tab tab-locked" id="tab-btn-dashboard" data-tab="dashboard">
                     <i class="fa-solid fa-chart-pie"></i>
-                    <span>Dashboard</span>
+                    <span>Dashboard 🔒</span>
                 </button>
-                <button class="nav-tab" id="tab-btn-clients" data-tab="clients">
+                <button class="nav-tab tab-locked" id="tab-btn-clients" data-tab="clients">
                     <i class="fa-solid fa-users"></i>
-                    <span>Clientes</span>
+                    <span>Clientes 🔒</span>
                 </button>
-                <button class="nav-tab" id="tab-btn-catalog" data-tab="catalog">
+                <button class="nav-tab tab-locked" id="tab-btn-catalog" data-tab="catalog">
                     <i class="fa-solid fa-box-archive"></i>
-                    <span>Servicios</span>
+                    <span>Servicios 🔒</span>
                 </button>
-                <button class="nav-tab" id="tab-btn-history" data-tab="history">
+                <button class="nav-tab tab-locked" id="tab-btn-history" data-tab="history">
                     <i class="fa-solid fa-clock-rotate-left"></i>
-                    <span>Historial</span>
+                    <span>Historial 🔒</span>
                     <span class="badge-count" id="history-count">0</span>
                 </button>
             </nav>
@@ -66,7 +71,8 @@
             <!-- Quick Action Toolbar -->
             <div class="header-actions">
                 <span id="user-plan-badge" class="badge-plan badge-plan--pro">PLAN PRO</span>
-                <button type="button" class="btn btn-outline btn-sm" id="btn-show-pricing" title="Ver Planes de Suscripción">
+                <button type="button" class="btn btn-outline btn-sm" id="btn-show-pricing"
+                    title="Ver Planes de Suscripción">
                     <i class="fa-solid fa-gem font-accent"></i>
                     <span class="btn-text">Planes</span>
                 </button>
@@ -74,17 +80,9 @@
                     <i class="fa-solid fa-user"></i>
                     <span class="btn-text">Iniciar Sesión</span>
                 </button>
-                <button type="button" class="btn btn-secondary btn-sm" id="btn-sample-data" title="Llenar con datos de prueba">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    <span class="btn-text">Ejemplo</span>
-                </button>
-                <button type="button" class="btn btn-outline btn-sm" id="btn-save-draft" title="Guardar borrador en memoria">
-                    <i class="fa-solid fa-floppy-disk"></i>
-                    <span class="btn-text">Guardar</span>
-                </button>
-                <button type="button" class="btn btn-primary btn-sm" id="btn-export-pdf" title="Descargar en PDF">
-                    <i class="fa-solid fa-file-pdf"></i>
-                    <span class="btn-text">PDF</span>
+                <button type="button" class="icon-btn" id="btn-force-reload" title="Forzar Actualización de la App"
+                    onclick="if('caches' in window){caches.keys().then(names=>{for(let n of names)caches.delete(n);});} window.location.reload(true);">
+                    <i class="fa-solid fa-arrows-rotate"></i>
                 </button>
                 <button type="button" class="icon-btn" id="btn-theme-toggle" title="Cambiar Tema Oscuro/Claro">
                     <i class="fa-solid fa-moon" id="theme-icon"></i>
@@ -183,20 +181,29 @@
                     <div class="control-group">
                         <label for="doc-language"><i class="fa-solid fa-globe"></i> Idioma Doc:</label>
                         <select id="doc-language" class="form-select">
-                            <option value="es">Español</option>
-                            <option value="en">English</option>
-                            <option value="pt">Português</option>
+                            <option value="es">Español 🇪🇸</option>
+                            <option value="en">English 🇺🇸</option>
+                            <option value="pt">Português 🇧🇷</option>
+                            <option value="fr">Français 🇫🇷</option>
+                            <option value="de">Deutsch 🇩🇪</option>
+                            <option value="it">Italiano 🇮🇹</option>
+                            <option value="zh">中文 (Chinese) 🇨🇳</option>
                         </select>
                     </div>
 
                     <div class="control-group">
                         <label><i class="fa-solid fa-droplet"></i> Color Acento:</label>
                         <div class="color-picker-group">
-                            <button type="button" class="color-dot active" data-color="#4f46e5" style="background-color: #4f46e5;" title="Índigo"></button>
-                            <button type="button" class="color-dot" data-color="#0284c7" style="background-color: #0284c7;" title="Azul Océano"></button>
-                            <button type="button" class="color-dot" data-color="#059669" style="background-color: #059669;" title="Esmeralda"></button>
-                            <button type="button" class="color-dot" data-color="#7c3aed" style="background-color: #7c3aed;" title="Violeta"></button>
-                            <button type="button" class="color-dot" data-color="#ea580c" style="background-color: #ea580c;" title="Naranja Sunset"></button>
+                            <button type="button" class="color-dot active" data-color="#4f46e5"
+                                style="background-color: #4f46e5;" title="Índigo"></button>
+                            <button type="button" class="color-dot" data-color="#0284c7"
+                                style="background-color: #0284c7;" title="Azul Océano"></button>
+                            <button type="button" class="color-dot" data-color="#059669"
+                                style="background-color: #059669;" title="Esmeralda"></button>
+                            <button type="button" class="color-dot" data-color="#7c3aed"
+                                style="background-color: #7c3aed;" title="Violeta"></button>
+                            <button type="button" class="color-dot" data-color="#ea580c"
+                                style="background-color: #ea580c;" title="Naranja Sunset"></button>
                             <input type="color" id="custom-accent-color" value="#4f46e5" title="Color personalizado">
                         </div>
                     </div>
@@ -209,7 +216,7 @@
                 </div>
 
                 <!-- Two-Column Workspace Layout -->
-                <div class="workspace-grid">
+                <div class="workspace-grid" id="workspace-grid">
                     <!-- Left Column: Interactive Form Editor -->
                     <div class="editor-pane" id="editor-pane">
                         <form id="invoice-form" onsubmit="event.preventDefault();">
@@ -221,7 +228,8 @@
                                 <div class="card-box-body grid-2">
                                     <div class="form-group">
                                         <label for="input-doc-number">Número / Folio</label>
-                                        <input type="text" id="input-doc-number" class="form-input" value="COT-2026-001" placeholder="Ej: COT-001">
+                                        <input type="text" id="input-doc-number" class="form-input" value="COT-2026-001"
+                                            placeholder="Ej: COT-001">
                                     </div>
                                     <div class="form-group">
                                         <label for="input-doc-status">Estado</label>
@@ -250,7 +258,8 @@
                                 </div>
                                 <div class="card-box-body">
                                     <div class="logo-upload-zone" id="logo-dropzone">
-                                        <input type="file" id="input-logo-file" accept="image/*" class="file-input-hidden">
+                                        <input type="file" id="input-logo-file" accept="image/*"
+                                            class="file-input-hidden">
                                         <div class="logo-preview-wrapper" id="logo-preview-wrapper">
                                             <img id="logo-preview-img" src="" alt="Logo" class="hidden">
                                             <div class="logo-placeholder" id="logo-placeholder">
@@ -258,30 +267,37 @@
                                                 <span>Subir Logotipo (PNG/JPG/SVG)</span>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn btn-xs btn-ghost hidden" id="btn-remove-logo"><i class="fa-solid fa-trash"></i> Eliminar Logo</button>
+                                        <button type="button" class="btn btn-xs btn-ghost hidden"
+                                            id="btn-remove-logo"><i class="fa-solid fa-trash"></i> Eliminar
+                                            Logo</button>
                                     </div>
 
                                     <div class="grid-2 margin-top-12">
                                         <div class="form-group">
                                             <label for="input-emitter-name">Nombre Comercial / Empresa *</label>
-                                            <input type="text" id="input-emitter-name" class="form-input" placeholder="Ej: Nexus Digital Studio" required>
+                                            <input type="text" id="input-emitter-name" class="form-input"
+                                                placeholder="Ej: Nexus Digital Studio" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="input-emitter-taxid">Identificación Fiscal (RUT/NIF/RFC)</label>
-                                            <input type="text" id="input-emitter-taxid" class="form-input" placeholder="Ej: 123456789-0">
+                                            <input type="text" id="input-emitter-taxid" class="form-input"
+                                                placeholder="Ej: 123456789-0">
                                         </div>
                                         <div class="form-group">
                                             <label for="input-emitter-email">Correo Electrónico</label>
-                                            <input type="email" id="input-emitter-email" class="form-input" placeholder="contacto@nexusstudio.com">
+                                            <input type="email" id="input-emitter-email" class="form-input"
+                                                placeholder="contacto@nexusstudio.com">
                                         </div>
                                         <div class="form-group">
                                             <label for="input-emitter-phone">Teléfono / WhatsApp</label>
-                                            <input type="text" id="input-emitter-phone" class="form-input" placeholder="+56 9 1234 5678">
+                                            <input type="text" id="input-emitter-phone" class="form-input"
+                                                placeholder="+56 9 1234 5678">
                                         </div>
                                     </div>
                                     <div class="form-group margin-top-8">
                                         <label for="input-emitter-address">Dirección Fiscal / Ciudad</label>
-                                        <input type="text" id="input-emitter-address" class="form-input" placeholder="Av. Providencia 1234, Of 502, Santiago">
+                                        <input type="text" id="input-emitter-address" class="form-input"
+                                            placeholder="Av. Providencia 1234, Of 502, Santiago">
                                     </div>
                                 </div>
                             </div>
@@ -302,23 +318,28 @@
                                 <div class="card-box-body grid-2">
                                     <div class="form-group">
                                         <label for="input-client-name">Nombre / Razon Social *</label>
-                                        <input type="text" id="input-client-name" class="form-input" placeholder="Ej: Innova Tech Corp" required>
+                                        <input type="text" id="input-client-name" class="form-input"
+                                            placeholder="Ej: Innova Tech Corp" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="input-client-taxid">Identificación Fiscal / RUT</label>
-                                        <input type="text" id="input-client-taxid" class="form-input" placeholder="Ej: 76.543.210-K">
+                                        <input type="text" id="input-client-taxid" class="form-input"
+                                            placeholder="Ej: 76.543.210-K">
                                     </div>
                                     <div class="form-group">
                                         <label for="input-client-email">Correo Electrónico</label>
-                                        <input type="email" id="input-client-email" class="form-input" placeholder="facturacion@innovatech.com">
+                                        <input type="email" id="input-client-email" class="form-input"
+                                            placeholder="facturacion@innovatech.com">
                                     </div>
                                     <div class="form-group">
                                         <label for="input-client-phone">Teléfono de Contacto</label>
-                                        <input type="text" id="input-client-phone" class="form-input" placeholder="+56 9 8765 4321">
+                                        <input type="text" id="input-client-phone" class="form-input"
+                                            placeholder="+56 9 8765 4321">
                                     </div>
                                     <div class="form-group full-width">
                                         <label for="input-client-address">Dirección de Envío / Facturación</label>
-                                        <input type="text" id="input-client-address" class="form-input" placeholder="Las Condes 500, Santiago">
+                                        <input type="text" id="input-client-address" class="form-input"
+                                            placeholder="Las Condes 500, Santiago">
                                     </div>
                                 </div>
                             </div>
@@ -358,21 +379,39 @@
 
                             <!-- Section: Tax & Totals Breakdown Settings -->
                             <div class="card-box">
-                                <div class="card-box-header">
+                                <div class="card-box-header space-between">
                                     <h3><i class="fa-solid fa-calculator"></i> Ajustes de Impuestos y Descuentos</h3>
+                                    <label class="toggle-switch-btn">
+                                        <input type="checkbox" id="toggle-show-amount-words" checked>
+                                        <span class="toggle-label"><i class="fa-solid fa-eye"></i> Monto en
+                                            Letras</span>
+                                    </label>
                                 </div>
-                                <div class="card-box-body grid-3">
+                                <div class="card-box-body grid-2">
                                     <div class="form-group">
-                                        <label for="input-tax-rate">Impuesto / IVA (%)</label>
+                                        <label for="select-tax-preset">Tipo de Impuesto / Retención</label>
+                                        <select id="select-tax-preset" class="form-select">
+                                            <option value="iva_19">IVA 19% (Chile / Colombia)</option>
+                                            <option value="ret_1375">Retención Honorarios 13.75% (Chile)</option>
+                                            <option value="iva_16">IVA 16% (México)</option>
+                                            <option value="iva_21">IVA 21% (España / Argentina)</option>
+                                            <option value="exempt">Exento de Impuestos (0%)</option>
+                                            <option value="custom">Porcentaje Personalizado (%)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-tax-rate">Tasa de Impuesto (%)</label>
                                         <div class="input-suffix">
-                                            <input type="number" id="input-tax-rate" class="form-input" value="19" min="0" max="100" step="0.1">
+                                            <input type="number" id="input-tax-rate" class="form-input" value="19"
+                                                min="0" max="100" step="0.01">
                                             <span>%</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="input-discount-val">Descuento Global</label>
                                         <div class="input-group-row">
-                                            <input type="number" id="input-discount-val" class="form-input" value="0" min="0" step="0.1">
+                                            <input type="number" id="input-discount-val" class="form-input" value="0"
+                                                min="0" step="0.1">
                                             <select id="input-discount-type" class="form-select-compact">
                                                 <option value="percent">%</option>
                                                 <option value="fixed">Fijo</option>
@@ -381,7 +420,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="input-shipping-fee">Gastos Envío / Adicionales</label>
-                                        <input type="number" id="input-shipping-fee" class="form-input" value="0" min="0" step="1">
+                                        <input type="number" id="input-shipping-fee" class="form-input" value="0"
+                                            min="0" step="1">
                                     </div>
                                 </div>
                             </div>
@@ -394,29 +434,39 @@
                                 <div class="card-box-body">
                                     <div class="form-group">
                                         <label for="input-qr-url">URL / Enlace de Pago</label>
-                                        <input type="text" id="input-qr-url" class="form-input" placeholder="https://paypal.me/tuusuario  o  https://yape.pe/tuusuario  o  IBAN/datos bancarios">
-                                        <small style="color: var(--text-muted); margin-top: 4px; display: block;"><i class="fa-solid fa-circle-info"></i> El QR aparecerá automáticamente en el documento junto a los datos bancarios.</small>
+                                        <input type="text" id="input-qr-url" class="form-input"
+                                            placeholder="https://paypal.me/tuusuario  o  https://yape.pe/tuusuario  o  IBAN/datos bancarios">
+                                        <small style="color: var(--text-muted); margin-top: 4px; display: block;"><i
+                                                class="fa-solid fa-circle-info"></i> El QR aparecerá automáticamente en
+                                            el documento junto a los datos bancarios.</small>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Section: Notes, Payment Info & Terms -->
                             <div class="card-box">
-                                <div class="card-box-header">
+                                <div class="card-box-header space-between">
                                     <h3><i class="fa-solid fa-file-contract"></i> Términos, Datos Bancarios y Notas</h3>
+                                    <label class="toggle-switch-btn">
+                                        <input type="checkbox" id="toggle-show-bank-terms" checked>
+                                        <span class="toggle-label"><i class="fa-solid fa-eye"></i> Mostrar en PDF</span>
+                                    </label>
                                 </div>
                                 <div class="card-box-body grid-2">
                                     <div class="form-group">
                                         <label for="input-bank-details">Datos Bancarios para Transferencia</label>
-                                        <textarea id="input-bank-details" class="form-textarea" rows="3" placeholder="Banco: Banco Estado&#10;Tipo: Cuenta Corriente N° 12345678&#10;Titular: Nexus Digital Studio LTDA"></textarea>
+                                        <textarea id="input-bank-details" class="form-textarea" rows="3"
+                                            placeholder="Banco: Banco Estado&#10;Tipo: Cuenta Corriente N° 12345678&#10;Titular: Nexus Digital Studio LTDA"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="input-terms-conditions">Condiciones y Términos de Entrega</label>
-                                        <textarea id="input-terms-conditions" class="form-textarea" rows="3" placeholder="Cotización válida por 15 días.&#10;50% de anticipo al iniciar y 50% al finalizar entrega."></textarea>
+                                        <textarea id="input-terms-conditions" class="form-textarea" rows="3"
+                                            placeholder="Cotización válida por 15 días.&#10;50% de anticipo al iniciar y 50% al finalizar entrega."></textarea>
                                     </div>
                                     <div class="form-group full-width">
                                         <label for="input-custom-notes">Nota Adicional / Agradecimiento</label>
-                                        <input type="text" id="input-custom-notes" class="form-input" placeholder="¡Gracias por confiar en nuestros servicios!">
+                                        <input type="text" id="input-custom-notes" class="form-input"
+                                            placeholder="¡Gracias por confiar en nuestros servicios!">
                                     </div>
                                 </div>
                             </div>
@@ -425,7 +475,12 @@
                             <div class="card-box">
                                 <div class="card-box-header space-between">
                                     <h3><i class="fa-solid fa-pen-nib"></i> Firma Digital del Emisor</h3>
-                                    <div class="header-tools">
+                                    <div class="header-tools" style="display:flex; align-items:center; gap:12px;">
+                                        <label class="toggle-switch-btn">
+                                            <input type="checkbox" id="toggle-show-signature" checked>
+                                            <span class="toggle-label"><i class="fa-solid fa-eye"></i> Mostrar en
+                                                PDF</span>
+                                        </label>
                                         <button type="button" class="btn btn-xs btn-ghost" id="btn-clear-signature">
                                             <i class="fa-solid fa-eraser"></i> Limpiar
                                         </button>
@@ -434,15 +489,43 @@
                                 <div class="card-box-body">
                                     <div class="signature-canvas-wrapper">
                                         <canvas id="signature-canvas" width="560" height="120"></canvas>
-                                        <div class="signature-hint" id="signature-hint"><i class="fa-solid fa-pen-nib"></i> Dibuja tu firma aquí</div>
+                                        <div class="signature-hint" id="signature-hint"><i
+                                                class="fa-solid fa-pen-nib"></i> Dibuja tu firma aquí</div>
                                     </div>
                                     <div class="form-group" style="margin-top:10px;">
                                         <label for="input-signer-name">Nombre del Firmante</label>
-                                        <input type="text" id="input-signer-name" class="form-input" placeholder="Ej: Juan García — Representante Legal">
+                                        <input type="text" id="input-signer-name" class="form-input"
+                                            placeholder="Ej: Juan García — Representante Legal">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Attachments & Document Files (Feature 15) -->
+                            <div class="card-box">
+                                <div class="card-box-header">
+                                    <h3><i class="fa-solid fa-paperclip"></i> Archivos y Documentos Anexos</h3>
+                                </div>
+                                <div class="card-box-body">
+                                    <div class="attachments-upload-zone">
+                                        <input type="file" id="input-attachment-files" multiple accept="image/*,.pdf,.doc,.docx,.zip" class="file-input-hidden">
+                                        <button type="button" class="btn btn-sm btn-outline" id="btn-trigger-attachment">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i> Adjuntar Archivos / Documentos
+                                        </button>
+                                        <small style="color: var(--text-muted); margin-top: 6px; display: block;">
+                                            <i class="fa-solid fa-circle-info"></i> Los nombres de los documentos adjuntos figurarán en el pie del PDF.
+                                        </small>
+                                    </div>
+                                    <div id="attachments-list-container" class="attachments-list margin-top-12">
+                                        <!-- Dynamic attachment list items inserted by JS -->
                                     </div>
                                 </div>
                             </div>
                         </form>
+                    </div>
+
+                    <!-- Interactive Resizer Divider Handle -->
+                    <div class="resizer-handle" id="resizer-handle" title="Arrastrar para ajustar ancho de paneles">
+                        <div class="resizer-line"></div>
                     </div>
 
                     <!-- Right Column: Live Document Render Canvas -->
@@ -452,13 +535,24 @@
                                 <i class="fa-solid fa-eye"></i> Vista Previa en Tiempo Real
                             </div>
                             <div class="preview-actions">
-                                <button type="button" class="btn btn-xs btn-ghost" id="btn-export-csv" title="Exportar a CSV">
+                                <button type="button" class="btn btn-xs btn-ghost" id="btn-sample-data"
+                                    title="Llenar con datos de prueba">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i> Ejemplo
+                                </button>
+                                <button type="button" class="btn btn-xs btn-outline" id="btn-save-draft"
+                                    title="Guardar borrador en memoria">
+                                    <i class="fa-solid fa-floppy-disk"></i> Guardar
+                                </button>
+                                <button type="button" class="btn btn-xs btn-ghost" id="btn-export-csv"
+                                    title="Exportar a CSV">
                                     <i class="fa-solid fa-file-csv"></i> CSV
                                 </button>
-                                <button type="button" class="btn btn-xs btn-ghost" id="btn-send-email" title="Enviar por email">
+                                <button type="button" class="btn btn-xs btn-ghost" id="btn-send-email"
+                                    title="Enviar por email">
                                     <i class="fa-solid fa-envelope"></i> Email
                                 </button>
-                                <button type="button" class="btn btn-xs btn-ghost" id="btn-zoom-fit" title="Ajustar vista">
+                                <button type="button" class="btn btn-xs btn-ghost" id="btn-zoom-fit"
+                                    title="Ajustar vista">
                                     <i class="fa-solid fa-expand"></i>
                                 </button>
                                 <button type="button" class="btn btn-xs btn-primary" id="btn-print-direct">
@@ -483,7 +577,8 @@
                     <div class="section-header-row">
                         <div>
                             <h2><i class="fa-solid fa-chart-pie"></i> Dashboard de Estadísticas</h2>
-                            <p class="section-desc">Resumen visual de tus ventas, clientes top y documentos pendientes.</p>
+                            <p class="section-desc">Resumen visual de tus ventas, clientes top y documentos pendientes.
+                            </p>
                         </div>
                     </div>
                     <div class="dashboard-stats-row" id="dashboard-stats-row">
@@ -491,21 +586,31 @@
                     </div>
                     <div class="dashboard-grid">
                         <div class="card-box dashboard-chart-card">
-                            <div class="card-box-header"><h3><i class="fa-solid fa-chart-bar"></i> Ingresos últimos 6 meses</h3></div>
-                            <div class="card-box-body"><canvas id="chart-revenue" width="600" height="280"></canvas></div>
+                            <div class="card-box-header">
+                                <h3><i class="fa-solid fa-chart-bar"></i> Ingresos últimos 6 meses</h3>
+                            </div>
+                            <div class="card-box-body"><canvas id="chart-revenue" width="600" height="280"></canvas>
+                            </div>
                         </div>
                         <div class="card-box dashboard-chart-card">
-                            <div class="card-box-header"><h3><i class="fa-solid fa-chart-pie"></i> Estado de Documentos</h3></div>
-                            <div class="card-box-body"><canvas id="chart-status" width="280" height="280"></canvas></div>
+                            <div class="card-box-header">
+                                <h3><i class="fa-solid fa-chart-pie"></i> Estado de Documentos</h3>
+                            </div>
+                            <div class="card-box-body"><canvas id="chart-status" width="280" height="280"></canvas>
+                            </div>
                         </div>
                     </div>
                     <div class="dashboard-grid">
                         <div class="card-box">
-                            <div class="card-box-header"><h3><i class="fa-solid fa-trophy"></i> Top 5 Clientes</h3></div>
+                            <div class="card-box-header">
+                                <h3><i class="fa-solid fa-trophy"></i> Top 5 Clientes</h3>
+                            </div>
                             <div class="card-box-body" id="dashboard-top-clients"><!-- Dynamic --></div>
                         </div>
                         <div class="card-box">
-                            <div class="card-box-header"><h3><i class="fa-solid fa-bell"></i> Documentos por Vencer</h3></div>
+                            <div class="card-box-header">
+                                <h3><i class="fa-solid fa-bell"></i> Documentos por Vencer</h3>
+                            </div>
                             <div class="card-box-body" id="dashboard-due-soon"><!-- Dynamic --></div>
                         </div>
                     </div>
@@ -518,7 +623,8 @@
                     <div class="section-header-row">
                         <div>
                             <h2><i class="fa-solid fa-address-book"></i> Directorio de Clientes</h2>
-                            <p class="section-desc">Guarda la información de tus clientes habituales para generar cotizaciones en 1 segundo.</p>
+                            <p class="section-desc">Guarda la información de tus clientes habituales para generar
+                                cotizaciones en 1 segundo.</p>
                         </div>
                         <button type="button" class="btn btn-primary" id="btn-new-client-modal">
                             <i class="fa-solid fa-user-plus"></i> Nuevo Cliente
@@ -528,7 +634,8 @@
                     <div class="search-filter-bar">
                         <div class="search-input-wrap">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" id="search-client-input" class="form-input" placeholder="Buscar cliente por nombre, RUT o email...">
+                            <input type="text" id="search-client-input" class="form-input"
+                                placeholder="Buscar cliente por nombre, RUT o email...">
                         </div>
                     </div>
 
@@ -544,7 +651,8 @@
                     <div class="section-header-row">
                         <div>
                             <h2><i class="fa-solid fa-boxes-stacked"></i> Catálogo de Servicios y Productos</h2>
-                            <p class="section-desc">Mantén un inventario de tus tarifas y servicios para añadirlos a tus facturas sin reescribir.</p>
+                            <p class="section-desc">Mantén un inventario de tus tarifas y servicios para añadirlos a tus
+                                facturas sin reescribir.</p>
                         </div>
                         <button type="button" class="btn btn-primary" id="btn-new-catalog-item-modal">
                             <i class="fa-solid fa-plus"></i> Nuevo Servicio
@@ -554,7 +662,8 @@
                     <div class="search-filter-bar">
                         <div class="search-input-wrap">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" id="search-catalog-input" class="form-input" placeholder="Buscar servicio o concepto...">
+                            <input type="text" id="search-catalog-input" class="form-input"
+                                placeholder="Buscar servicio o concepto...">
                         </div>
                     </div>
 
@@ -581,7 +690,8 @@
                     <div class="section-header-row">
                         <div>
                             <h2><i class="fa-solid fa-clock-rotate-left"></i> Historial de Documentos</h2>
-                            <p class="section-desc">Revisa, edita, duplica o vuelve a descargar tus cotizaciones y facturas guardadas.</p>
+                            <p class="section-desc">Revisa, edita, duplica o vuelve a descargar tus cotizaciones y
+                                facturas guardadas.</p>
                         </div>
                         <div class="flex-gap-8">
                             <button type="button" class="btn btn-outline" id="btn-export-backup">
@@ -676,7 +786,8 @@
                     <input type="hidden" id="modal-catalog-id">
                     <div class="form-group">
                         <label for="modal-catalog-name">Descripción del Servicio / Producto *</label>
-                        <input type="text" id="modal-catalog-name" class="form-input" required placeholder="Ej: Diseño de Logotipo Corporativo">
+                        <input type="text" id="modal-catalog-name" class="form-input" required
+                            placeholder="Ej: Diseño de Logotipo Corporativo">
                     </div>
                     <div class="form-group margin-top-8">
                         <label for="modal-catalog-price">Precio Unitario Sugerido *</label>
@@ -705,7 +816,8 @@
                 </div>
                 <div class="modal-footer margin-top-16">
                     <button type="button" class="btn btn-ghost" data-close="modal-select-catalog">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="btn-insert-selected-catalog">Insertar Seleccionados</button>
+                    <button type="button" class="btn btn-primary" id="btn-insert-selected-catalog">Insertar
+                        Seleccionados</button>
                 </div>
             </div>
         </div>
@@ -748,11 +860,13 @@
                     <input type="hidden" id="modal-auth-is-register" value="false">
                     <div class="form-group">
                         <label for="modal-auth-email">Correo Electrónico *</label>
-                        <input type="email" id="modal-auth-email" class="form-input" placeholder="tu@empresa.com" required>
+                        <input type="email" id="modal-auth-email" class="form-input" placeholder="tu@empresa.com"
+                            required>
                     </div>
                     <div class="form-group margin-top-8">
                         <label for="modal-auth-password">Contraseña *</label>
-                        <input type="password" id="modal-auth-password" class="form-input" placeholder="••••••••" required minlength="6">
+                        <input type="password" id="modal-auth-password" class="form-input" placeholder="••••••••"
+                            required minlength="6">
                     </div>
                     <button type="submit" class="btn btn-primary btn-full margin-top-16" id="modal-auth-submit">
                         Ingresar a Emitia Pro
@@ -766,7 +880,8 @@
                 </button>
 
                 <div class="text-center margin-top-16">
-                    <button type="button" class="btn-link" id="btn-toggle-auth-mode">¿No tienes cuenta? Regístrate aquí</button>
+                    <button type="button" class="btn-link" id="btn-toggle-auth-mode">¿No tienes cuenta? Regístrate
+                        aquí</button>
                 </div>
             </div>
         </div>
@@ -786,10 +901,13 @@
                     <span id="modal-account-plan" class="badge-plan badge-plan--pro">PLAN PRO ACTIVO</span>
                 </div>
                 <div class="account-features-list margin-top-16">
-                    <div><i class="fa-solid fa-check text-success"></i> Documentos ilimitados</div>
+                    <div><i class="fa-solid fa-check text-success"></i> Documentos e Historial ilimitados</div>
                     <div><i class="fa-solid fa-check text-success"></i> Respaldo automático en la nube</div>
                     <div><i class="fa-solid fa-check text-success"></i> Acceso a las 8 plantillas y marcas de agua</div>
                 </div>
+                <button type="button" class="btn btn-primary btn-full margin-top-16" id="btn-account-upgrade-pro">
+                    <i class="fa-solid fa-bolt"></i> Actualizar a PLAN PRO ($9.990 CLP/mes)
+                </button>
                 <div class="modal-footer margin-top-20" style="justify-content: center;">
                     <button type="button" class="btn btn-danger-outline" id="btn-auth-logout">
                         <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
@@ -801,51 +919,61 @@
 
     <!-- MODAL: PRICING / PLANES DE SUSCRIPCIÓN SAAS -->
     <div class="modal-backdrop hidden" id="modal-pricing">
-        <div class="modal-card" style="max-width: 720px;">
+        <div class="modal-card" style="max-width: 760px;">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-gem font-accent"></i> Planes de Suscripción Emitia Pro</h3>
                 <button type="button" class="modal-close" data-close="modal-pricing">&times;</button>
             </div>
             <div class="modal-body">
-                <p class="modal-desc text-center">Elige el plan ideal para automatizar las finanzas de tu negocio:</p>
+                <p class="modal-desc text-center">Elige el plan ideal para automatizar la facturación de tu empresa:</p>
                 <div class="pricing-grid margin-top-16">
                     <!-- PLAN GRATIS -->
                     <div class="pricing-card">
                         <div class="pricing-header">
-                            <h4>Plan Gratuito</h4>
+                            <h4>Plan Creador Gratuito</h4>
                             <div class="pricing-price">$ 0 <span>/ mes</span></div>
-                            <p class="pricing-sub">Para probar la plataforma</p>
+                            <p class="pricing-sub">Solo acceso al Creador</p>
                         </div>
                         <ul class="pricing-features">
-                            <li><i class="fa-solid fa-check text-success"></i> Hasta 3 facturas/mes</li>
-                            <li><i class="fa-solid fa-check text-success"></i> 2 plantillas básicas</li>
-                            <li class="disabled"><i class="fa-solid fa-xmark"></i> Descarga a PDF e impresión</li>
-                            <li class="disabled"><i class="fa-solid fa-xmark"></i> Dashboard avanzado</li>
-                            <li class="disabled"><i class="fa-solid fa-xmark"></i> Multi-idioma (EN/PT)</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Creador de Documentos A4</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Plantilla Moderna Neoglass</li>
+                            <li class="disabled"><i class="fa-solid fa-lock"></i> Pestañas Dashboard, Clientes 🔒</li>
+                            <li class="disabled"><i class="fa-solid fa-lock"></i> 8 Plantillas Premium 🔒</li>
+                            <li class="disabled"><i class="fa-solid fa-lock"></i> Multi-idioma (EN, PT, FR...) 🔒</li>
                         </ul>
-                        <button type="button" class="btn btn-outline btn-full margin-top-16" id="btn-select-free">Usar Plan Gratuito</button>
+                        <button type="button" class="btn btn-outline btn-full margin-top-16" id="btn-select-free">
+                            Continuar con Plan Gratuito
+                        </button>
                     </div>
 
                     <!-- PLAN PRO MENSUAL -->
                     <div class="pricing-card pricing-card--featured">
-                        <div class="pricing-badge">RECOMENDADO</div>
+                        <div class="pricing-badge">MÁS POPULAR</div>
                         <div class="pricing-header">
-                            <h4>Plan PRO Mensual</h4>
+                            <h4>Plan PRO Ilimitado</h4>
                             <div class="pricing-price">$ 9.990 <span>CLP / mes</span></div>
                             <p class="pricing-sub">o $9.99 USD / mes para empresas</p>
                         </div>
                         <ul class="pricing-features">
-                            <li><i class="fa-solid fa-check text-success"></i> Facturas e Historial ILIMITADOS</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Documentos e Historial ILIMITADOS</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Acceso total a Dashboard de Ventas</li>
                             <li><i class="fa-solid fa-check text-success"></i> Las 8 plantillas profesionales</li>
-                            <li><i class="fa-solid fa-check text-success"></i> Dashboard de ventas y gráficos</li>
-                            <li><i class="fa-solid fa-check text-success"></i> Marcas de agua y QR de pago</li>
-                            <li><i class="fa-solid fa-check text-success"></i> Multi-idioma (ES / EN / PT)</li>
-                            <li><i class="fa-solid fa-check text-success"></i> Respaldo JSON y Exportación CSV</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Cobertura total en 7 Idiomas</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Retención 13.75%, Fotos y Anexos</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Respaldo Cloud (Firebase) & Exportación CSV</li>
                         </ul>
                         <button type="button" class="btn btn-primary btn-full margin-top-16" id="btn-subscribe-pro">
-                            <i class="fa-solid fa-bolt"></i> Activar Plan PRO Mensual
+                            <i class="fa-solid fa-bolt"></i> Suscribirse y Activar PLAN PRO
                         </button>
                     </div>
+                </div>
+
+                <!-- PAYMENT GATEWAYS BADGE FOOTER -->
+                <div class="modal-footer margin-top-16" style="justify-content: center; gap: 16px; font-size: 0.8rem; color: var(--text-muted);">
+                    <span><i class="fa-solid fa-shield-halved text-success"></i> Pagos Seguros SSL</span>
+                    <span><i class="fa-solid fa-bolt" style="color:#0ea5e9;"></i> Flow.cl & Webpay</span>
+                    <span><i class="fa-solid fa-wallet" style="color:#009ee3;"></i> Mercado Pago</span>
+                    <span><i class="fa-brands fa-stripe" style="color:#635bff;"></i> Stripe & PayPal</span>
                 </div>
             </div>
         </div>
@@ -857,27 +985,31 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <!-- JavaScript Scripts -->
-    <script src="js/storage.js"></script>
-    <script src="js/i18n.js"></script>
-    <script src="js/templates.js"></script>
-    <script src="js/editor.js"></script>
-    <script src="js/export.js"></script>
-    <script src="js/dashboard.js"></script>
-    <script src="js/auth-subscription.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/storage.js?v=18"></script>
+    <script src="js/i18n.js?v=18"></script>
+    <script src="js/templates.js?v=18"></script>
+    <script src="js/editor.js?v=18"></script>
+    <script src="js/export.js?v=18"></script>
+    <script src="js/dashboard.js?v=18"></script>
+    <script src="js/cloud-sync.js?v=18"></script>
+    <script src="js/auth-subscription.js?v=18"></script>
+    <script src="js/app.js?v=18"></script>
 
-    <!-- PWA Service Worker Registration -->
+    <!-- PWA Service Worker Cleanup & Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(registrations => {
                 for (let registration of registrations) {
-                    registration.update();
+                    registration.unregister();
                 }
             });
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js?v=2').catch(() => {});
-            });
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    for (let name of names) caches.delete(name);
+                });
+            }
         }
     </script>
 </body>
+
 </html>
