@@ -4,18 +4,10 @@
 
 const ExportModule = {
     exportToPDF(docData) {
-        if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
-            if (typeof showToast === 'function') {
-                showToast('🔒 La descarga a PDF es exclusiva del PLAN PRO. ¡Suscríbete para descargar tus documentos!', 'error');
-            }
-            if (AuthSubscription.showPricingModal) AuthSubscription.showPricingModal();
-            return;
-        }
-
         const element = document.getElementById('document-paper');
         if (!element) return;
 
-        const filename = `${docData.docType}_${docData.number || '001'}_${docData.client.name ? docData.client.name.replace(/[^a-zA-Z0-9]/g, '_') : 'Cliente'}.pdf`;
+        const filename = `${docData.docType}_${docData.number || '001'}_${docData.client && docData.client.name ? docData.client.name.replace(/[^a-zA-Z0-9]/g, '_') : 'Cliente'}.pdf`;
 
         if (typeof html2pdf !== 'undefined') {
             if (typeof showToast === 'function') {
@@ -44,13 +36,6 @@ const ExportModule = {
     },
 
     printDocument() {
-        if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
-            if (typeof showToast === 'function') {
-                showToast('🔒 La impresión de documentos es exclusiva del PLAN PRO. ¡Suscríbete para imprimir!', 'error');
-            }
-            if (AuthSubscription.showPricingModal) AuthSubscription.showPricingModal();
-            return;
-        }
         window.print();
     }
 };

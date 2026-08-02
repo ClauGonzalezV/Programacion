@@ -14,6 +14,7 @@ const AuthSubscription = {
     },
 
     currentUser: null,
+    pendingPaymentAfterAuth: false,
     userPlan: { isPro: false, planName: 'PLAN GRATUITO', expiresAt: null },
     adminEmails: ['gonzalezclaudioxdxd@gmail.com'],
 
@@ -135,8 +136,19 @@ const AuthSubscription = {
         const btnSubscribePro = document.getElementById('btn-subscribe-pro');
         if (btnSubscribePro) {
             btnSubscribePro.addEventListener('click', () => {
+                if (!this.currentUser) {
+                    this.pendingPaymentAfterAuth = true;
+                    this.closeModal('modal-pricing');
+                    if (typeof showToast === 'function') {
+                        showToast('🔒 Debes iniciar sesión o registrarte primero para realizar el pago del PLAN PRO.', 'warning');
+                    }
+                    this.showLoginModal();
+                    return;
+                }
                 this.closeModal('modal-pricing');
-                if (typeof PaymentsModule !== 'undefined' && PaymentsModule.payWithWebpay) {
+                if (typeof PaymentsModule !== 'undefined' && PaymentsModule.showPaymentModal) {
+                    PaymentsModule.showPaymentModal();
+                } else if (typeof PaymentsModule !== 'undefined' && PaymentsModule.payWithWebpay) {
                     PaymentsModule.payWithWebpay();
                 } else {
                     window.open("https://www.flow.cl/uri/tWKV0dM6v", "_blank");
@@ -152,6 +164,15 @@ const AuthSubscription = {
         const btnAccountUpgrade = document.getElementById('btn-account-upgrade-pro');
         if (btnAccountUpgrade) {
             btnAccountUpgrade.addEventListener('click', () => {
+                if (!this.currentUser) {
+                    this.pendingPaymentAfterAuth = true;
+                    this.closeModal('modal-account');
+                    if (typeof showToast === 'function') {
+                        showToast('🔒 Debes iniciar sesión o registrarte primero para realizar el pago del PLAN PRO.', 'warning');
+                    }
+                    this.showLoginModal();
+                    return;
+                }
                 this.closeModal('modal-account');
                 if (typeof PaymentsModule !== 'undefined' && PaymentsModule.showPaymentModal) {
                     PaymentsModule.showPaymentModal();
@@ -201,6 +222,18 @@ const AuthSubscription = {
                 showToast(`💎 ¡Plan PRO Activado! Contratado el ${now.toLocaleDateString()} — Válido hasta el ${expiresAtIso}.`, 'success');
             }
         } else {
+            const today = new Date().toISOString().split('T')[0];
+            const hasActivePro = this.userPlan && this.userPlan.isPro && (this.isAdminUser() || !this.userPlan.expiresAt || today <= this.userPlan.expiresAt);
+
+            if (hasActivePro) {
+                this.closeModal('modal-pricing');
+                if (typeof showToast === 'function') {
+                    const expMsg = this.isAdminUser() ? 'Acceso Administrador Ilimitado' : `Válido hasta el ${this.userPlan.expiresAt}`;
+                    showToast(`💎 Tu PLAN PRO se encuentra activo (${expMsg}). Mantendrás todos tus beneficios PRO hasta la fecha de vencimiento.`, 'info');
+                }
+                return;
+            }
+
             this.userPlan = {
                 isPro: false,
                 planName: 'PLAN GRATUITO',
@@ -274,6 +307,22 @@ const AuthSubscription = {
         }
     },
 
+    checkPendingPaymentAfterAuth() {
+        if (this.pendingPaymentAfterAuth && this.currentUser) {
+            this.pendingPaymentAfterAuth = false;
+            setTimeout(() => {
+                if (typeof showToast === 'function') {
+                    showToast('✅ ¡Sesión iniciada con éxito! Redirigiendo a las opciones de pago...', 'success');
+                }
+                if (typeof PaymentsModule !== 'undefined' && PaymentsModule.showPaymentModal) {
+                    PaymentsModule.showPaymentModal();
+                } else {
+                    this.showPricingModal();
+                }
+            }, 500);
+        }
+    },
+
     signUpWithEmail(email, password) {
         if (!this.isDemoConfig() && typeof firebase !== 'undefined' && firebase.auth) {
             firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -283,6 +332,7 @@ const AuthSubscription = {
                     this.saveUserProfileToCloud(cred.user);
                     showToast(`¡Cuenta registrada con éxito en Firebase! Bienvenido/a ${cred.user.email}`, 'success');
                     this.closeModal('modal-auth');
+                    this.checkPendingPaymentAfterAuth();
                 })
                 .catch(err => {
                     let msg = err.message;
@@ -300,6 +350,7 @@ const AuthSubscription = {
             this.setPlan('free');
             showToast(`¡Cuenta creada con éxito! Estás en el Plan Gratuito.`, 'success');
             this.closeModal('modal-auth');
+            this.checkPendingPaymentAfterAuth();
         }
     },
 
@@ -311,6 +362,7 @@ const AuthSubscription = {
                     this.loadUserData(cred.user);
                     showToast(`Sesión iniciada correctamente como ${cred.user.email}`, 'success');
                     this.closeModal('modal-auth');
+                    this.checkPendingPaymentAfterAuth();
                 })
                 .catch(err => {
                     let msg = err.message;
@@ -327,6 +379,7 @@ const AuthSubscription = {
             this.applyPlanRestrictions();
             showToast(`Sesión iniciada correctamente`, 'success');
             this.closeModal('modal-auth');
+            this.checkPendingPaymentAfterAuth();
         }
     },
 
@@ -339,6 +392,7 @@ const AuthSubscription = {
                     this.loadUserData(result.user);
                     showToast(`Bienvenido/a ${result.user.displayName}`, 'success');
                     this.closeModal('modal-auth');
+                    this.checkPendingPaymentAfterAuth();
                 })
                 .catch(err => {
                     showToast(`Error con Google Auth: ${err.message}`, 'error');
@@ -351,6 +405,7 @@ const AuthSubscription = {
             this.applyPlanRestrictions();
             showToast(`Sesión iniciada con Google`, 'success');
             this.closeModal('modal-auth');
+            this.checkPendingPaymentAfterAuth();
         }
     },
 
@@ -446,7 +501,8 @@ const AuthSubscription = {
 
         if (btnAuth) {
             if (this.currentUser) {
-                btnAuth.innerHTML = `<i class="fa-solid fa-circle-user" style="color:#10b981;"></i> <span>${this.currentUser.displayName || this.currentUser.email.split('@')[0]}</span>`;
+                const uName = this.currentUser.username || this.currentUser.displayName || this.currentUser.email.split('@')[0];
+                btnAuth.innerHTML = `<i class="fa-solid fa-circle-user" style="color:#10b981;"></i> <span>${uName}</span>`;
                 btnAuth.classList.remove('btn-outline');
                 btnAuth.classList.add('btn-secondary');
             } else {
@@ -473,29 +529,17 @@ const AuthSubscription = {
 
     applyPlanRestrictions() {
         try {
-            // 1. Templates Restriction (2 basic for Free, 8 for PRO)
+            // 1. Templates Available (15 templates live preview supported)
             const templateSelect = document.getElementById('doc-template');
             if (templateSelect && templateSelect.options) {
-                const proTemplates = ['dark', 'classic', 'minimal', 'colorful', 'corporate', 'neon'];
+                const currentVal = templateSelect.value;
                 Array.from(templateSelect.options).forEach(opt => {
-                    if (proTemplates.includes(opt.value)) {
-                        if (this.userPlan.isPro) {
-                            opt.disabled = false;
-                            opt.textContent = opt.textContent.replace(' 🔒 (Plan PRO)', '');
-                        } else {
-                            opt.disabled = true;
-                            if (!opt.textContent.includes('🔒')) {
-                                opt.textContent += ' 🔒 (Plan PRO)';
-                            }
-                        }
+                    opt.disabled = false;
+                    if (opt.textContent.includes('🔒') || /[\u{1F300}-\u{1F9FF}]/gu.test(opt.textContent)) {
+                        opt.textContent = opt.textContent.replace(' 🔒 (Plan PRO)', '').replace(/[\u{1F300}-\u{1F9FF}]/gu, '').trim();
                     }
                 });
-                if (!this.userPlan.isPro && proTemplates.includes(templateSelect.value)) {
-                    templateSelect.value = 'modern';
-                    if (typeof EditorModule !== 'undefined' && EditorModule.recalculateAndRender) {
-                        EditorModule.recalculateAndRender();
-                    }
-                }
+                if (currentVal) templateSelect.value = currentVal;
             }
 
             // 2. Multi-Language Restriction (Spanish only for Free, EN/PT/etc for PRO)
@@ -547,19 +591,12 @@ const AuthSubscription = {
             });
 
             // 4. PDF and Print Buttons Lock Indicator
-            const btnExportPdf = document.getElementById('btn-export-pdf');
             const btnPrintDirect = document.getElementById('btn-print-direct');
 
-            if (btnExportPdf) {
-                const btnText = btnExportPdf.querySelector('.btn-text');
-                if (btnText) {
-                    btnText.textContent = this.userPlan.isPro ? 'PDF' : 'PDF 🔒';
-                }
-            }
             if (btnPrintDirect) {
                 btnPrintDirect.innerHTML = this.userPlan.isPro 
                     ? '<i class="fa-solid fa-print"></i> Imprimir / PDF'
-                    : '<i class="fa-solid fa-lock"></i> Imprimir / PDF';
+                    : '<i class="fa-solid fa-lock"></i> Imprimir / PDF 🔒';
             }
 
             // 5. Watermark Control Restriction
@@ -592,32 +629,27 @@ const AuthSubscription = {
             const emailElem = document.getElementById('modal-account-email');
             if (emailElem) emailElem.textContent = this.currentUser ? this.currentUser.email : 'usuario@emitia.pro';
 
-            const planBadge = document.getElementById('modal-account-plan');
-            if (planBadge) {
-                planBadge.textContent = this.userPlan.planName;
-                planBadge.className = this.userPlan.isPro ? 'badge-plan badge-plan--pro' : 'badge-plan badge-plan--free';
-            }
-            const btnUpgrade = document.getElementById('btn-account-upgrade-pro');
-            if (btnUpgrade) {
-                btnUpgrade.style.display = this.userPlan.isPro ? 'none' : 'inline-flex';
+            const userDisplayName = (this.currentUser && (this.currentUser.username || this.currentUser.displayName)) 
+                ? (this.currentUser.username || this.currentUser.displayName) 
+                : (this.currentUser ? this.currentUser.email.split('@')[0] : 'usuario');
+
+            const nameView = document.getElementById('modal-account-display-name-view');
+            if (nameView) nameView.textContent = userDisplayName;
+
+            const usernameInput = document.getElementById('modal-account-input-username');
+            if (usernameInput) usernameInput.value = userDisplayName;
+
+            const avatarInitials = document.getElementById('modal-account-avatar-initials');
+            if (avatarInitials) {
+                avatarInitials.textContent = userDisplayName.substring(0, 2).toUpperCase();
             }
 
-            // Update Subscription Expiration Date UI
-            const expElem = document.getElementById('modal-account-exp-date');
-            if (expElem) {
-                if (this.isAdminUser()) {
-                    expElem.textContent = 'Sin vencimiento (Admin Infinito)';
-                    expElem.style.color = '#10b981';
-                } else if (this.userPlan.isPro && this.userPlan.expiresAt) {
-                    expElem.textContent = `${this.userPlan.expiresAt} (Mensual)`;
-                    expElem.style.color = '#6366f1';
-                } else {
-                    expElem.textContent = 'Sin suscripción activa';
-                    expElem.style.color = '#94a3b8';
-                }
+            const feedback = document.getElementById('username-feedback');
+            if (feedback) {
+                feedback.textContent = '💡 Tu nombre de usuario identifica tu cuenta y figurará en la aplicación.';
+                feedback.style.color = '#64748b';
             }
 
-            // Show Admin Panel button ONLY if user is gonzalezclaudioxdxd@gmail.com
             const btnAdmin = document.getElementById('btn-open-admin-panel');
             if (btnAdmin) {
                 btnAdmin.style.display = this.isAdminUser() ? 'inline-flex' : 'none';
@@ -625,6 +657,155 @@ const AuthSubscription = {
 
             modal.classList.remove('hidden');
         }
+    },
+
+    async saveUsernameProfile() {
+        const input = document.getElementById('modal-account-input-username');
+        const feedback = document.getElementById('username-feedback');
+        if (!input) return;
+
+        let rawVal = input.value.trim().replace(/^@/, '');
+        const username = rawVal.replace(/[^a-zA-Z0-9_]/g, '');
+
+        if (!username || username.length < 3) {
+            if (typeof showToast === 'function') {
+                showToast('⚠️ El nombre de usuario debe tener al menos 3 caracteres (letras, números y guiones bajos).', 'warning');
+            }
+            if (feedback) {
+                feedback.textContent = '❌ Mínimo 3 caracteres (solo letras, números o _).';
+                feedback.style.color = '#ef4444';
+            }
+            input.style.borderColor = '#ef4444';
+            return;
+        }
+
+        const usernameLower = username.toLowerCase();
+        const oldUsername = (this.currentUser && this.currentUser.username) ? this.currentUser.username : null;
+        const oldUsernameLower = oldUsername ? oldUsername.toLowerCase() : null;
+        const currentUid = this.currentUser ? (this.currentUser.uid || this.currentUser.email) : 'guest';
+
+        // If the username hasn't changed, simply inform the user
+        if (oldUsernameLower && oldUsernameLower === usernameLower) {
+            if (typeof showToast === 'function') showToast('ℹ️ El nombre de usuario no ha cambiado.', 'info');
+            return;
+        }
+
+        if (typeof showToast === 'function') showToast('Verificando disponibilidad de usuario...', 'info');
+
+        let isTaken = false;
+        let isCloudAvailable = false;
+
+        // 1. Check availability in Firestore cloud database
+        if (typeof firebase !== 'undefined' && firebase.firestore) {
+            try {
+                const db = firebase.firestore();
+                const snap = await db.collection('usernames').doc(usernameLower).get();
+                if (snap.exists) {
+                    const data = snap.data();
+                    if (data && data.uid && data.uid !== currentUid) {
+                        isTaken = true;
+                    }
+                }
+                isCloudAvailable = true;
+            } catch (e) {
+                console.log('Error checking username in Firestore:', e);
+            }
+        }
+
+        // 2. Check availability in local registry as well
+        const registryKey = 'emitia_registered_usernames';
+        const registry = JSON.parse(localStorage.getItem(registryKey) || '{}');
+        if (registry[usernameLower] && registry[usernameLower] !== currentUid) {
+            isTaken = true;
+        }
+
+        if (isTaken) {
+            if (typeof showToast === 'function') {
+                showToast(`⚠️ El nombre de usuario '${username}' ya se encuentra registrado por otro usuario. Por favor elige otro.`, 'error');
+            }
+            if (feedback) {
+                feedback.textContent = `❌ '${username}' ya está registrado por otro usuario. Elige un nombre distinto.`;
+                feedback.style.color = '#ef4444';
+            }
+            input.style.borderColor = '#ef4444';
+            return;
+        }
+
+        // 3. Clean up previous username entries in local registry
+        for (const key in registry) {
+            if (registry[key] === currentUid && key !== usernameLower) {
+                delete registry[key];
+            }
+        }
+        registry[usernameLower] = currentUid;
+        localStorage.setItem(registryKey, JSON.stringify(registry));
+
+        if (this.currentUser) {
+            this.currentUser.username = username;
+            this.currentUser.displayName = username;
+
+            const savedDemo = localStorage.getItem('emitia_demo_user');
+            if (savedDemo) {
+                try {
+                    const parsed = JSON.parse(savedDemo);
+                    parsed.username = username;
+                    parsed.displayName = username;
+                    localStorage.setItem('emitia_demo_user', JSON.stringify(parsed));
+                } catch (e) {}
+            }
+        }
+
+        // 4. Update Firestore: Delete old username document and save only current username document
+        if (isCloudAvailable && typeof firebase !== 'undefined' && firebase.firestore && this.currentUser && this.currentUser.uid) {
+            try {
+                const db = firebase.firestore();
+
+                // Delete previous username doc if changed
+                if (oldUsernameLower && oldUsernameLower !== usernameLower) {
+                    await db.collection('usernames').doc(oldUsernameLower).delete().catch(e => console.log('Old username delete info:', e));
+                }
+
+                // Delete any old orphaned username docs for this UID to keep usernames collection 1:1 clean
+                try {
+                    const userOldDocs = await db.collection('usernames').where('uid', '==', this.currentUser.uid).get();
+                    userOldDocs.forEach(async (doc) => {
+                        if (doc.id !== usernameLower) {
+                            await doc.ref.delete().catch(() => {});
+                        }
+                    });
+                } catch (e) {}
+
+                // Save new username doc
+                await db.collection('usernames').doc(usernameLower).set({
+                    username: username,
+                    uid: this.currentUser.uid,
+                    email: this.currentUser.email || '',
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Update user document
+                await db.collection('users').doc(this.currentUser.uid).set({
+                    username: username,
+                    displayName: username
+                }, { merge: true });
+            } catch (err) {
+                console.log('Error updating username in cloud:', err);
+            }
+        }
+
+        input.style.borderColor = '#10b981';
+        if (feedback) {
+            feedback.textContent = `✅ ¡Nombre de usuario '${username}' actualizado y guardado con éxito!`;
+            feedback.style.color = '#10b981';
+        }
+        if (typeof showToast === 'function') {
+            showToast(`✅ ¡Nombre de usuario '${username}' actualizado con éxito!`, 'success');
+        }
+
+        const nameView = document.getElementById('modal-account-display-name-view');
+        if (nameView) nameView.textContent = username;
+
+        this.updateUI();
     },
 
     showPricingModal() {
@@ -657,12 +838,12 @@ const AuthSubscription = {
         if (isRegisterInput.value === 'true') {
             isRegisterInput.value = 'false';
             title.innerHTML = '<i class="fa-solid fa-right-to-bracket" style="color: #818cf8;"></i> Iniciar Sesión';
-            submitBtn.textContent = 'Ingresar a Emitia Pro';
+            submitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> <span>Ingresar a Emitia Pro</span>';
             toggleBtn.textContent = '¿No tienes cuenta? Regístrate aquí';
         } else {
             isRegisterInput.value = 'true';
             title.innerHTML = '<i class="fa-solid fa-user-plus" style="color: #818cf8;"></i> Crear Cuenta Pro';
-            submitBtn.textContent = 'Registrarse Gratis';
+            submitBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> <span>Registrarse Gratis</span>';
             toggleBtn.textContent = '¿Ya tienes cuenta? Inicia sesión aquí';
         }
     },

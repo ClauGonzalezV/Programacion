@@ -89,6 +89,33 @@ const EditorModule = {
             }
         });
 
+        // Template Selector explicit change listener & Chip Buttons sync
+        const templateSelect = document.getElementById('doc-template');
+        const syncTemplateState = (tmplVal) => {
+            if (templateSelect) templateSelect.value = tmplVal;
+            const paperContainer = document.getElementById('document-paper');
+            if (paperContainer) {
+                paperContainer.className = `document-paper template-${tmplVal}`;
+            }
+            document.querySelectorAll('.chip-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.template === tmplVal);
+            });
+            this.recalculateAndRender();
+        };
+
+        if (templateSelect) {
+            templateSelect.addEventListener('change', (e) => {
+                syncTemplateState(e.target.value);
+            });
+        }
+
+        document.querySelectorAll('.chip-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const tmpl = e.target.dataset.template;
+                if (tmpl) syncTemplateState(tmpl);
+            });
+        });
+
         // Currency change symbol update
         document.getElementById('doc-currency').addEventListener('change', (e) => {
             const opt = e.target.options[e.target.selectedIndex];

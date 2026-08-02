@@ -1,6 +1,6 @@
 /* ==========================================================================
    TEMPLATES ENGINE - AUTO-PAGINATING DOCUMENT RENDERER v3.0
-   Supports: Multi-page, Watermark, i18n, 8 templates
+   Supports: Multi-page, Watermark, i18n, 15 templates
    ========================================================================== */
 
 const TemplatesEngine = {

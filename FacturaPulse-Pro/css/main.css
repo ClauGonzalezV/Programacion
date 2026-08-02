@@ -546,6 +546,59 @@ body {
     color: var(--text-secondary);
 }
 
+.template-chips-bar {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.chips-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+}
+
+.chips-scroll {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+}
+
+.chip-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.chip-btn:hover {
+    background: rgba(79, 70, 229, 0.2);
+    border-color: #6366f1;
+    color: #ffffff;
+}
+
+.chip-btn.active {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    border-color: #6366f1;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+}
+
 .paper-container-wrapper {
     flex: 1;
     display: flex;
@@ -1751,4 +1804,92 @@ body {
     .doc-totals-table {
         font-size: 0.8rem;
     }
+}
+
+/* ==========================================================================
+   AUTH MODAL DESIGN FIXES & GLASSMORPHISM
+   ========================================================================== */
+.auth-card-glass {
+    max-width: 440px !important;
+    width: 92% !important;
+    border-radius: 24px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: rgba(15, 23, 42, 0.92) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.25) !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+.custom-auth-input {
+    height: 48px !important;
+    font-size: 0.92rem !important;
+    border-radius: 12px !important;
+    background: rgba(30, 41, 59, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    transition: all 0.2s ease !important;
+}
+
+.custom-auth-input:focus {
+    border-color: #818cf8 !important;
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.25) !important;
+    outline: none !important;
+}
+
+.custom-auth-input::placeholder {
+    color: #64748b !important;
+}
+
+#modal-auth-submit {
+    margin-top: 24px !important;
+    min-height: 48px !important;
+    height: 48px !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    border-radius: 14px !important;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #9333ea 100%) !important;
+    box-shadow: 0 8px 25px -4px rgba(99, 102, 241, 0.5) !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    white-space: nowrap !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+#modal-auth-submit:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 30px -4px rgba(99, 102, 241, 0.6) !important;
+}
+
+#btn-auth-google {
+    min-height: 48px !important;
+    height: 48px !important;
+    border-radius: 14px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    font-size: 0.92rem !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+}
+
+#btn-auth-google:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
 }

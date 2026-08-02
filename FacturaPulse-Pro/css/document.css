@@ -889,3 +889,325 @@
     border-bottom-color: #00ff88;
 }
 
+/* ==========================================================================
+   9. TEMPLATE: NORDIC SLATE & ICE 🏔️
+   ========================================================================== */
+.template-nordic .doc-page {
+    background: #f8fafc !important;
+    color: #1e293b !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+.template-nordic .doc-page .doc-header-grid {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+    padding: 20px !important;
+    border-radius: 12px !important;
+    border-bottom: none !important;
+    margin-bottom: 20px !important;
+}
+.template-nordic .doc-page .doc-emitter-name,
+.template-nordic .doc-page .doc-emitter-sub,
+.template-nordic .doc-page .doc-number {
+    color: #ffffff !important;
+}
+.template-nordic .doc-page .doc-type-title {
+    color: #38bdf8 !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.12em !important;
+}
+.template-nordic .doc-page .doc-parties-grid {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 10px !important;
+}
+.template-nordic .doc-page .party-title {
+    color: #0284c7 !important;
+}
+.template-nordic .doc-page .doc-table th {
+    background-color: #334155 !important;
+    color: #ffffff !important;
+}
+.template-nordic .doc-page .doc-totals-table tr.grand-total td {
+    color: #0284c7 !important;
+}
+
+/* ==========================================================================
+   10. TEMPLATE: EMERALD LUXURY 💎
+   ========================================================================== */
+.template-emerald .doc-page {
+    background: #ffffff !important;
+    color: #064e3b !important;
+    font-family: 'Georgia', serif !important;
+    border: 2px solid #047857 !important;
+}
+.template-emerald .doc-page .doc-header-grid {
+    background: linear-gradient(135deg, #064e3b 0%, #047857 100%) !important;
+    padding: 20px !important;
+    border-radius: 10px !important;
+    border-bottom: 4px solid #d97706 !important;
+    margin-bottom: 20px !important;
+}
+.template-emerald .doc-page .doc-emitter-name,
+.template-emerald .doc-page .doc-emitter-sub,
+.template-emerald .doc-page .doc-number {
+    color: #ffffff !important;
+}
+.template-emerald .doc-page .doc-type-title {
+    color: #fef3c7 !important;
+    font-family: 'Georgia', serif !important;
+    letter-spacing: 0.1em !important;
+}
+.template-emerald .doc-page .doc-parties-grid {
+    background: #f0fdf4 !important;
+    border: 1px solid #6ee7b7 !important;
+}
+.template-emerald .doc-page .party-title {
+    color: #d97706 !important;
+}
+.template-emerald .doc-page .party-name {
+    color: #064e3b !important;
+}
+.template-emerald .doc-page .doc-table th {
+    background-color: #065f46 !important;
+    color: #fef3c7 !important;
+    font-family: 'Georgia', serif !important;
+}
+.template-emerald .doc-page .doc-totals-table tr.grand-total td {
+    color: #065f46 !important;
+}
+
+/* ==========================================================================
+   11. TEMPLATE: CYBER VIOLET & NEON 🔮
+   ========================================================================== */
+.template-cyber .doc-page {
+    background: #090d16 !important;
+    color: #f3e8ff !important;
+    border: 1px solid #a855f7 !important;
+}
+.template-cyber .doc-page .doc-header-grid {
+    background: linear-gradient(135deg, #2e1065 0%, #581c87 100%) !important;
+    padding: 20px !important;
+    border-radius: 12px !important;
+    border: 1px solid #c084fc !important;
+    margin-bottom: 20px !important;
+}
+.template-cyber .doc-page .doc-emitter-name,
+.template-cyber .doc-page .doc-number {
+    color: #ffffff !important;
+}
+.template-cyber .doc-page .doc-emitter-sub {
+    color: #e9d5ff !important;
+}
+.template-cyber .doc-page .doc-type-title {
+    color: #f0abfc !important;
+    text-shadow: 0 0 15px rgba(240, 171, 252, 0.6) !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+}
+.template-cyber .doc-page .doc-parties-grid,
+.template-cyber .doc-page .note-box {
+    background: #140e24 !important;
+    border: 1px solid #a855f7 !important;
+}
+.template-cyber .doc-page .party-title {
+    color: #f0abfc !important;
+}
+.template-cyber .doc-page .party-name,
+.template-cyber .doc-page .party-detail,
+.template-cyber .doc-page .doc-meta-item,
+.template-cyber .doc-page .doc-meta-item span,
+.template-cyber .doc-page .doc-totals-table td.label,
+.template-cyber .doc-page .doc-totals-table td.val,
+.template-cyber .doc-page .doc-footer-logo-text,
+.template-cyber .doc-page .doc-footer-contact {
+    color: #e9d5ff !important;
+}
+.template-cyber .doc-page .doc-table th {
+    background: linear-gradient(90deg, #581c87, #7e22ce) !important;
+    color: #f0abfc !important;
+}
+.template-cyber .doc-page .doc-table td {
+    border-bottom: 1px solid #3b0764 !important;
+    color: #e9d5ff !important;
+}
+.template-cyber .doc-page .doc-totals-table tr.grand-total td {
+    color: #f0abfc !important;
+    text-shadow: 0 0 12px rgba(240, 171, 252, 0.6) !important;
+}
+
+/* ==========================================================================
+   12. TEMPLATE: SUNSET GRADIENT PRO 🌅
+   ========================================================================== */
+.template-sunset .doc-page {
+    background: #ffffff !important;
+    color: #1e293b !important;
+}
+.template-sunset .doc-page .doc-header-grid {
+    background: linear-gradient(135deg, #ea580c 0%, #db2777 50%, #9333ea 100%) !important;
+    padding: 22px !important;
+    border-radius: 14px !important;
+    border-bottom: none !important;
+    margin-bottom: 20px !important;
+}
+.template-sunset .doc-page .doc-emitter-name,
+.template-sunset .doc-page .doc-emitter-sub,
+.template-sunset .doc-page .doc-number {
+    color: #ffffff !important;
+}
+.template-sunset .doc-page .doc-type-title {
+    color: #ffffff !important;
+    font-weight: 900 !important;
+}
+.template-sunset .doc-page .doc-parties-grid {
+    background: #fff7ed !important;
+    border: 1px solid #fdba74 !important;
+    border-radius: 10px !important;
+}
+.template-sunset .doc-page .party-title {
+    color: #ea580c !important;
+}
+.template-sunset .doc-page .doc-table th {
+    background: linear-gradient(90deg, #ea580c, #db2777) !important;
+    color: #ffffff !important;
+}
+.template-sunset .doc-page .doc-totals-table tr.grand-total td {
+    color: #db2777 !important;
+}
+
+/* ==========================================================================
+   13. TEMPLATE: ARCHITECT BLUEPRINT 📐
+   ========================================================================== */
+.template-architect .doc-page {
+    background: #f0f9ff !important;
+    color: #0c4a6e !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    border: 2px dashed #0284c7 !important;
+}
+.template-architect .doc-page .doc-header-grid {
+    background: #0284c7 !important;
+    padding: 20px !important;
+    border-radius: 6px !important;
+    border-bottom: none !important;
+    margin-bottom: 20px !important;
+}
+.template-architect .doc-page .doc-emitter-name,
+.template-architect .doc-page .doc-emitter-sub,
+.template-architect .doc-page .doc-number {
+    color: #ffffff !important;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+.template-architect .doc-page .doc-type-title {
+    color: #ffffff !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 1.6rem !important;
+}
+.template-architect .doc-page .doc-parties-grid {
+    background: #e0f2fe !important;
+    border: 1px solid #0284c7 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+.template-architect .doc-page .party-title {
+    color: #0369a1 !important;
+}
+.template-architect .doc-page .doc-table th {
+    background-color: #0284c7 !important;
+    color: #ffffff !important;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+.template-architect .doc-page .doc-totals-table tr.grand-total td {
+    color: #0284c7 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* ==========================================================================
+   14. TEMPLATE: VINTAGE PARCHMENT 📜
+   ========================================================================== */
+.template-vintage .doc-page {
+    background: #fdfbf7 !important;
+    color: #381d09 !important;
+    font-family: 'Georgia', serif !important;
+    border: 4px double #78350f !important;
+    padding: 14mm 16mm !important;
+}
+.template-vintage .doc-page .doc-header-grid {
+    background: #78350f !important;
+    padding: 20px !important;
+    border-radius: 4px !important;
+    border-bottom: none !important;
+    margin-bottom: 20px !important;
+}
+.template-vintage .doc-page .doc-emitter-name,
+.template-vintage .doc-page .doc-emitter-sub,
+.template-vintage .doc-page .doc-number {
+    color: #fef3c7 !important;
+    font-family: 'Georgia', serif !important;
+}
+.template-vintage .doc-page .doc-type-title {
+    color: #fef3c7 !important;
+    font-family: 'Georgia', serif !important;
+    letter-spacing: 0.1em !important;
+}
+.template-vintage .doc-page .doc-parties-grid {
+    background: #fffbeb !important;
+    border: 1px solid #d97706 !important;
+}
+.template-vintage .doc-page .party-title {
+    color: #78350f !important;
+}
+.template-vintage .doc-page .party-name {
+    color: #381d09 !important;
+}
+.template-vintage .doc-page .doc-table th {
+    background-color: #78350f !important;
+    color: #fef3c7 !important;
+    font-family: 'Georgia', serif !important;
+}
+.template-vintage .doc-page .doc-totals-table tr.grand-total td {
+    color: #78350f !important;
+}
+
+/* ==========================================================================
+   15. TEMPLATE: BOLD IMPACT ⚡
+   ========================================================================== */
+.template-impact .doc-page {
+    background: #ffffff !important;
+    color: #0f172a !important;
+}
+.template-impact .doc-page .doc-header-grid {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%) !important;
+    color: #ffffff !important;
+    padding: 20px !important;
+    border-radius: 12px !important;
+    border-left: 6px solid #fbbf24 !important;
+    border-bottom: none !important;
+    margin-bottom: 20px !important;
+}
+.template-impact .doc-page .doc-emitter-name,
+.template-impact .doc-page .doc-number {
+    color: #ffffff !important;
+}
+.template-impact .doc-page .doc-emitter-sub {
+    color: #c7d2fe !important;
+}
+.template-impact .doc-page .doc-type-title {
+    color: #fbbf24 !important;
+    font-size: 1.8rem !important;
+    font-weight: 900 !important;
+}
+.template-impact .doc-page .doc-parties-grid {
+    background: #e0e7ff !important;
+    border: 2px solid #4338ca !important;
+}
+.template-impact .doc-page .party-title {
+    color: #312e81 !important;
+}
+.template-impact .doc-page .party-name {
+    color: #0f172a !important;
+}
+.template-impact .doc-page .doc-table th {
+    background-color: #1e1b4b !important;
+    color: #fbbf24 !important;
+}
+.template-impact .doc-page .doc-totals-table tr.grand-total td {
+    color: #1e1b4b !important;
+}
+
+

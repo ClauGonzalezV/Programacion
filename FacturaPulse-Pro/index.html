@@ -158,7 +158,7 @@
                     </div>
 
                     <div class="control-group">
-                        <label for="doc-template"><i class="fa-solid fa-palette"></i> Plantilla:</label>
+                        <label for="doc-template"><i class="fa-solid fa-palette"></i> Plantilla (15 Diseños PRO):</label>
                         <select id="doc-template" class="form-select">
                             <option value="modern">Moderna Neo-Glass</option>
                             <option value="executive">Ejecutiva Minimal</option>
@@ -168,6 +168,13 @@
                             <option value="colorful">Colorida Startup</option>
                             <option value="corporate">Corporativa Formal</option>
                             <option value="neon">Tech Neon</option>
+                            <option value="nordic">Nórdica Slate & Ice</option>
+                            <option value="emerald">Esmeralda Deluxe</option>
+                            <option value="cyber">Cyber Violet & Neon</option>
+                            <option value="sunset">Sunset Gradient Pro</option>
+                            <option value="architect">Arquitectura Blueprint</option>
+                            <option value="vintage">Pergamino Vintage</option>
+                            <option value="impact">Impacto Visual Bold</option>
                         </select>
                     </div>
 
@@ -559,9 +566,28 @@
                                     title="Ajustar vista">
                                     <i class="fa-solid fa-expand"></i>
                                 </button>
-                                <button type="button" class="btn btn-xs btn-primary" id="btn-print-direct">
-                                    <i class="fa-solid fa-print"></i> Imprimir / PDF
-                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quick Template Selector Chips Bar -->
+                        <div class="template-chips-bar" id="template-chips-bar">
+                            <span class="chips-label"><i class="fa-solid fa-palette"></i> Plantilla:</span>
+                            <div class="chips-scroll">
+                                <button type="button" class="chip-btn active" data-template="modern">Moderna</button>
+                                <button type="button" class="chip-btn" data-template="executive">Ejecutiva</button>
+                                <button type="button" class="chip-btn" data-template="dark">Dark</button>
+                                <button type="button" class="chip-btn" data-template="classic">Clásica</button>
+                                <button type="button" class="chip-btn" data-template="minimal">Minimalista</button>
+                                <button type="button" class="chip-btn" data-template="colorful">Colorida</button>
+                                <button type="button" class="chip-btn" data-template="corporate">Corporativa</button>
+                                <button type="button" class="chip-btn" data-template="neon">Tech Neon</button>
+                                <button type="button" class="chip-btn" data-template="nordic">Nórdica</button>
+                                <button type="button" class="chip-btn" data-template="emerald">Esmeralda</button>
+                                <button type="button" class="chip-btn" data-template="cyber">Cyber Violet</button>
+                                <button type="button" class="chip-btn" data-template="sunset">Sunset Gradient</button>
+                                <button type="button" class="chip-btn" data-template="architect">Arquitectura</button>
+                                <button type="button" class="chip-btn" data-template="vintage">Pergamino</button>
+                                <button type="button" class="chip-btn" data-template="impact">Impacto Bold</button>
                             </div>
                         </div>
 
@@ -894,8 +920,8 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-full margin-top-20" id="modal-auth-submit" style="height: 50px; font-size: 0.98rem; font-weight: 700; border-radius: 14px; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #9333ea 100%); box-shadow: 0 8px 25px -4px rgba(99, 102, 241, 0.5); border: none; cursor: pointer; transition: all 0.2s ease; width: 100%;">
-                        Ingresar a Emitia Pro
+                    <button type="submit" class="btn btn-primary btn-full" id="modal-auth-submit" style="margin-top: 24px !important; height: 48px; min-height: 48px; font-size: 0.95rem; font-weight: 700; border-radius: 14px; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #9333ea 100%); box-shadow: 0 8px 25px -4px rgba(99, 102, 241, 0.5); border: none; cursor: pointer; transition: all 0.2s ease; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;">
+                        <i class="fa-solid fa-right-to-bracket"></i> <span>Ingresar a Emitia Pro</span>
                     </button>
                 </form>
 
@@ -926,71 +952,64 @@
 
     <!-- MODAL: USER ACCOUNT PROFILE -->
     <div class="modal-backdrop hidden" id="modal-account">
-        <div class="modal-card" style="max-width: 440px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); overflow: hidden; background: #131722;">
-            <div class="modal-header" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(16, 185, 129, 0.1)); padding: 20px 24px; border-bottom: 1px solid rgba(255,255,255,0.08);">
-                <h3 style="font-size: 1.15rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px; margin: 0;">
-                    <i class="fa-solid fa-user-shield" style="color: #6366f1;"></i> Perfil de Cuenta
+        <div class="modal-card auth-card-glass" style="max-width: 440px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(24px) saturate(180%); box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.25); overflow: hidden; position: relative;">
+            <!-- Ambient Glow Effect -->
+            <div style="position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 240px; height: 160px; background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(16, 185, 129, 0.2) 70%, transparent 100%); filter: blur(40px); pointer-events: none;"></div>
+
+            <div class="modal-header" style="background: transparent; padding: 24px 28px 12px 28px; border-bottom: none; position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between;">
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-circle-user" style="color: #818cf8;"></i> Perfil de Cuenta
                 </h3>
-                <button type="button" class="modal-close" data-close="modal-account" style="color: #94a3b8; font-size: 1.5rem;">&times;</button>
+                <button type="button" class="modal-close" data-close="modal-account" style="color: #94a3b8; font-size: 1.5rem; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); border: none; cursor: pointer; transition: all 0.2s ease;">&times;</button>
             </div>
             
-            <div class="modal-body" style="padding: 24px;">
+            <div class="modal-body" style="padding: 12px 28px 28px 28px; position: relative; z-index: 2;">
                 <!-- User Avatar & Identity Header -->
                 <div class="text-center" style="margin-bottom: 20px;">
-                    <div style="width: 72px; height: 72px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #10b981); padding: 3px; box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);">
+                    <div style="width: 76px; height: 76px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #10b981); padding: 3px; box-shadow: 0 0 25px rgba(99, 102, 241, 0.45);">
                         <div style="width: 100%; height: 100%; border-radius: 50%; background: #0f172a; display: flex; align-items: center; justify-content: center;">
-                            <i class="fa-solid fa-user-large" style="font-size: 1.8rem; color: #a5b4fc;"></i>
+                            <span id="modal-account-avatar-initials" style="font-size: 1.6rem; font-weight: 800; color: #818cf8;">US</span>
                         </div>
                     </div>
                     
-                    <h4 id="modal-account-email" style="margin-top: 14px; margin-bottom: 6px; font-size: 1.05rem; font-weight: 600; color: #f8fafc; word-break: break-all;">
-                        usuario@empresa.com
+                    <h4 id="modal-account-display-name-view" style="margin-top: 12px; margin-bottom: 2px; font-size: 1.15rem; font-weight: 700; color: #ffffff;">
+                        usuario
                     </h4>
+                    <p id="modal-account-email" style="margin: 0 0 10px 0; font-size: 0.85rem; color: #94a3b8; word-break: break-all;">
+                        usuario@empresa.com
+                    </p>
 
-                    <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #10b981; background: rgba(16, 185, 129, 0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.25);">
+                    <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; color: #10b981; background: rgba(16, 185, 129, 0.1); padding: 4px 14px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.25);">
                         <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
                         Cloud Sync Activo
                     </div>
                 </div>
 
-                <!-- Plan Status Card -->
-                <div style="background: rgba(30, 41, 59, 0.7); border-radius: 14px; padding: 18px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.06);">
-                        <span style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Plan Actual</span>
-                        <span id="modal-account-plan" class="badge-plan badge-plan--free" style="padding: 4px 14px; font-size: 0.75rem; font-weight: 700; border-radius: 12px; letter-spacing: 0.5px;">PLAN GRATUITO</span>
-                    </div>
+                <!-- Username Selection Box -->
+                <div style="background: rgba(30, 41, 59, 0.75); border-radius: 16px; padding: 18px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; text-align: left;">
+                    <label for="modal-account-input-username" style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #a5b4fc; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                        <span><i class="fa-solid fa-user-pen" style="margin-right: 6px; color: #818cf8;"></i> Nombre de Usuario Único</span>
+                    </label>
 
-                    <div class="account-features-list" style="display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: #cbd5e1; text-align: left;">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>
-                            <span>Creador de Cotizaciones e Historial</span>
+                    <div style="display: flex; gap: 8px; margin-bottom: 6px;">
+                        <div style="position: relative; flex: 1;">
+                            <input type="text" id="modal-account-input-username" class="form-input custom-auth-input" placeholder="tu_usuario" style="padding-left: 14px; height: 42px; font-size: 0.9rem; border-radius: 10px; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff;">
                         </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>
-                            <span>Respaldo automático en Firebase</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <i class="fa-solid fa-gem" style="color: #6366f1;"></i>
-                            <span style="color: #a5b4fc; font-weight: 500;">Plan PRO activa Dashboard, Clientes y 8 Plantillas</span>
-                        </div>
+                        <button type="button" class="btn btn-primary" id="btn-save-username" onclick="AuthSubscription.saveUsernameProfile()" style="height: 42px; font-size: 0.85rem; font-weight: 700; border-radius: 10px; background: linear-gradient(135deg, #6366f1, #4f46e5); border: none; cursor: pointer; padding: 0 16px; white-space: nowrap;">
+                            <i class="fa-solid fa-floppy-disk"></i> Guardar
+                        </button>
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1); font-size: 0.8rem; color: #94a3b8;">
-                        <span>Vencimiento de Suscripción:</span>
-                        <strong id="modal-account-exp-date" style="color: #a5b4fc;">Ilimitado</strong>
+                    <div id="username-feedback" style="font-size: 0.76rem; color: #64748b; font-style: italic;">
+                        💡 Tu nombre de usuario identifica tu cuenta y figurará en la aplicación.
                     </div>
                 </div>
 
-                <!-- Upgrade Button -->
-                <button type="button" class="btn btn-primary btn-full" id="btn-account-upgrade-pro" style="padding: 12px 20px; font-size: 0.95rem; font-weight: 700; border-radius: 12px; background: linear-gradient(135deg, #6366f1, #4f46e5); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); transition: all 0.2s ease;">
-                    <i class="fa-solid fa-bolt" style="color: #facc15; margin-right: 6px;"></i> Actualizar a PLAN PRO ($9.990 CLP/mes)
-                </button>
-
-                <!-- Logout Action -->
-                <div style="margin-top: 16px; display:flex; flex-direction:column; gap:10px; text-align: center;">
-                    <button type="button" class="btn btn-outline" id="btn-open-admin-panel" style="width: 100%; border-radius: 12px; padding: 10px; border-color: var(--accent-color); color: var(--accent-color);" onclick="AuthSubscription.showAdminPanel()">
+                <!-- Action Buttons -->
+                <div style="display:flex; flex-direction:column; gap:10px; text-align: center;">
+                    <button type="button" class="btn btn-outline" id="btn-open-admin-panel" style="width: 100%; border-radius: 12px; padding: 11px; border-color: rgba(99, 102, 241, 0.4); color: #a5b4fc; background: rgba(99, 102, 241, 0.08);" onclick="AuthSubscription.showAdminPanel()">
                         <i class="fa-solid fa-screwdriver-wrench" style="margin-right: 6px;"></i> Panel Desarrollador & Pruebas
                     </button>
-                    <button type="button" class="btn btn-danger-outline" id="btn-auth-logout" style="width: 100%; border-radius: 12px; padding: 10px; border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; background: rgba(239, 68, 68, 0.05); font-weight: 600;">
+                    <button type="button" class="btn btn-danger-outline" id="btn-auth-logout" style="width: 100%; border-radius: 12px; padding: 11px; border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; background: rgba(239, 68, 68, 0.05); font-weight: 600;">
                         <i class="fa-solid fa-right-from-bracket" style="margin-right: 6px;"></i> Cerrar Sesión
                     </button>
                 </div>
@@ -1054,74 +1073,72 @@
                     <span><i class="fa-solid fa-shield-halved text-success"></i> Pagos Seguros SSL</span>
                     <span><i class="fa-solid fa-bolt" style="color:#0ea5e9;"></i> Flow.cl & Webpay</span>
                     <span><i class="fa-solid fa-wallet" style="color:#009ee3;"></i> Mercado Pago</span>
-                    <span><i class="fa-brands fa-stripe" style="color:#635bff;"></i> Stripe & PayPal</span>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- MODAL SELECTOR DE PASARELAS DE PAGO -->
-    <div id="modal-payment-gateways" class="modal-overlay hidden">
-        <div class="modal-card" style="max-width: 600px; padding: 24px;">
-            <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center;">
-                <h3 style="margin:0; font-size:1.3rem; color: var(--text-color);">
-                    <i class="fa-solid fa-credit-card font-accent"></i> Elige tu Método de Pago
-                </h3>
-                <button type="button" class="btn-modal-close" onclick="PaymentsModule.closePaymentModal()">&times;</button>
+    <div id="modal-payment-gateways" class="modal-backdrop hidden">
+        <div class="modal-card auth-card-glass" style="max-width: 540px; border-radius: 28px; border: 1px solid rgba(255, 255, 255, 0.12); background: linear-gradient(145deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.94) 100%); backdrop-filter: blur(28px) saturate(190%); box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.85), 0 0 50px rgba(99, 102, 241, 0.2); overflow: hidden; position: relative;">
+            
+            <!-- DECORATIVE GLOW ACCENTS -->
+            <div style="position: absolute; top: -60px; right: -60px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(0, 0, 0, 0) 70%); pointer-events: none;"></div>
+            <div style="position: absolute; bottom: -60px; left: -60px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(0, 158, 227, 0.2) 0%, rgba(0, 0, 0, 0) 70%); pointer-events: none;"></div>
+
+            <div class="modal-header" style="background: transparent; padding: 28px 32px 14px 32px; border-bottom: none; display: flex; align-items: flex-start; justify-content: space-between; position: relative; z-index: 2;">
+                <div>
+                    <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffffff; margin: 0 0 6px 0; display: flex; align-items: center; gap: 10px; letter-spacing: -0.3px;">
+                        <i class="fa-solid fa-credit-card" style="color: #6366f1; font-size: 1.3rem;"></i> Opciones de Pago PLAN PRO
+                    </h3>
+                    <p style="margin: 0; font-size: 0.83rem; color: #94a3b8; font-weight: 400;">
+                        Selecciona tu plataforma para activar tu membresía ilimitada:
+                    </p>
+                </div>
+                <button type="button" class="modal-close" onclick="PaymentsModule.closePaymentModal()" style="color: #94a3b8; font-size: 1.4rem; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); cursor: pointer; transition: all 0.2s ease;">&times;</button>
             </div>
-            <div class="modal-body margin-top-16">
-                <p style="color: var(--text-muted); margin-bottom: 20px; font-size:0.9rem;">
-                    Selecciona tu medio de pago preferido para activar tu suscripción <strong>PLAN PRO Ilimitado ($9.990 CLP / $9.99 USD)</strong>:
-                </p>
 
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <!-- Mercado Pago -->
-                    <button type="button" class="btn btn-outline" style="justify-content: space-between; padding: 14px 18px; border-color: #009ee3; background: rgba(0,158,227,0.05);" onclick="PaymentsModule.payWithMercadoPago()">
-                        <div style="display:flex; align-items:center; gap: 12px;">
-                            <i class="fa-solid fa-wallet" style="color: #009ee3; font-size: 1.4rem;"></i>
-                            <div style="text-align:left;">
-                                <strong style="display:block; color: var(--text-color);">Mercado Pago (Chile)</strong>
-                                <span style="font-size:0.8rem; color: var(--text-muted);">Débito, Crédito, CuentaRUT o Saldo CLP</span>
+            <div class="modal-body" style="padding: 10px 32px 32px 32px; position: relative; z-index: 2;">
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    
+                    <!-- Mercado Pago Card Option -->
+                    <button type="button" onclick="PaymentsModule.payWithMercadoPago()" class="payment-card-option" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(0, 158, 227, 0.35); border-radius: 20px; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); color: #ffffff; position: relative; overflow: hidden;" onmouseover="this.style.borderColor='#009ee3'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 25px -5px rgba(0, 158, 227, 0.35)'; this.style.background='rgba(30, 41, 59, 0.95)';" onmouseout="this.style.borderColor='rgba(0, 158, 227, 0.35)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='rgba(30, 41, 59, 0.7)';">
+                        <div style="display: flex; align-items: center; gap: 16px; text-align: left;">
+                            <div style="width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, rgba(0, 158, 227, 0.3) 0%, rgba(0, 158, 227, 0.1) 100%); border: 1px solid rgba(0, 158, 227, 0.4); display: flex; align-items: center; justify-content: center; color: #009ee3; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(0, 158, 227, 0.2);">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 800; font-size: 1.05rem; color: #ffffff; margin-bottom: 2px; display: flex; align-items: center; gap: 8px;">
+                                    Mercado Pago <i class="fa-solid fa-circle-check" style="color: #009ee3; font-size: 0.82rem;"></i>
+                                </div>
+                                <div style="font-size: 0.78rem; color: #94a3b8; font-weight: 400;">Tarjetas de Crédito, Débito y Saldo Mercado Pago</div>
                             </div>
                         </div>
-                        <span class="badge" style="background:#009ee3; color:#fff;">$9.990 CLP</span>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="background: linear-gradient(135deg, #009ee3 0%, #0284c7 100%); color: #ffffff; font-weight: 800; font-size: 0.9rem; padding: 6px 14px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(0, 158, 227, 0.3);">$9.990</span>
+                            <i class="fa-solid fa-chevron-right" style="color: #009ee3; font-size: 0.9rem;"></i>
+                        </div>
                     </button>
 
-                    <!-- Webpay Flow -->
-                    <button type="button" class="btn btn-outline" style="justify-content: space-between; padding: 14px 18px; border-color: #0ea5e9; background: rgba(14,165,233,0.05);" onclick="PaymentsModule.payWithWebpay()">
-                        <div style="display:flex; align-items:center; gap: 12px;">
-                            <i class="fa-solid fa-bolt" style="color: #0ea5e9; font-size: 1.4rem;"></i>
-                            <div style="text-align:left;">
-                                <strong style="display:block; color: var(--text-color);">Webpay Plus / Flow (Chile)</strong>
-                                <span style="font-size:0.8rem; color: var(--text-muted);">Tarjetas de Crédito y Redcompra Transbank</span>
+                    <!-- Webpay / Flow Option -->
+                    <button type="button" onclick="PaymentsModule.payWithWebpay()" class="payment-card-option" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(14, 165, 233, 0.35); border-radius: 20px; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); color: #ffffff; position: relative; overflow: hidden;" onmouseover="this.style.borderColor='#0ea5e9'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 25px -5px rgba(14, 165, 233, 0.35)'; this.style.background='rgba(30, 41, 59, 0.95)';" onmouseout="this.style.borderColor='rgba(14, 165, 233, 0.35)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='rgba(30, 41, 59, 0.7)';">
+                        <div style="display: flex; align-items: center; gap: 16px; text-align: left;">
+                            <div style="width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, rgba(14, 165, 233, 0.3) 0%, rgba(14, 165, 233, 0.1) 100%); border: 1px solid rgba(14, 165, 233, 0.4); display: flex; align-items: center; justify-content: center; color: #0ea5e9; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);">
+                                <i class="fa-solid fa-credit-card"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 800; font-size: 1.05rem; color: #ffffff; margin-bottom: 2px; display: flex; align-items: center; gap: 8px;">
+                                    Webpay Plus / Flow <i class="fa-solid fa-bolt" style="color: #0ea5e9; font-size: 0.82rem;"></i>
+                                </div>
+                                <div style="font-size: 0.78rem; color: #94a3b8; font-weight: 400;">Tarjetas de Crédito, Débito y Redcompra Transbank</div>
                             </div>
                         </div>
-                        <span class="badge" style="background:#0ea5e9; color:#fff;">$9.990 CLP</span>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #ffffff; font-weight: 800; font-size: 0.9rem; padding: 6px 14px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);">$9.990</span>
+                            <i class="fa-solid fa-chevron-right" style="color: #0ea5e9; font-size: 0.9rem;"></i>
+                        </div>
                     </button>
 
-                    <!-- Stripe USD -->
-                    <button type="button" class="btn btn-outline" style="justify-content: space-between; padding: 14px 18px; border-color: #635bff; background: rgba(99,91,255,0.05);" onclick="PaymentsModule.payWithStripe()">
-                        <div style="display:flex; align-items:center; gap: 12px;">
-                            <i class="fa-brands fa-stripe" style="color: #635bff; font-size: 1.6rem;"></i>
-                            <div style="text-align:left;">
-                                <strong style="display:block; color: var(--text-color);">Stripe / Tarjeta Internacional</strong>
-                                <span style="font-size:0.8rem; color: var(--text-muted);">Pago en USD para empresas en todo el mundo</span>
-                            </div>
-                        </div>
-                        <span class="badge" style="background:#635bff; color:#fff;">$9.99 USD</span>
-                    </button>
-
-                    <!-- WhatsApp / Bank Transfer -->
-                    <button type="button" class="btn btn-outline" style="justify-content: space-between; padding: 14px 18px; border-color: #25d366; background: rgba(37,211,102,0.05);" onclick="PaymentsModule.payWithWhatsApp()">
-                        <div style="display:flex; align-items:center; gap: 12px;">
-                            <i class="fa-brands fa-whatsapp" style="color: #25d366; font-size: 1.6rem;"></i>
-                            <div style="text-align:left;">
-                                <strong style="display:block; color: var(--text-color);">Transferencia Bancaria (WhatsApp)</strong>
-                                <span style="font-size:0.8rem; color: var(--text-muted);">Transferencia a Cuenta Corriente y activación asistida</span>
-                            </div>
-                        </div>
-                        <span class="badge" style="background:#25d366; color:#fff;">Directo</span>
-                    </button>
                 </div>
             </div>
         </div>
