@@ -199,19 +199,6 @@ const App = {
             });
         }
 
-        // CSV Export Button
-        const btnCsv = document.getElementById('btn-export-csv');
-        if (btnCsv) {
-            btnCsv.addEventListener('click', () => {
-                if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
-                    showToast('🔒 La exportación a CSV es exclusiva del PLAN PRO. ¡Suscríbete para desbloquearla!', 'error');
-                    AuthSubscription.showPricingModal();
-                    return;
-                }
-                this.exportCSV();
-            });
-        }
-
         // Email Button
         const btnEmail = document.getElementById('btn-send-email');
         if (btnEmail) {
@@ -823,41 +810,9 @@ const App = {
         }
     },
 
-    // Feature 10: Export items to CSV (PRO Feature)
-    exportCSV() {
-        if (typeof AuthSubscription !== 'undefined' && (!AuthSubscription.userPlan || !AuthSubscription.userPlan.isPro)) {
-            if (typeof showToast === 'function') {
-                showToast('🔒 La exportación a CSV es exclusiva del PLAN PRO. ¡Suscríbete para desbloquearla!', 'error');
-            }
-            if (typeof AuthSubscription.showPricingModal === 'function') {
-                AuthSubscription.showPricingModal();
-            }
-            return;
-        }
 
-        const data = EditorModule.getCollectFormData();
-        const items = data.items || [];
-        if (items.length === 0) {
-            showToast('No hay ítems para exportar', 'error');
-            return;
-        }
-        let csv = 'Descripción,Cantidad,Precio Unitario,Total\n';
-        items.forEach(item => {
-            const total = (parseFloat(item.quantity) || 0) * (parseFloat(item.price) || 0);
-            csv += `"${(item.description || '').replace(/"/g, '""')}",${item.quantity},${item.price},${total.toFixed(2)}\n`;
-        });
-        csv += `\n,,Subtotal,${data.totals.subtotal.toFixed(2)}\n`;
-        csv += `,,Total,${data.totals.grandTotal.toFixed(2)}\n`;
 
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${data.docType}_${data.number}.csv`;
-        a.click();
-        URL.revokeObjectURL(url);
-        showToast('CSV exportado correctamente', 'success');
-    },
+
 
     // Feature 3: Send by Email (PRO Feature)
     sendByEmail() {
@@ -872,19 +827,33 @@ const App = {
         }
 
         const data = EditorModule.getCollectFormData();
-        const clientEmail = data.client.email || '';
-        const subject = encodeURIComponent(`${data.docType} N° ${data.number} - ${data.emitter.name || 'Emitia Pro'}`);
+        let targetEmail = (data.client && data.client.email) ? data.client.email.trim() : '';
+        if (!targetEmail && typeof AuthSubscription !== 'undefined' && AuthSubscription.currentUser) {
+            targetEmail = AuthSubscription.currentUser.email || '';
+        }
+
+        let emitterName = (data.emitter && data.emitter.name) ? data.emitter.name.trim() : '';
+        if (!emitterName && typeof AuthSubscription !== 'undefined' && AuthSubscription.currentUser) {
+            emitterName = AuthSubscription.currentUser.displayName || AuthSubscription.currentUser.email || 'Emitia Pro';
+        }
+
+        const subject = encodeURIComponent(`${data.docType} N° ${data.number} - ${emitterName}`);
         const body = encodeURIComponent(
             `Estimado/a ${data.client.name || 'Cliente'},\n\n` +
-            `Adjunto encontrará el documento ${data.docType} N° ${data.number}.\n\n` +
-            `Total: ${data.currencySymbol} ${data.totals.grandTotal.toLocaleString('es-CL', { minimumFractionDigits: 2 })}\n` +
-            `Fecha: ${data.date}\n` +
-            `Vencimiento: ${data.dueDate}\n\n` +
-            `${data.bankDetails ? 'Datos bancarios:\n' + data.bankDetails + '\n\n' : ''}` +
-            `Saludos cordiales,\n${data.emitter.name || ''}\n${data.emitter.phone || ''}`
+            `Adjunto encontrará la ${data.docType.toLowerCase()} N° ${data.number}.\n\n` +
+            `• Documento: ${data.docType} N° ${data.number}\n` +
+            `• Total a Pagar: ${data.currencySymbol} ${data.totals.grandTotal.toLocaleString('es-CL', { minimumFractionDigits: 2 })}\n` +
+            `• Fecha de Emisión: ${data.date}\n` +
+            `• Fecha de Vencimiento: ${data.dueDate}\n\n` +
+            `${data.bankDetails ? '📌 Datos de Pago / Transferencia Bancaria:\n' + data.bankDetails + '\n\n' : ''}` +
+            `Saludos cordiales,\n` +
+            `${emitterName}\n` +
+            `${data.emitter.email ? data.emitter.email + '\n' : ''}` +
+            `${data.emitter.phone ? data.emitter.phone : ''}`
         );
-        window.open(`mailto:${clientEmail}?subject=${subject}&body=${body}`, '_self');
-        showToast('Abriendo cliente de correo...', 'info');
+
+        window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_self');
+        showToast(targetEmail ? `Abriendo correo para: ${targetEmail}...` : 'Abriendo cliente de correo...', 'info');
     }
 };
 

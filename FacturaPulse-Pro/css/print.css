@@ -1,9 +1,26 @@
 /* ==========================================================================
    PRINT & PDF EXPORT OPTIMIZATION STYLESHEET
+   Fixes blank second page issues & ensures clean A4 print preview
    ========================================================================== */
 
+@page {
+    size: A4 portrait;
+    margin: 0mm !important;
+}
+
 @media print {
-    /* 1. Hide all UI components, headers, forms, navigation and other tabs */
+    /* 1. Reset root elements for print */
+    html,
+    body {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    /* 2. Hide all UI components, headers, forms, navigation and other tabs */
     header,
     nav,
     .app-header,
@@ -21,9 +38,7 @@
         display: none !important;
     }
 
-    /* 2. Unhide only the containers holding the document paper */
-    html,
-    body,
+    /* 3. Unhide only the containers holding the document paper */
     .app-layout,
     .app-workspace,
     #tab-editor,
@@ -36,15 +51,14 @@
         visibility: visible !important;
     }
 
-    /* 3. Reset margins, padding and backgrounds for clean A4 output */
-    body,
+    /* 4. Reset wrapper styles */
     .app-layout,
     .app-workspace,
     #tab-editor,
     .workspace-grid,
     .preview-pane,
     .paper-container-wrapper {
-        background: #ffffff !important;
+        background: transparent !important;
         padding: 0 !important;
         margin: 0 !important;
         overflow: visible !important;
@@ -62,6 +76,8 @@
         width: 100% !important;
         margin: 0 !important;
         gap: 0 !important;
+    }
+
     /* Enable full exact color printing for background cards and gradients */
     * {
         -webkit-print-color-adjust: exact !important;
@@ -69,31 +85,40 @@
         color-adjust: exact !important;
     }
 
+    /* 5. A4 Document Page Dimensioning (296mm height to avoid Chromium subpixel 2nd page overflow) */
     .doc-page {
         box-shadow: none !important;
         border-radius: 0 !important;
         padding: 8mm 12mm !important;
         width: 210mm !important;
-        height: 297mm !important;
-        max-height: 297mm !important;
-        margin: 0 !important;
+        max-width: 210mm !important;
+        height: 296mm !important;
+        max-height: 296mm !important;
+        margin: 0 auto !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
+        background: #ffffff;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    /* Page breaks only for multi-page documents */
+    .doc-page:not(:last-child) {
         page-break-after: always !important;
         break-after: page !important;
-        background: #ffffff;
+    }
+
+    .doc-page:only-child,
+    .doc-page:last-child {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        page-break-before: avoid !important;
     }
 
     /* Template background overrides for print & PDF */
     .template-dark .doc-page { background-color: #0f172a !important; color: #f8fafc !important; }
     .template-neon .doc-page { background-color: #0f172a !important; color: #e2e8f0 !important; }
     .template-colorful .doc-page { background: linear-gradient(135deg, #fefce8 0%, #fff7ed 30%, #fff1f2 60%, #f0f9ff 100%) !important; }
-
-    /* Don't break after the last page */
-    .doc-page:last-child {
-        page-break-after: avoid !important;
-        break-after: avoid !important;
-    }
 
     /* Prevent breaking inside key structural blocks */
     .doc-header-grid,
@@ -110,10 +135,5 @@
     /* Hide continuation indicator on printed paper */
     .doc-page-continues {
         display: none !important;
-    }
-
-    @page {
-        size: A4 portrait;
-        margin: 0;
     }
 }

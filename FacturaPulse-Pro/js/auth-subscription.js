@@ -151,7 +151,9 @@ const AuthSubscription = {
                 } else if (typeof PaymentsModule !== 'undefined' && PaymentsModule.payWithWebpay) {
                     PaymentsModule.payWithWebpay();
                 } else {
-                    window.open("https://www.flow.cl/uri/tWKV0dM6v", "_blank");
+                    const email = this.currentUser ? this.currentUser.email : '';
+                    const url = "https://www.flow.cl/uri/0BTj8Mtxz" + (email ? `?email=${encodeURIComponent(email)}&payer_email=${encodeURIComponent(email)}` : '');
+                    window.open(url, "_blank");
                 }
             });
         }
@@ -600,12 +602,9 @@ const AuthSubscription = {
                     : '<i class="fa-solid fa-lock"></i> Imprimir / PDF 🔒';
             }
 
-            const btnCsv = document.getElementById('btn-export-csv');
-            if (btnCsv) {
-                btnCsv.innerHTML = this.userPlan.isPro 
-                    ? '<i class="fa-solid fa-file-csv"></i> CSV'
-                    : '<i class="fa-solid fa-lock"></i> CSV 🔒';
-            }
+
+
+
 
             const btnEmail = document.getElementById('btn-send-email');
             if (btnEmail) {
