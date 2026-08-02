@@ -1067,10 +1067,14 @@
                 </div>
 
                 <!-- PAYMENT GATEWAYS BADGE FOOTER -->
-                <div class="modal-footer margin-top-16" style="justify-content: center; gap: 16px; font-size: 0.8rem; color: var(--text-muted);">
+                <div class="modal-footer margin-top-16" style="justify-content: center; gap: 14px; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap;">
                     <span><i class="fa-solid fa-shield-halved text-success"></i> Pagos Seguros SSL</span>
                     <span><i class="fa-solid fa-bolt" style="color:#0ea5e9;"></i> Flow.cl & Webpay</span>
                     <span><i class="fa-solid fa-wallet" style="color:#009ee3;"></i> Mercado Pago</span>
+                    <span>•</span>
+                    <a href="#" data-open-legal="terms" style="color: #94a3b8; text-decoration: underline;">Términos</a>
+                    <a href="#" data-open-legal="privacy" style="color: #94a3b8; text-decoration: underline;">Privacidad</a>
+                    <a href="#" data-open-legal="cookies" style="color: #94a3b8; text-decoration: underline;">Cookies</a>
                 </div>
             </div>
         </div>
@@ -1219,6 +1223,89 @@
         </div>
     </div>
 
+    <!-- BANNER DE AVISO DE COOKIES -->
+    <div id="cookie-consent-banner" class="cookie-banner-wrapper hidden">
+        <div class="cookie-banner-info">
+            <i class="fa-solid fa-cookie-bite cookie-banner-icon"></i>
+            <div class="cookie-banner-text">
+                <strong>Uso de Cookies & Protección de Datos</strong>
+                <p>Utilizamos cookies esenciales y almacenamiento local para garantizar la facturación, autenticación y análisis del servicio. Consulta nuestra <a href="#" data-open-legal="privacy">Política de Privacidad</a> y <a href="#" data-open-legal="terms">Términos y Condiciones</a>.</p>
+            </div>
+        </div>
+        <div class="cookie-banner-btns">
+            <button type="button" class="btn btn-outline btn-sm" id="btn-cookie-decline">Rechazar</button>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-cookie-accept">Aceptar todas</button>
+        </div>
+    </div>
+
+    <!-- MODAL TÉRMINOS Y CONDICIONES DEL SERVICIO -->
+    <div id="modal-terms" class="modal-backdrop hidden">
+        <div class="modal-card legal-modal-card auth-card-glass">
+            <div class="modal-header" style="background: transparent; padding: 24px 32px 16px 32px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between;">
+                <h3 style="font-size: 1.3rem; font-weight: 800; color: #ffffff; margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-file-contract" style="color: #6366f1;"></i> Términos y Condiciones del Servicio
+                </h3>
+                <button type="button" class="modal-close" onclick="LegalModule.closeTermsModal()">&times;</button>
+            </div>
+            <div class="legal-modal-body">
+                <h4><i class="fa-solid fa-circle-check" style="color:#6366f1;"></i> 1. Aceptación de los Términos</h4>
+                <p>Al acceder y utilizar <strong>Emitia Pro</strong>, el usuario acepta regirse por los presentes Términos y Condiciones. Si no está de acuerdo con alguna disposición, deberá abstenerse de utilizar la plataforma.</p>
+
+                <h4><i class="fa-solid fa-bolt" style="color:#6366f1;"></i> 2. Descripción del Servicio y Planes</h4>
+                <p>Emitia Pro proporciona herramientas digitales para la generación, edición, exportación en PDF y gestión comercial de facturas, cotizaciones y documentos contables.</p>
+                <ul>
+                    <li><strong>Plan Gratuito:</strong> Permite el uso básico de la plataforma con almacenamiento local en el navegador del usuario y límite de exportaciones.</li>
+                    <li><strong>Plan PRO ($9.990 CLP / $9.99 USD mensual):</strong> Proporciona acceso ilimitado a exportaciones PDF, plantillas profesionales, sincronización en la nube vía Firebase Cloud Firestore, soporte multi-idioma y módulo de cotizaciones avanzadas.</li>
+                </ul>
+
+                <h4><i class="fa-solid fa-credit-card" style="color:#6366f1;"></i> 3. Políticas de Cobro, Suscripciones y Pagos</h4>
+                <p>Los pagos son procesados a través de pasarelas de pago certificadas con encriptación SSL (Flow.cl, Webpay, Mercado Pago, Stripe o PayPal). Las suscripciones se activan de forma digital e inmediata tras la confirmación exitosa del pago.</p>
+
+                <h4><i class="fa-solid fa-rotate-left" style="color:#6366f1;"></i> 4. Política de Devoluciones y Cancelación</h4>
+                <p>Debido a la naturaleza del software como servicio de acceso digital inmediato, las suscripciones PRO procesadas no son reembolsables una vez activado el periodo de servicio. El usuario puede cancelar la renovación automática de su membresía en cualquier momento sin penalizaciones adicionales.</p>
+
+                <h4><i class="fa-solid fa-shield-halved" style="color:#6366f1;"></i> 5. Garantía de Servicio y Responsabilidad</h4>
+                <p>Emitia Pro se compromete a mantener la disponibilidad del servicio. Sin embargo, no se hace responsable por interrupciones derivadas de mantenimiento programado o fallas en proveedores de infraestructura de terceros (como Google Cloud o Firebase).</p>
+            </div>
+            <div class="modal-footer" style="padding: 16px 32px; border-top: 1px solid rgba(255, 255, 255, 0.1); justify-content: flex-end;">
+                <button type="button" class="btn btn-outline" onclick="LegalModule.closeTermsModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL POLÍTICA DE PRIVACIDAD Y TRATAMIENTO DE DATOS -->
+    <div id="modal-privacy" class="modal-backdrop hidden">
+        <div class="modal-card legal-modal-card auth-card-glass">
+            <div class="modal-header" style="background: transparent; padding: 24px 32px 16px 32px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between;">
+                <h3 style="font-size: 1.3rem; font-weight: 800; color: #ffffff; margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-user-shield" style="color: #10b981;"></i> Política de Privacidad y Tratamiento de Datos
+                </h3>
+                <button type="button" class="modal-close" onclick="LegalModule.closePrivacyModal()">&times;</button>
+            </div>
+            <div class="legal-modal-body">
+                <h4><i class="fa-solid fa-database" style="color:#10b981;"></i> 1. Recolección de Información</h4>
+                <p>Recopilamos únicamente los datos necesarios para brindar el servicio de facturación digital, incluyendo:</p>
+                <ul>
+                    <li>Dirección de correo electrónico de la cuenta del usuario.</li>
+                    <li>Nombres comerciales, identificadores tributarios (RUT/TAX ID), direcciones y números de contacto ingresados en los documentos.</li>
+                    <li>Historial de facturas y cotizaciones generadas.</li>
+                </ul>
+
+                <h4><i class="fa-solid fa-lock" style="color:#10b981;"></i> 2. Almacenamiento y Seguridad de los Datos</h4>
+                <p>Toda la información es almacenada mediante estándares de encriptación de nivel industrial en <strong>Google Cloud Firestore</strong> y en el <strong>LocalStorage</strong> cifrado de su navegador. No vendemos, alquilamos ni compartimos sus datos personales con terceros para fines publicitarios.</p>
+
+                <h4><i class="fa-solid fa-cookie" style="color:#10b981;"></i> 3. Uso de Cookies y Almacenamiento Local</h4>
+                <p>Utilizamos cookies estrictamente necesarias para la autenticación de usuarios, la gestión de sesiones y el mantenimiento de preferencias de la aplicación. El usuario puede configurar sus preferencias de cookies en cualquier momento desde el pie de página del sitio.</p>
+
+                <h4><i class="fa-solid fa-user-gear" style="color:#10b981;"></i> 4. Derechos ARCO (Acceso, Rectificación, Cancelación y Oposición)</h4>
+                <p>El usuario mantiene el control absoluto sobre su información y puede solicitar la eliminación total de sus documentos y datos personales registrados en nuestros servidores a través de la función de eliminación de cuenta o enviando una solicitud a soporte.</p>
+            </div>
+            <div class="modal-footer" style="padding: 16px 32px; border-top: 1px solid rgba(255, 255, 255, 0.1); justify-content: flex-end;">
+                <button type="button" class="btn btn-outline" onclick="LegalModule.closePrivacyModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Firebase Compat Web SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
@@ -1234,6 +1321,7 @@
     <script src="js/cloud-sync.js?v=47"></script>
     <script src="js/auth-subscription.js?v=47"></script>
     <script src="js/payments.js?v=47"></script>
+    <script src="js/legal.js?v=47"></script>
     <script src="js/app.js?v=47"></script>
 
     <!-- PWA Service Worker Cleanup & Registration -->
