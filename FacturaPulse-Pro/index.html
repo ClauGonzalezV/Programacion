@@ -158,7 +158,7 @@
                     </div>
 
                     <div class="control-group">
-                        <label for="doc-template"><i class="fa-solid fa-palette"></i> Plantilla (15 Diseños PRO):</label>
+                        <label for="doc-template"><i class="fa-solid fa-palette"></i> Plantilla (Diseños PRO):</label>
                         <select id="doc-template" class="form-select">
                             <option value="modern">Moderna Neo-Glass</option>
                             <option value="executive">Ejecutiva Minimal</option>
@@ -168,13 +168,6 @@
                             <option value="colorful">Colorida Startup</option>
                             <option value="corporate">Corporativa Formal</option>
                             <option value="neon">Tech Neon</option>
-                            <option value="nordic">Nórdica Slate & Ice</option>
-                            <option value="emerald">Esmeralda Deluxe</option>
-                            <option value="cyber">Cyber Violet & Neon</option>
-                            <option value="sunset">Sunset Gradient Pro</option>
-                            <option value="architect">Arquitectura Blueprint</option>
-                            <option value="vintage">Pergamino Vintage</option>
-                            <option value="impact">Impacto Visual Bold</option>
                         </select>
                     </div>
 
@@ -566,28 +559,9 @@
                                     title="Ajustar vista">
                                     <i class="fa-solid fa-expand"></i>
                                 </button>
-                            </div>
-                        </div>
-
-                        <!-- Quick Template Selector Chips Bar -->
-                        <div class="template-chips-bar" id="template-chips-bar">
-                            <span class="chips-label"><i class="fa-solid fa-palette"></i> Plantilla:</span>
-                            <div class="chips-scroll">
-                                <button type="button" class="chip-btn active" data-template="modern">Moderna</button>
-                                <button type="button" class="chip-btn" data-template="executive">Ejecutiva</button>
-                                <button type="button" class="chip-btn" data-template="dark">Dark</button>
-                                <button type="button" class="chip-btn" data-template="classic">Clásica</button>
-                                <button type="button" class="chip-btn" data-template="minimal">Minimalista</button>
-                                <button type="button" class="chip-btn" data-template="colorful">Colorida</button>
-                                <button type="button" class="chip-btn" data-template="corporate">Corporativa</button>
-                                <button type="button" class="chip-btn" data-template="neon">Tech Neon</button>
-                                <button type="button" class="chip-btn" data-template="nordic">Nórdica</button>
-                                <button type="button" class="chip-btn" data-template="emerald">Esmeralda</button>
-                                <button type="button" class="chip-btn" data-template="cyber">Cyber Violet</button>
-                                <button type="button" class="chip-btn" data-template="sunset">Sunset Gradient</button>
-                                <button type="button" class="chip-btn" data-template="architect">Arquitectura</button>
-                                <button type="button" class="chip-btn" data-template="vintage">Pergamino</button>
-                                <button type="button" class="chip-btn" data-template="impact">Impacto Bold</button>
+                                <button type="button" class="btn btn-xs btn-primary" id="btn-print-direct">
+                                    <i class="fa-solid fa-print"></i> Imprimir / PDF
+                                </button>
                             </div>
                         </div>
 
@@ -701,6 +675,7 @@
                         <table class="data-table">
                             <thead>
                                 <tr>
+                                    <th style="width: 70px; text-align: center;">Imagen</th>
                                     <th>Concepto / Servicio</th>
                                     <th>Precio Sugerido</th>
                                     <th>Acciones</th>
@@ -791,7 +766,7 @@
                             <input type="text" id="modal-client-phone" class="form-input">
                         </div>
                         <div class="form-group">
-                            <label for="modal-client-address">Dirección</label>
+                            <label for="modal-client-address">Dirección Fiscal / Comuna</label>
                             <input type="text" id="modal-client-address" class="form-input">
                         </div>
                     </div>
@@ -814,7 +789,29 @@
             <div class="modal-body">
                 <form id="form-modal-catalog">
                     <input type="hidden" id="modal-catalog-id">
+                    
+                    <!-- Imagen del Producto / Servicio -->
                     <div class="form-group">
+                        <label>Imagen del Producto / Servicio (Opcional)</label>
+                        <div class="catalog-image-upload-wrap" style="display: flex; align-items: center; gap: 12px; margin-top: 6px; padding: 10px; border: 1px dashed var(--border-color); border-radius: 8px; background: var(--bg-input);">
+                            <div id="modal-catalog-img-preview" style="width: 54px; height: 54px; border-radius: 6px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; background: var(--bg-card); overflow: hidden; flex-shrink: 0;">
+                                <i class="fa-solid fa-camera" style="font-size: 1.2rem; color: var(--text-muted);"></i>
+                            </div>
+                            <div style="flex: 1;">
+                                <label class="btn btn-xs btn-outline" style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+                                    <i class="fa-solid fa-upload"></i> Subir Foto
+                                    <input type="file" id="modal-catalog-img-input" accept="image/*" style="display: none;">
+                                </label>
+                                <button type="button" class="btn btn-xs btn-ghost text-danger" id="modal-catalog-img-remove" style="display: none; margin-left: 6px;">
+                                    <i class="fa-solid fa-trash"></i> Eliminar
+                                </button>
+                                <input type="hidden" id="modal-catalog-image">
+                                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Sube una foto del producto para adjuntarla automáticamente a tus facturas y cotizaciones.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group margin-top-8">
                         <label for="modal-catalog-name">Descripción del Servicio / Producto *</label>
                         <input type="text" id="modal-catalog-name" class="form-input" required
                             placeholder="Ej: Diseño de Logotipo Corporativo">

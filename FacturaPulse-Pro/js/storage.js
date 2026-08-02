@@ -28,41 +28,47 @@ const StorageManager = {
     },
 
     init() {
-        if (!localStorage.getItem(this.KEYS.CLIENTS)) {
-            const seedClients = [
-                {
-                    id: 'cli-1',
-                    name: 'Innova Tech Solutions SpA',
-                    taxId: '76.890.123-5',
-                    email: 'contacto@innovatech.cl',
-                    phone: '+56 9 7654 3210',
-                    address: 'Av. Andrés Bello 2457, Of. 1002, Providencia, Santiago'
-                },
-                {
-                    id: 'cli-2',
-                    name: 'Comercial & Logística Del Sur',
-                    taxId: '89.123.456-K',
-                    email: 'compras@delsur.cl',
-                    phone: '+56 9 8811 2233',
-                    address: 'Calle O\'Higgins 450, Concepción'
-                }
-            ];
-            this.saveClients(seedClients);
-        }
+        const isInitialized = localStorage.getItem('facturapulse_initialized');
 
-        if (!localStorage.getItem(this.KEYS.CATALOG)) {
-            const seedCatalog = [
-                { id: 'cat-1', name: 'Diseño y Desarrollo de Sitio Web Corporativo', price: 1200 },
-                { id: 'cat-2', name: 'Mantenimiento Mensual y Servidor Cloud', price: 150 },
-                { id: 'cat-3', name: 'Optimización SEO y Posicionamiento Google', price: 450 },
-                { id: 'cat-4', name: 'Integración de Pasarela de Pagos (Stripe/Webpay)', price: 300 },
-                { id: 'cat-5', name: 'Consultoría en UI/UX y Arquitectura Web', price: 80 }
-            ];
-            this.saveCatalog(seedCatalog);
-        }
+        if (!isInitialized) {
+            if (!localStorage.getItem(this.KEYS.CLIENTS)) {
+                const seedClients = [
+                    {
+                        id: 'cli-1',
+                        name: 'Innova Tech Solutions SpA',
+                        taxId: '76.890.123-5',
+                        email: 'contacto@innovatech.cl',
+                        phone: '+56 9 7654 3210',
+                        address: 'Av. Andrés Bello 2457, Of. 1002, Providencia, Santiago'
+                    },
+                    {
+                        id: 'cli-2',
+                        name: 'Comercial & Logística Del Sur',
+                        taxId: '89.123.456-K',
+                        email: 'compras@delsur.cl',
+                        phone: '+56 9 8811 2233',
+                        address: 'Calle O\'Higgins 450, Concepción'
+                    }
+                ];
+                this.saveClients(seedClients);
+            }
 
-        if (!localStorage.getItem(this.KEYS.HISTORY)) {
-            this.saveHistory([]);
+            if (!localStorage.getItem(this.KEYS.CATALOG)) {
+                const seedCatalog = [
+                    { id: 'cat-1', name: 'Diseño y Desarrollo de Sitio Web Corporativo', price: 1200 },
+                    { id: 'cat-2', name: 'Mantenimiento Mensual y Servidor Cloud', price: 150 },
+                    { id: 'cat-3', name: 'Optimización SEO y Posicionamiento Google', price: 450 },
+                    { id: 'cat-4', name: 'Integración de Pasarela de Pagos (Stripe/Webpay)', price: 300 },
+                    { id: 'cat-5', name: 'Consultoría en UI/UX y Arquitectura Web', price: 80 }
+                ];
+                this.saveCatalog(seedCatalog);
+            }
+
+            if (!localStorage.getItem(this.KEYS.HISTORY)) {
+                this.saveHistory([]);
+            }
+
+            localStorage.setItem('facturapulse_initialized', 'true');
         }
     },
 
@@ -92,10 +98,11 @@ const StorageManager = {
 
     deleteClient(id) {
         let clients = this.getClients();
+        const clientToDelete = clients.find(c => c.id === id);
         clients = clients.filter(c => c.id !== id);
         this.saveClients(clients);
         if (typeof CloudSync !== 'undefined' && CloudSync.deleteClient) {
-            CloudSync.deleteClient(id);
+            CloudSync.deleteClient(id, clientToDelete ? clientToDelete.name : '');
         }
     },
 
@@ -125,10 +132,11 @@ const StorageManager = {
 
     deleteCatalogItem(id) {
         let catalog = this.getCatalog();
+        const itemToDelete = catalog.find(i => i.id === id);
         catalog = catalog.filter(i => i.id !== id);
         this.saveCatalog(catalog);
         if (typeof CloudSync !== 'undefined' && CloudSync.deleteCatalogItem) {
-            CloudSync.deleteCatalogItem(id);
+            CloudSync.deleteCatalogItem(id, itemToDelete ? itemToDelete.name : '');
         }
     },
 

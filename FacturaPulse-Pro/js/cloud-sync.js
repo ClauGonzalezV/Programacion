@@ -96,7 +96,7 @@ const CloudSync = {
         if (!uid || !this.db) return;
 
         try {
-            const clientId = clientData.id || (clientData.taxId || clientData.name ? clientData.name.replace(/[^a-zA-Z0-9]/g, '_') : `CLIENT_${Date.now()}`);
+            const clientId = clientData.id || `cli_${Date.now()}`;
             await this.db.collection('users').doc(uid).collection('clients').doc(clientId).set({
                 ...clientData,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -108,13 +108,24 @@ const CloudSync = {
     },
 
     // Delete Client from Firestore Cloud
-    async deleteClient(clientId) {
+    async deleteClient(clientId, clientName = '') {
         const uid = this.userUid;
         if (!uid || !this.db || !clientId) return;
 
         try {
+            // Delete directly by document ID
             await this.db.collection('users').doc(uid).collection('clients').doc(clientId).delete();
-            console.log(`CloudSync: Client ${clientId} deleted from cloud.`);
+            
+            // Delete any document matching clientId, data.id, or name-slug
+            const nameSlug = clientName ? clientName.replace(/[^a-zA-Z0-9]/g, '_') : '';
+            const snapshot = await this.db.collection('users').doc(uid).collection('clients').get();
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (doc.id === clientId || data.id === clientId || (nameSlug && doc.id.includes(nameSlug))) {
+                    doc.ref.delete().catch(e => {});
+                }
+            });
+            console.log(`CloudSync: Client ${clientId} permanently deleted from cloud.`);
         } catch (err) {
             console.log('CloudSync delete client info:', err.message);
         }
@@ -142,7 +153,7 @@ const CloudSync = {
         if (!uid || !this.db) return;
 
         try {
-            const itemId = itemData.id || (itemData.name ? itemData.name.replace(/[^a-zA-Z0-9]/g, '_') : `ITEM_${Date.now()}`);
+            const itemId = itemData.id || `cat_${Date.now()}`;
             await this.db.collection('users').doc(uid).collection('catalog').doc(itemId).set({
                 ...itemData,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -154,13 +165,22 @@ const CloudSync = {
     },
 
     // Delete Catalog Item from Firestore Cloud
-    async deleteCatalogItem(itemId) {
+    async deleteCatalogItem(itemId, itemName = '') {
         const uid = this.userUid;
         if (!uid || !this.db || !itemId) return;
 
         try {
             await this.db.collection('users').doc(uid).collection('catalog').doc(itemId).delete();
-            console.log(`CloudSync: Item ${itemId} deleted from cloud.`);
+            
+            const nameSlug = itemName ? itemName.replace(/[^a-zA-Z0-9]/g, '_') : '';
+            const snapshot = await this.db.collection('users').doc(uid).collection('catalog').get();
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (doc.id === itemId || data.id === itemId || (nameSlug && doc.id.includes(nameSlug))) {
+                    doc.ref.delete().catch(e => {});
+                }
+            });
+            console.log(`CloudSync: Item ${itemId} permanently deleted from cloud.`);
         } catch (err) {
             console.log('CloudSync delete catalog info:', err.message);
         }
@@ -187,35 +207,44 @@ const CloudSync = {
         const uid = this.userUid;
         if (!uid) return;
 
-        // Pull cloud history
-        const cloudDocs = await this.fetchHistory();
-        if (cloudDocs && cloudDocs.length > 0) {
-            localStorage.setItem(StorageManager.KEYS.HISTORY, JSON.stringify(cloudDocs));
+        const hasLocalClients = localStorage.getItem(StorageManager.KEYS.CLIENTS) !== null;
+        const hasLocalCatalog = localStorage.getItem(StorageManager.KEYS.CATALOG) !== null;
+        const hasLocalHistory = localStorage.getItem(StorageManager.KEYS.HISTORY) !== null;
+
+        // Sync history
+        if (!hasLocalHistory) {
+            const cloudDocs = await this.fetchHistory();
+            if (cloudDocs && cloudDocs.length > 0) {
+                localStorage.setItem(StorageManager.KEYS.HISTORY, JSON.stringify(cloudDocs));
+            }
         } else {
-            // Push local history to cloud
             const localHistory = StorageManager.getHistory();
             localHistory.forEach(doc => this.syncDocument(doc));
         }
 
-        // Pull cloud clients
-        const cloudClients = await this.fetchClients();
-        if (cloudClients && cloudClients.length > 0) {
-            localStorage.setItem(StorageManager.KEYS.CLIENTS, JSON.stringify(cloudClients));
+        // Sync clients
+        if (!hasLocalClients) {
+            const cloudClients = await this.fetchClients();
+            if (cloudClients && cloudClients.length > 0) {
+                localStorage.setItem(StorageManager.KEYS.CLIENTS, JSON.stringify(cloudClients));
+            }
         } else {
             const localClients = StorageManager.getClients();
             localClients.forEach(c => this.syncClient(c));
         }
 
-        // Pull cloud catalog
-        const cloudCatalog = await this.fetchCatalog();
-        if (cloudCatalog && cloudCatalog.length > 0) {
-            localStorage.setItem(StorageManager.KEYS.CATALOG, JSON.stringify(cloudCatalog));
+        // Sync catalog
+        if (!hasLocalCatalog) {
+            const cloudCatalog = await this.fetchCatalog();
+            if (cloudCatalog && cloudCatalog.length > 0) {
+                localStorage.setItem(StorageManager.KEYS.CATALOG, JSON.stringify(cloudCatalog));
+            }
         } else {
             const localCatalog = StorageManager.getCatalog();
             localCatalog.forEach(i => this.syncCatalogItem(i));
         }
 
-        // Re-render UI views with pulled Cloud Data
+        // Re-render UI views
         if (typeof App !== 'undefined' && App.renderAllViews) {
             App.renderAllViews();
         }

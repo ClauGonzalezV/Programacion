@@ -529,14 +529,16 @@ const AuthSubscription = {
 
     applyPlanRestrictions() {
         try {
-            // 1. Templates Available (15 templates live preview supported)
+            // 1. Templates Available (Free has 'modern', PRO templates 2-8 show 🔒 (Plan PRO))
             const templateSelect = document.getElementById('doc-template');
             if (templateSelect && templateSelect.options) {
                 const currentVal = templateSelect.value;
                 Array.from(templateSelect.options).forEach(opt => {
-                    opt.disabled = false;
-                    if (opt.textContent.includes('🔒') || /[\u{1F300}-\u{1F9FF}]/gu.test(opt.textContent)) {
-                        opt.textContent = opt.textContent.replace(' 🔒 (Plan PRO)', '').replace(/[\u{1F300}-\u{1F9FF}]/gu, '').trim();
+                    let baseText = opt.textContent.replace(' 🔒 (Plan PRO)', '').trim();
+                    if (!this.userPlan.isPro && opt.value !== 'modern') {
+                        opt.textContent = `${baseText} 🔒 (Plan PRO)`;
+                    } else {
+                        opt.textContent = baseText;
                     }
                 });
                 if (currentVal) templateSelect.value = currentVal;
@@ -590,13 +592,26 @@ const AuthSubscription = {
                 }
             });
 
-            // 4. PDF and Print Buttons Lock Indicator
+            // 4. PDF, Print, CSV & Email Action Buttons Lock Indicators
             const btnPrintDirect = document.getElementById('btn-print-direct');
-
             if (btnPrintDirect) {
                 btnPrintDirect.innerHTML = this.userPlan.isPro 
                     ? '<i class="fa-solid fa-print"></i> Imprimir / PDF'
                     : '<i class="fa-solid fa-lock"></i> Imprimir / PDF 🔒';
+            }
+
+            const btnCsv = document.getElementById('btn-export-csv');
+            if (btnCsv) {
+                btnCsv.innerHTML = this.userPlan.isPro 
+                    ? '<i class="fa-solid fa-file-csv"></i> CSV'
+                    : '<i class="fa-solid fa-lock"></i> CSV 🔒';
+            }
+
+            const btnEmail = document.getElementById('btn-send-email');
+            if (btnEmail) {
+                btnEmail.innerHTML = this.userPlan.isPro 
+                    ? '<i class="fa-solid fa-envelope"></i> Email'
+                    : '<i class="fa-solid fa-lock"></i> Email 🔒';
             }
 
             // 5. Watermark Control Restriction

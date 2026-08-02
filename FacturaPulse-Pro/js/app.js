@@ -202,13 +202,27 @@ const App = {
         // CSV Export Button
         const btnCsv = document.getElementById('btn-export-csv');
         if (btnCsv) {
-            btnCsv.addEventListener('click', () => this.exportCSV());
+            btnCsv.addEventListener('click', () => {
+                if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
+                    showToast('🔒 La exportación a CSV es exclusiva del PLAN PRO. ¡Suscríbete para desbloquearla!', 'error');
+                    AuthSubscription.showPricingModal();
+                    return;
+                }
+                this.exportCSV();
+            });
         }
 
         // Email Button
         const btnEmail = document.getElementById('btn-send-email');
         if (btnEmail) {
-            btnEmail.addEventListener('click', () => this.sendByEmail());
+            btnEmail.addEventListener('click', () => {
+                if (typeof AuthSubscription !== 'undefined' && !AuthSubscription.userPlan.isPro) {
+                    showToast('🔒 El envío de documentos por Email es exclusivo del PLAN PRO. ¡Suscríbete para desbloquearlo!', 'error');
+                    AuthSubscription.showPricingModal();
+                    return;
+                }
+                this.sendByEmail();
+            });
         }
 
         // Zoom/Fit View Button
@@ -394,6 +408,41 @@ const App = {
             });
         }
 
+        // Catalog Product Image Uploader Listener
+        const catalogImgInput = document.getElementById('modal-catalog-img-input');
+        const catalogImgPreview = document.getElementById('modal-catalog-img-preview');
+        const catalogImgHidden = document.getElementById('modal-catalog-image');
+        const catalogImgRemove = document.getElementById('modal-catalog-img-remove');
+
+        if (catalogImgInput) {
+            catalogImgInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                        const base64 = evt.target.result;
+                        if (catalogImgHidden) catalogImgHidden.value = base64;
+                        if (catalogImgPreview) {
+                            catalogImgPreview.innerHTML = `<img src="${base64}" style="width:100%; height:100%; object-fit:cover;">`;
+                        }
+                        if (catalogImgRemove) catalogImgRemove.style.display = 'inline-flex';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        if (catalogImgRemove) {
+            catalogImgRemove.addEventListener('click', () => {
+                if (catalogImgInput) catalogImgInput.value = '';
+                if (catalogImgHidden) catalogImgHidden.value = '';
+                if (catalogImgPreview) {
+                    catalogImgPreview.innerHTML = `<i class="fa-solid fa-camera" style="font-size: 1.2rem; color: var(--text-muted);"></i>`;
+                }
+                catalogImgRemove.style.display = 'none';
+            });
+        }
+
         // Save Catalog Form Submit
         const formCatalog = document.getElementById('form-modal-catalog');
         if (formCatalog) {
@@ -401,15 +450,26 @@ const App = {
                 e.preventDefault();
                 const nameEl = document.getElementById('modal-catalog-name');
                 const priceEl = document.getElementById('modal-catalog-price');
+                const imageEl = document.getElementById('modal-catalog-image');
                 const item = {
                     name: nameEl ? nameEl.value : '',
-                    price: priceEl ? (parseFloat(priceEl.value) || 0) : 0
+                    price: priceEl ? (parseFloat(priceEl.value) || 0) : 0,
+                    image: imageEl ? imageEl.value : ''
                 };
                 StorageManager.addCatalogItem(item);
                 const modal = document.getElementById('modal-catalog');
                 if (modal) modal.classList.add('hidden');
+                
+                // Reset catalog modal inputs
+                formCatalog.reset();
+                if (catalogImgHidden) catalogImgHidden.value = '';
+                if (catalogImgPreview) {
+                    catalogImgPreview.innerHTML = `<i class="fa-solid fa-camera" style="font-size: 1.2rem; color: var(--text-muted);"></i>`;
+                }
+                if (catalogImgRemove) catalogImgRemove.style.display = 'none';
+
                 this.renderCatalogTab();
-                showToast('Servicio añadido al catálogo', 'success');
+                showToast('Servicio con imagen añadido al catálogo', 'success');
             });
         }
 
@@ -424,12 +484,15 @@ const App = {
                         listEl.innerHTML = '<p style="color: #94a3b8;">No hay servicios en el catálogo. Añade algunos en la pestaña "Servicios".</p>';
                     } else {
                         listEl.innerHTML = catalog.map(item => `
-                            <div class="catalog-select-item">
-                                <label>
-                                    <input type="checkbox" class="chk-catalog-select" value="${item.id}" data-name="${item.name}" data-price="${item.price}">
+                            <div class="catalog-select-item" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid var(--border-color);">
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; flex: 1;">
+                                    <input type="checkbox" class="chk-catalog-select" value="${item.id}" data-name="${item.name.replace(/"/g, '&quot;')}" data-price="${item.price}" data-image="${item.image || ''}">
+                                    <div style="width: 32px; height: 32px; border-radius: 4px; border: 1px solid var(--border-color); overflow: hidden; background: var(--bg-card); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        ${item.image ? `<img src="${item.image}" style="width:100%; height:100%; object-fit:cover;">` : `<i class="fa-solid fa-camera" style="font-size: 0.75rem; color: var(--text-muted);"></i>`}
+                                    </div>
                                     <span>${item.name}</span>
                                 </label>
-                                <strong style="color: var(--accent-color);">$ ${item.price.toFixed(2)}</strong>
+                                <strong style="color: var(--accent-color); font-family: monospace;">$ ${item.price.toFixed(2)}</strong>
                             </div>
                         `).join('');
                     }
@@ -449,7 +512,7 @@ const App = {
                     return;
                 }
                 checkboxes.forEach(chk => {
-                    EditorModule.addItemRow(chk.dataset.name, 1, parseFloat(chk.dataset.price));
+                    EditorModule.addItemRow(chk.dataset.name, 1, parseFloat(chk.dataset.price), chk.dataset.image || '');
                 });
                 EditorModule.recalculateAndRender();
                 const modal = document.getElementById('modal-select-catalog');
@@ -566,15 +629,20 @@ const App = {
         const catalog = StorageManager.getCatalog();
 
         if (catalog.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="3" class="text-center" style="color: var(--text-muted); padding: 24px;">El catálogo está vacío.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="color: var(--text-muted); padding: 24px;">El catálogo está vacío.</td></tr>';
             return;
         }
 
         tbody.innerHTML = catalog.map(item => `
             <tr>
-                <td><strong>${item.name}</strong></td>
-                <td>$ ${item.price.toFixed(2)}</td>
-                <td>
+                <td style="text-align: center; vertical-align: middle;">
+                    <div style="width: 42px; height: 42px; border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; background: var(--bg-card); display: inline-flex; align-items: center; justify-content: center;">
+                        ${item.image ? `<img src="${item.image}" style="width:100%; height:100%; object-fit:cover;">` : `<i class="fa-solid fa-camera" style="font-size: 0.9rem; color: var(--text-muted);"></i>`}
+                    </div>
+                </td>
+                <td style="vertical-align: middle;"><strong>${item.name}</strong></td>
+                <td style="vertical-align: middle; font-family: monospace; font-weight: 600;">$ ${item.price.toFixed(2)}</td>
+                <td style="vertical-align: middle;">
                     <button type="button" class="btn btn-xs btn-outline" onclick="App.addCatalogToCurrentDoc('${item.id}')">
                         <i class="fa-solid fa-plus"></i> Añadir a Doc
                     </button>
@@ -590,7 +658,7 @@ const App = {
         const catalog = StorageManager.getCatalog();
         const item = catalog.find(i => i.id === id);
         if (item) {
-            EditorModule.addItemRow(item.name, 1, item.price);
+            EditorModule.addItemRow(item.name, 1, item.price, item.image || '');
             EditorModule.recalculateAndRender();
             showToast(`'${item.name}' añadido al documento`, 'success');
         }
@@ -755,8 +823,18 @@ const App = {
         }
     },
 
-    // Feature 10: Export items to CSV
+    // Feature 10: Export items to CSV (PRO Feature)
     exportCSV() {
+        if (typeof AuthSubscription !== 'undefined' && (!AuthSubscription.userPlan || !AuthSubscription.userPlan.isPro)) {
+            if (typeof showToast === 'function') {
+                showToast('🔒 La exportación a CSV es exclusiva del PLAN PRO. ¡Suscríbete para desbloquearla!', 'error');
+            }
+            if (typeof AuthSubscription.showPricingModal === 'function') {
+                AuthSubscription.showPricingModal();
+            }
+            return;
+        }
+
         const data = EditorModule.getCollectFormData();
         const items = data.items || [];
         if (items.length === 0) {
@@ -781,8 +859,18 @@ const App = {
         showToast('CSV exportado correctamente', 'success');
     },
 
-    // Feature 3: Send by Email
+    // Feature 3: Send by Email (PRO Feature)
     sendByEmail() {
+        if (typeof AuthSubscription !== 'undefined' && (!AuthSubscription.userPlan || !AuthSubscription.userPlan.isPro)) {
+            if (typeof showToast === 'function') {
+                showToast('🔒 El envío de documentos por Email es exclusivo del PLAN PRO. ¡Suscríbete para desbloquearlo!', 'error');
+            }
+            if (typeof AuthSubscription.showPricingModal === 'function') {
+                AuthSubscription.showPricingModal();
+            }
+            return;
+        }
+
         const data = EditorModule.getCollectFormData();
         const clientEmail = data.client.email || '';
         const subject = encodeURIComponent(`${data.docType} N° ${data.number} - ${data.emitter.name || 'Emitia Pro'}`);

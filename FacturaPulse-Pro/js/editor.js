@@ -89,32 +89,17 @@ const EditorModule = {
             }
         });
 
-        // Template Selector explicit change listener & Chip Buttons sync
+        // Template Selector explicit change listener
         const templateSelect = document.getElementById('doc-template');
-        const syncTemplateState = (tmplVal) => {
-            if (templateSelect) templateSelect.value = tmplVal;
-            const paperContainer = document.getElementById('document-paper');
-            if (paperContainer) {
-                paperContainer.className = `document-paper template-${tmplVal}`;
-            }
-            document.querySelectorAll('.chip-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.template === tmplVal);
-            });
-            this.recalculateAndRender();
-        };
-
         if (templateSelect) {
             templateSelect.addEventListener('change', (e) => {
-                syncTemplateState(e.target.value);
+                const paperContainer = document.getElementById('document-paper');
+                if (paperContainer) {
+                    paperContainer.className = `document-paper template-${e.target.value}`;
+                }
+                this.recalculateAndRender();
             });
         }
-
-        document.querySelectorAll('.chip-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const tmpl = e.target.dataset.template;
-                if (tmpl) syncTemplateState(tmpl);
-            });
-        });
 
         // Currency change symbol update
         document.getElementById('doc-currency').addEventListener('change', (e) => {
@@ -306,15 +291,7 @@ const EditorModule = {
 
         tr.innerHTML = `
             <td>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <label class="item-img-label" title="Adjuntar foto del producto" style="cursor: pointer; flex-shrink: 0;">
-                        <input type="file" accept="image/*" class="item-img-input file-input-hidden">
-                        <div class="item-img-preview" style="width: 32px; height: 32px; border-radius: 4px; border: 1px dashed var(--border-color); display: flex; align-items: center; justify-content: center; background: var(--bg-input); overflow: hidden;">
-                            ${image ? `<img src="${image}" style="width:100%; height:100%; object-fit:cover;">` : `<i class="fa-solid fa-camera" style="font-size:0.75rem; color:var(--text-muted);"></i>`}
-                        </div>
-                    </label>
-                    <input type="text" class="form-input item-desc" placeholder="Descripción del concepto / producto" value="${desc}">
-                </div>
+                <input type="text" class="form-input item-desc" placeholder="Descripción del concepto / producto" value="${desc}">
             </td>
             <td>
                 <input type="number" class="form-input item-qty text-center" value="${qty}" min="0.1" step="0.1">
@@ -329,24 +306,6 @@ const EditorModule = {
                 <button type="button" class="btn-remove-item" title="Eliminar ítem">&times;</button>
             </td>
         `;
-
-        // Item photo reader
-        const imgInput = tr.querySelector('.item-img-input');
-        const imgPreview = tr.querySelector('.item-img-preview');
-        if (imgInput) {
-            imgInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (evt) => {
-                        tr.dataset.image = evt.target.result;
-                        imgPreview.innerHTML = `<img src="${evt.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
-                        this.recalculateAndRender();
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
 
         // Listen for row edits
         tr.querySelectorAll('input').forEach(inp => {

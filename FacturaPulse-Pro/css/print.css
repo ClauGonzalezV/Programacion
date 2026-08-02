@@ -84,26 +84,10 @@
         background: #ffffff;
     }
 
-    /* Template background & header card overrides for print & PDF */
+    /* Template background overrides for print & PDF */
     .template-dark .doc-page { background-color: #0f172a !important; color: #f8fafc !important; }
     .template-neon .doc-page { background-color: #0f172a !important; color: #e2e8f0 !important; }
-    .template-cyber .doc-page { background-color: #090d16 !important; color: #f3e8ff !important; }
-    .template-nordic .doc-page { background-color: #f8fafc !important; color: #1e293b !important; }
-    .template-architect .doc-page { background-color: #f0f9ff !important; color: #0c4a6e !important; }
-    .template-vintage .doc-page { background-color: #fdfbf7 !important; color: #381d09 !important; }
     .template-colorful .doc-page { background: linear-gradient(135deg, #fefce8 0%, #fff7ed 30%, #fff1f2 60%, #f0f9ff 100%) !important; }
-    .template-emerald .doc-page { background-color: #ffffff !important; }
-    .template-sunset .doc-page { background-color: #ffffff !important; }
-    .template-impact .doc-page { background-color: #ffffff !important; }
-
-    /* Preserve Header Banners in PDF */
-    .template-nordic .doc-page .doc-header-grid { background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important; color: #ffffff !important; }
-    .template-emerald .doc-page .doc-header-grid { background: linear-gradient(135deg, #064e3b 0%, #047857 100%) !important; color: #ffffff !important; }
-    .template-cyber .doc-page .doc-header-grid { background: linear-gradient(135deg, #2e1065 0%, #581c87 100%) !important; color: #ffffff !important; }
-    .template-sunset .doc-page .doc-header-grid { background: linear-gradient(135deg, #ea580c 0%, #db2777 50%, #9333ea 100%) !important; color: #ffffff !important; }
-    .template-architect .doc-page .doc-header-grid { background: #0284c7 !important; color: #ffffff !important; }
-    .template-vintage .doc-page .doc-header-grid { background: #78350f !important; color: #fef3c7 !important; }
-    .template-impact .doc-page .doc-header-grid { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%) !important; color: #ffffff !important; }
 
     /* Don't break after the last page */
     .doc-page:last-child {
