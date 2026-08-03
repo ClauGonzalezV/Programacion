@@ -39,12 +39,10 @@
     /* Box Shadows & Glass Effect */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.4);
-    --glass-bg: rgba(30, 41, 59, 0.75);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* Light Theme Overrides */
+/* --- Light Theme Variables --- */
 [data-theme="light"] {
     --bg-app: #f1f5f9;
     --bg-header: #ffffff;

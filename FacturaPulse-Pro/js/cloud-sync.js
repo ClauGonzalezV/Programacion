@@ -248,5 +248,34 @@ const CloudSync = {
         if (typeof App !== 'undefined' && App.renderAllViews) {
             App.renderAllViews();
         }
+    },
+
+    // 8. Emitter Profiles Sync to Firestore Cloud
+    async syncEmitterProfile(profileData) {
+        const uid = this.userUid;
+        if (!uid || !this.db) return;
+        try {
+            await this.db.collection('users').doc(uid).collection('settings').doc('emitter').set({
+                ...profileData,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+            console.log('CloudSync: Emitter profile synced to cloud.');
+        } catch (err) {
+            console.log('CloudSync emitter profile sync info:', err.message);
+        }
+    },
+
+    async syncEmitterProfiles(profilesList) {
+        const uid = this.userUid;
+        if (!uid || !this.db) return;
+        try {
+            await this.db.collection('users').doc(uid).collection('settings').doc('emitter_profiles').set({
+                profiles: profilesList,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+            console.log('CloudSync: Emitter profiles list synced to cloud.');
+        } catch (err) {
+            console.log('CloudSync emitter profiles sync info:', err.message);
+        }
     }
 };

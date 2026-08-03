@@ -21,6 +21,7 @@ const EditorModule = {
         }
         this.setDefaultDates();
         this.bindEvents();
+        this.initEmitterProfiles();
         this.renderInitialItemRows();
         this.recalculateAndRender();
     },
@@ -137,7 +138,7 @@ const EditorModule = {
         // Logo Upload
         const logoDropzone = document.getElementById('logo-dropzone');
         const logoFileInput = document.getElementById('input-logo-file');
-        
+
         logoDropzone.addEventListener('click', (e) => {
             if (e.target.id !== 'btn-remove-logo' && !e.target.closest('#btn-remove-logo')) {
                 logoFileInput.click();
@@ -289,12 +290,14 @@ const EditorModule = {
         tr.className = 'editor-item-row';
         if (image) tr.dataset.image = image;
 
+        const intQty = Math.max(1, Math.round(qty) || 1);
+
         tr.innerHTML = `
             <td>
                 <input type="text" class="form-input item-desc" placeholder="Descripción del concepto / producto" value="${desc}">
             </td>
             <td>
-                <input type="number" class="form-input item-qty text-center" value="${qty}" min="0.1" step="0.1">
+                <input type="number" class="form-input item-qty text-center" value="${intQty}" min="1" step="1">
             </td>
             <td>
                 <input type="number" class="form-input item-price text-right" value="${price}" min="0" step="0.01">
@@ -306,6 +309,13 @@ const EditorModule = {
                 <button type="button" class="btn-remove-item" title="Eliminar ítem">&times;</button>
             </td>
         `;
+
+        // Force integer quantity on change
+        tr.querySelector('.item-qty').addEventListener('change', (e) => {
+            const val = parseInt(e.target.value, 10) || 1;
+            e.target.value = Math.max(1, val);
+            this.recalculateAndRender();
+        });
 
         // Listen for row edits
         tr.querySelectorAll('input').forEach(inp => {
@@ -329,7 +339,8 @@ const EditorModule = {
 
         document.querySelectorAll('.editor-item-row').forEach(row => {
             const desc = row.querySelector('.item-desc').value;
-            const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+            const qtyInput = row.querySelector('.item-qty');
+            const qty = Math.max(1, parseInt(qtyInput ? qtyInput.value : 1, 10) || 1);
             const price = parseFloat(row.querySelector('.item-price').value) || 0;
             const rowTotal = qty * price;
             const img = (row.dataset && row.dataset.image) ? row.dataset.image : '';
@@ -489,8 +500,8 @@ const EditorModule = {
     },
 
     getUserCounterKey() {
-        const uid = typeof AuthSubscription !== 'undefined' && AuthSubscription.currentUser 
-            ? AuthSubscription.currentUser.uid || AuthSubscription.currentUser.email 
+        const uid = typeof AuthSubscription !== 'undefined' && AuthSubscription.currentUser
+            ? AuthSubscription.currentUser.uid || AuthSubscription.currentUser.email
             : 'guest';
         return `facturapulse_counters_${uid.replace(/[^a-zA-Z0-9]/g, '_')}`;
     },
@@ -507,7 +518,7 @@ const EditorModule = {
         const counterKey = this.getUserCounterKey();
         const counters = JSON.parse(localStorage.getItem(counterKey) || '{}');
         const history = typeof StorageManager !== 'undefined' ? StorageManager.getHistory() : [];
-        
+
         let maxNum = counters[docType] || 0;
         history.forEach(doc => {
             if (doc.docType === docType && doc.number) {
@@ -538,7 +549,7 @@ const EditorModule = {
         const counterKey = this.getUserCounterKey();
         const counters = JSON.parse(localStorage.getItem(counterKey) || '{}');
         const history = typeof StorageManager !== 'undefined' ? StorageManager.getHistory() : [];
-        
+
         let maxNum = counters[docTypeVal] || 0;
         history.forEach(doc => {
             if (doc.docType === docTypeVal && doc.number) {
@@ -559,5 +570,107 @@ const EditorModule = {
         const nextFolio = `${prefix}-${year}-${padded}`;
         document.getElementById('input-doc-number').value = nextFolio;
         this.recalculateAndRender();
+    },
+
+    renderEmitterProfileOptions(selectedId) {
+        const select = document.getElementById('select-emitter-profile');
+        if (!select) return;
+        const profiles = typeof StorageManager !== 'undefined' ? StorageManager.getEmitterProfiles() : [];
+        select.innerHTML = profiles.map(p => `<option value="${p.id}">🏢 ${p.name || 'Empresa'}</option>`).join('');
+        select.innerHTML += `<option value="new">➕ Crear Nuevo Perfil</option>`;
+        if (selectedId) select.value = selectedId;
+    },
+
+    initEmitterProfiles() {
+        const select = document.getElementById('select-emitter-profile');
+        if (!select) return;
+
+        this.renderEmitterProfileOptions();
+
+        if (!select.dataset.bound) {
+            select.dataset.bound = 'true';
+            select.addEventListener('change', (e) => {
+                const val = e.target.value;
+                if (val === 'new') {
+                    document.getElementById('input-emitter-name').value = '';
+                    document.getElementById('input-emitter-taxid').value = '';
+                    document.getElementById('input-emitter-email').value = '';
+                    document.getElementById('input-emitter-phone').value = '';
+                    document.getElementById('input-emitter-address').value = '';
+                    document.getElementById('input-emitter-name').focus();
+                    if (typeof showToast === 'function') showToast('📝 Completa los campos y haz clic en "Guardar Perfil" para registrar tu nueva empresa.', 'info');
+                } else {
+                    this.loadSelectedEmitterProfile(val);
+                    if (typeof showToast === 'function') showToast('🏢 Perfil de emisor cargado en el editor.', 'info');
+                }
+                this.recalculateAndRender();
+            });
+        }
+    },
+
+    loadSelectedEmitterProfile(profileId) {
+        const profiles = typeof StorageManager !== 'undefined' ? StorageManager.getEmitterProfiles() : [];
+        const found = profiles.find(p => p.id === profileId);
+        if (!found) return;
+
+        const nameEl = document.getElementById('input-emitter-name');
+        const taxIdEl = document.getElementById('input-emitter-taxid');
+        const emailEl = document.getElementById('input-emitter-email');
+        const phoneEl = document.getElementById('input-emitter-phone');
+        const addressEl = document.getElementById('input-emitter-address');
+        const bankEl = document.getElementById('input-bank-details');
+
+        if (nameEl) nameEl.value = found.name || '';
+        if (taxIdEl) taxIdEl.value = found.taxId || '';
+        if (emailEl) emailEl.value = found.email || '';
+        if (phoneEl) phoneEl.value = found.phone || '';
+        if (addressEl) addressEl.value = found.address || '';
+        if (bankEl) bankEl.value = found.bankDetails || '';
+
+        if (found.logo) {
+            this.state.logoDataUrl = found.logo;
+            const img = document.getElementById('logo-preview-img');
+            const placeholder = document.getElementById('logo-placeholder');
+            if (img && placeholder) {
+                img.src = found.logo;
+                img.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+            }
+        }
+    },
+
+    saveCurrentAsEmitterProfile() {
+        const nameEl = document.getElementById('input-emitter-name');
+        const taxIdEl = document.getElementById('input-emitter-taxid');
+        const emailEl = document.getElementById('input-emitter-email');
+        const phoneEl = document.getElementById('input-emitter-phone');
+        const addressEl = document.getElementById('input-emitter-address');
+        const bankEl = document.getElementById('input-bank-details');
+
+        const name = nameEl ? nameEl.value.trim() : '';
+        if (!name) {
+            if (typeof showToast === 'function') showToast('⚠️ Escribe la Razón Social o Nombre de Empresa para guardar el perfil.', 'error');
+            return null;
+        }
+
+        const profileId = `prof-${name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
+        const profileData = {
+            id: profileId,
+            name: name,
+            taxId: taxIdEl ? taxIdEl.value : '',
+            email: emailEl ? emailEl.value : '',
+            phone: phoneEl ? phoneEl.value : '',
+            address: addressEl ? addressEl.value : '',
+            bankDetails: bankEl ? bankEl.value : '',
+            logo: this.state.logoDataUrl || ''
+        };
+
+        if (typeof StorageManager !== 'undefined') {
+            StorageManager.saveMultiEmitterProfile(profileData);
+            this.renderEmitterProfileOptions(profileId);
+            this.recalculateAndRender();
+            if (typeof showToast === 'function') showToast(`🏢 Perfil de empresa "${name}" guardado exitosamente.`, 'success');
+        }
+        return profileId;
     }
 };

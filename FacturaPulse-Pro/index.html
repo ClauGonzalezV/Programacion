@@ -257,8 +257,16 @@
 
                             <!-- Section: Emitter (My Business) -->
                             <div class="card-box">
-                                <div class="card-box-header">
+                                <div class="card-box-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                                     <h3><i class="fa-solid fa-building"></i> Mis Datos (Emisor)</h3>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <select id="select-emitter-profile" class="form-select form-select-sm" style="max-width: 180px; font-size: 0.8rem; padding: 4px 8px;">
+                                            <option value="default">🏢 Perfil Principal</option>
+                                        </select>
+                                        <button type="button" class="btn btn-outline btn-xs" id="btn-save-emitter-profile" onclick="EditorModule.saveCurrentAsEmitterProfile()" title="Guardar datos como Perfil de Empresa">
+                                            <i class="fa-solid fa-floppy-disk"></i> Guardar Perfil
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="card-box-body">
                                     <div class="logo-upload-zone" id="logo-dropzone">
@@ -582,9 +590,11 @@
                     <div class="section-header-row">
                         <div>
                             <h2><i class="fa-solid fa-chart-pie"></i> Dashboard de Estadísticas</h2>
-                            <p class="section-desc">Resumen visual de tus ventas, clientes top y documentos pendientes.
-                            </p>
+                            <p class="section-desc">Resumen visual de tus ventas, clientes top y documentos pendientes.</p>
                         </div>
+                        <button type="button" class="btn btn-outline" id="btn-export-accounting-report">
+                            <i class="fa-solid fa-file-invoice-dollar" style="color: #10b981;"></i> Reporte Contable PDF
+                        </button>
                     </div>
                     <div class="dashboard-stats-row" id="dashboard-stats-row">
                         <!-- Dynamic stat cards -->
@@ -717,14 +727,14 @@
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>N° Folio</th>
-                                    <th>Tipo</th>
-                                    <th>Cliente</th>
-                                    <th>Fecha</th>
-                                    <th>Vence</th>
-                                    <th>Total</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
+                                    <th style="white-space: nowrap;">N° Folio</th>
+                                    <th style="white-space: nowrap;">Tipo</th>
+                                    <th style="white-space: nowrap;">Cliente</th>
+                                    <th style="white-space: nowrap;">Fecha</th>
+                                    <th style="white-space: nowrap;">Vence</th>
+                                    <th style="white-space: nowrap;">Total</th>
+                                    <th style="white-space: nowrap;">Estado</th>
+                                    <th style="white-space: nowrap; text-align: center; min-width: 190px;">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="history-table-body">
@@ -1312,23 +1322,23 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <!-- JavaScript Scripts -->
-    <script src="js/storage.js?v=47"></script>
-    <script src="js/i18n.js?v=47"></script>
-    <script src="js/templates.js?v=47"></script>
-    <script src="js/editor.js?v=47"></script>
-    <script src="js/export.js?v=47"></script>
-    <script src="js/dashboard.js?v=47"></script>
-    <script src="js/cloud-sync.js?v=47"></script>
-    <script src="js/auth-subscription.js?v=47"></script>
-    <script src="js/payments.js?v=47"></script>
-    <script src="js/legal.js?v=47"></script>
-    <script src="js/app.js?v=47"></script>
+    <script src="js/storage.js?v=50"></script>
+    <script src="js/i18n.js?v=50"></script>
+    <script src="js/templates.js?v=50"></script>
+    <script src="js/editor.js?v=50"></script>
+    <script src="js/export.js?v=50"></script>
+    <script src="js/dashboard.js?v=50"></script>
+    <script src="js/cloud-sync.js?v=50"></script>
+    <script src="js/auth-subscription.js?v=50"></script>
+    <script src="js/payments.js?v=50"></script>
+    <script src="js/legal.js?v=50"></script>
+    <script src="js/app.js?v=50"></script>
 
     <!-- PWA Service Worker Cleanup & Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js?v=47').catch(err => console.log('SW reg error:', err));
+                navigator.serviceWorker.register('./sw.js?v=50').catch(err => console.log('SW reg error:', err));
             });
         }
     </script>

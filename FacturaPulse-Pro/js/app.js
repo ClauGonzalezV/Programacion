@@ -199,6 +199,14 @@ const App = {
             });
         }
 
+        // Accounting Report Export Button
+        const btnAccountingReport = document.getElementById('btn-export-accounting-report');
+        if (btnAccountingReport) {
+            btnAccountingReport.addEventListener('click', () => {
+                ExportModule.exportAccountingReportPDF();
+            });
+        }
+
         // Email Button
         const btnEmail = document.getElementById('btn-send-email');
         if (btnEmail) {
@@ -696,26 +704,31 @@ const App = {
 
             return `
             <tr>
-                <td><strong>${h.number}</strong></td>
-                <td>${h.docType}</td>
-                <td>${h.client.name || 'Sin cliente'}</td>
-                <td>${h.date || 'N/A'}</td>
-                <td>${fmtDate} ${dueBadge}</td>
-                <td><strong>${h.currencySymbol} ${fmtTotal}</strong></td>
-                <td><span class="status-pill ${h.status}">${h.status}</span></td>
-                <td>
-                    <button type="button" class="btn btn-xs btn-secondary" onclick="App.reloadDocumentFromHistory('${h.number}')" title="Cargar en editor">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button type="button" class="btn btn-xs btn-outline" onclick="App.duplicateDocument('${h.number}')" title="Duplicar">
-                        <i class="fa-solid fa-copy"></i>
-                    </button>
-                    <button type="button" class="btn btn-xs ${pdfClass}" onclick="App.exportHistoryPDF('${h.number}')" title="${pdfTitle}">
-                        <i class="fa-solid ${pdfIcon}"></i>
-                    </button>
-                    <button type="button" class="btn btn-xs btn-ghost" onclick="App.deleteHistoryItem('${h.number}')">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+                <td style="white-space: nowrap;"><strong style="font-family: monospace;">${h.number}</strong></td>
+                <td style="white-space: nowrap;">${h.docType}</td>
+                <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${h.client.name || 'Sin cliente'}">${h.client.name || 'Sin cliente'}</td>
+                <td style="white-space: nowrap;">${h.date || 'N/A'}</td>
+                <td style="white-space: nowrap;">${fmtDate} ${dueBadge}</td>
+                <td style="white-space: nowrap;"><strong>${h.currencySymbol} ${fmtTotal}</strong></td>
+                <td style="white-space: nowrap;"><span class="status-pill ${h.status}">${h.status}</span></td>
+                <td style="white-space: nowrap; text-align: center; min-width: 190px;">
+                    <div style="display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                        <button type="button" class="btn btn-xs btn-secondary" onclick="App.reloadDocumentFromHistory('${h.number}')" title="Cargar en editor">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button type="button" class="btn btn-xs btn-outline" onclick="App.sendPaymentReminder('${h.number}')" title="Enviar Recordatorio de Cobranza">
+                            <i class="fa-solid fa-bell" style="color: #f59e0b;"></i>
+                        </button>
+                        <button type="button" class="btn btn-xs btn-outline" onclick="App.duplicateDocument('${h.number}')" title="Duplicar">
+                            <i class="fa-solid fa-copy"></i>
+                        </button>
+                        <button type="button" class="btn btn-xs ${pdfClass}" onclick="App.exportHistoryPDF('${h.number}')" title="${pdfTitle}">
+                            <i class="fa-solid ${pdfIcon}"></i>
+                        </button>
+                        <button type="button" class="btn btn-xs btn-ghost text-danger" onclick="App.deleteHistoryItem('${h.number}')" title="Eliminar">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
                 </td>
             </tr>
         `;
@@ -854,6 +867,67 @@ const App = {
 
         window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_self');
         showToast(targetEmail ? `Abriendo correo para: ${targetEmail}...` : 'Abriendo cliente de correo...', 'info');
+    },
+
+    initTheme() {
+        const savedTheme = localStorage.getItem('emitia_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const icon = document.getElementById('theme-icon') || document.getElementById('theme-toggle-icon');
+        if (icon) {
+            icon.className = savedTheme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+        const btn = document.getElementById('btn-theme-toggle');
+        if (btn && !btn.dataset.bound) {
+            btn.dataset.bound = 'true';
+            btn.addEventListener('click', () => this.toggleTheme());
+        }
+    },
+
+    toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('emitia_theme', next);
+        const icon = document.getElementById('theme-icon') || document.getElementById('theme-toggle-icon');
+        if (icon) {
+            icon.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+        showToast(next === 'light' ? '☀️ Modo Claro activado' : '🌙 Modo Oscuro activado', 'info');
+    },
+
+    sendPaymentReminder(docNumber) {
+        const history = StorageManager.getHistory();
+        const doc = history.find(h => h.number === docNumber);
+        if (!doc) return;
+
+        let targetEmail = (doc.client && doc.client.email) ? doc.client.email.trim() : '';
+        if (!targetEmail && typeof AuthSubscription !== 'undefined' && AuthSubscription.currentUser) {
+            targetEmail = AuthSubscription.currentUser.email || '';
+        }
+
+        const emitterName = (doc.emitter && doc.emitter.name) ? doc.emitter.name : 'Emitia Pro';
+        const clientName = (doc.client && doc.client.name) ? doc.client.name : 'Estimado/a Cliente';
+        const isOverdue = doc.dueDate && new Date(doc.dueDate) < new Date();
+        const subject = encodeURIComponent(`📌 ${isOverdue ? 'RECORDATORIO DE PAGO VENCIDO' : 'RECORDATORIO DE COBRO'}: ${doc.docType} N° ${doc.number} - ${emitterName}`);
+
+        const flowUrl = `https://www.flow.cl/uri/0BTj8Mtxz${targetEmail ? '?email=' + encodeURIComponent(targetEmail) : ''}`;
+
+        const body = encodeURIComponent(
+            `Estimado/a ${clientName},\n\n` +
+            `Le saludamos cordialmente de ${emitterName}.\n\n` +
+            `Le recordamos que el documento ${doc.docType} N° ${doc.number} por un monto total de ${doc.currencySymbol} ${doc.totals.grandTotal.toLocaleString('es-CL', { minimumFractionDigits: 2 })} ` +
+            `${isOverdue ? 'se encuentra VENCIDO desde el ' + doc.dueDate : 'registra fecha de vencimiento el ' + doc.dueDate}.\n\n` +
+            `💳 Para su comodidad, puede realizar el pago en línea mediante Webpay/Flow a través del siguiente enlace seguro:\n` +
+            `${flowUrl}\n\n` +
+            `${doc.bankDetails ? '📌 O mediante transferencia bancaria a los siguientes datos:\n' + doc.bankDetails + '\n\n' : ''}` +
+            `Agradecemos responder a este correo adjuntando el comprobante de pago una vez realizado.\n\n` +
+            `Atentamente,\n` +
+            `${emitterName}\n` +
+            `${doc.emitter && doc.emitter.phone ? doc.emitter.phone : ''}`
+        );
+
+        window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_self');
+        showToast(targetEmail ? `Abriendo correo de cobranza para: ${targetEmail}...` : 'Abriendo cliente de correo...', 'info');
     }
 };
 

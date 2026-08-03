@@ -8,6 +8,7 @@ const StorageManager = {
         CATALOG: 'facturapulse_catalog',
         HISTORY: 'facturapulse_history',
         EMITTER: 'facturapulse_emitter_profile',
+        EMITTER_PROFILES: 'facturapulse_emitter_profiles_list',
         SETTINGS: 'facturapulse_settings'
     },
 
@@ -202,6 +203,64 @@ const StorageManager = {
 
     saveEmitterProfile(profile) {
         localStorage.setItem(this.KEYS.EMITTER, JSON.stringify(profile));
+        if (typeof CloudSync !== 'undefined' && CloudSync.syncEmitterProfile) {
+            CloudSync.syncEmitterProfile(profile);
+        }
+    },
+
+    getEmitterProfiles() {
+        const json = localStorage.getItem(this.KEYS.EMITTER_PROFILES);
+        if (!json) {
+            const current = this.getEmitterProfile() || {};
+            let userName = 'Perfil Principal';
+            if (typeof AuthSubscription !== 'undefined' && AuthSubscription.currentUser && AuthSubscription.currentUser.name) {
+                userName = AuthSubscription.currentUser.name;
+            }
+            const initialList = [{
+                id: 'prof-default',
+                name: current.name || userName,
+                taxId: current.taxId || '',
+                email: current.email || (typeof AuthSubscription !== 'undefined' && AuthSubscription.currentUser ? AuthSubscription.currentUser.email : ''),
+                phone: current.phone || '',
+                address: current.address || '',
+                logo: current.logo || '',
+                bankDetails: current.bankDetails || ''
+            }];
+            localStorage.setItem(this.KEYS.EMITTER_PROFILES, JSON.stringify(initialList));
+            return initialList;
+        }
+        try {
+            return JSON.parse(json) || [];
+        } catch (e) {
+            return [];
+        }
+    },
+
+    saveMultiEmitterProfile(profileData) {
+        const profiles = this.getEmitterProfiles();
+        const existingIdx = profiles.findIndex(p => p.id === profileData.id || p.name === profileData.name);
+        if (existingIdx >= 0) {
+            profiles[existingIdx] = { ...profiles[existingIdx], ...profileData };
+        } else {
+            profileData.id = profileData.id || `prof-${Date.now()}`;
+            profiles.push(profileData);
+        }
+        localStorage.setItem(this.KEYS.EMITTER_PROFILES, JSON.stringify(profiles));
+        this.saveEmitterProfile(profileData);
+        if (typeof CloudSync !== 'undefined' && CloudSync.syncEmitterProfiles) {
+            CloudSync.syncEmitterProfiles(profiles);
+        }
+        return profiles;
+    },
+
+    deleteMultiEmitterProfile(id) {
+        let profiles = this.getEmitterProfiles();
+        profiles = profiles.filter(p => p.id !== id);
+        localStorage.setItem(this.KEYS.EMITTER_PROFILES, JSON.stringify(profiles));
+        if (typeof CloudSync !== 'undefined' && CloudSync.syncEmitterProfiles) {
+            CloudSync.syncEmitterProfiles(profiles);
+        }
+        return profiles;
     },
 
     // --- BACKUP & RESTORE ---
