@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "emitia-pro",
   "cleanUrls": true,
   "routes": [
     { "src": "/landing", "dest": "/landing.html" },
