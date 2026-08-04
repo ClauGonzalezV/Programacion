@@ -22,8 +22,47 @@ const EditorModule = {
         this.setDefaultDates();
         this.bindEvents();
         this.initEmitterProfiles();
+        this.initAccordions();
         this.renderInitialItemRows();
         this.recalculateAndRender();
+    },
+
+    initAccordions() {
+        const cardBoxes = document.querySelectorAll('#invoice-form .card-box');
+        cardBoxes.forEach(card => {
+            const header = card.querySelector('.card-box-header');
+            if (!header) return;
+
+            // Remove legacy icons and duplicate chevron elements to leave strictly ONE indicator
+            const legacyIcons = header.querySelectorAll('.card-collapse-icon');
+            legacyIcons.forEach(ic => ic.remove());
+
+            const icons = header.querySelectorAll('.accordion-chevron-icon, .fa-chevron-right, .fa-chevron-down, svg[data-icon="chevron-right"], svg[data-icon="chevron-down"]');
+            if (icons.length > 1) {
+                for (let i = 1; i < icons.length; i++) {
+                    icons[i].remove();
+                }
+            } else if (icons.length === 0) {
+                const chevron = document.createElement('i');
+                chevron.className = 'fa-solid fa-chevron-right accordion-chevron-icon';
+                header.appendChild(chevron);
+            } else {
+                icons[0].classList.add('accordion-chevron-icon');
+            }
+
+            // All section cards start collapsed (closed) by default on load
+            card.classList.remove('is-open');
+
+            if (!header.dataset.accordionBound) {
+                header.dataset.accordionBound = 'true';
+                header.addEventListener('click', (e) => {
+                    if (e.target.closest('button, input, select, label, .header-tools, .toggle-switch-btn')) {
+                        return;
+                    }
+                    card.classList.toggle('is-open');
+                });
+            }
+        });
     },
 
     setDefaultDates() {
@@ -87,6 +126,47 @@ const EditorModule = {
             if (el) {
                 el.addEventListener('input', () => this.recalculateAndRender());
                 el.addEventListener('change', () => this.recalculateAndRender());
+            }
+        });
+
+        // 1. Real-time sanitization for Phone fields (numbers, +, spaces, hyphens, parentheses only)
+        ['input-emitter-phone', 'input-client-phone', 'modal-client-phone'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.setAttribute('type', 'tel');
+                el.setAttribute('inputmode', 'tel');
+                el.addEventListener('input', () => {
+                    el.value = el.value.replace(/[^0-9+\s\-()]/g, '');
+                });
+            }
+        });
+
+        // 2. Real-time sanitization for RUT fields (numbers, K, dots, hyphens only)
+        ['input-emitter-taxid', 'input-client-taxid', 'modal-client-taxid'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.setAttribute('inputmode', 'text');
+                el.addEventListener('input', () => {
+                    el.value = el.value.replace(/[^0-9kK\.\-]/g, '');
+                });
+                el.addEventListener('blur', () => {
+                    if (el.value.trim()) {
+                        el.value = this.formatRut(el.value);
+                        this.recalculateAndRender();
+                    }
+                });
+            }
+        });
+
+        // 3. Real-time sanitization for Price, Tax, Shipping & Discount numeric fields (positive numbers/decimals only)
+        ['input-tax-rate', 'input-discount-val', 'input-shipping-fee', 'modal-catalog-price'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.setAttribute('type', 'number');
+                el.setAttribute('inputmode', 'decimal');
+                el.addEventListener('input', () => {
+                    el.value = el.value.replace(/[^0-9\.]/g, '');
+                });
             }
         });
 
@@ -155,6 +235,9 @@ const EditorModule = {
                     document.getElementById('logo-preview-img').classList.remove('hidden');
                     document.getElementById('logo-placeholder').classList.add('hidden');
                     document.getElementById('btn-remove-logo').classList.remove('hidden');
+                    
+                    const companyName = document.getElementById('input-emitter-name') ? document.getElementById('input-emitter-name').value.trim() : '';
+                    this.updateHeaderBrand(evt.target.result, companyName);
                     this.recalculateAndRender();
                 };
                 reader.readAsDataURL(file);
@@ -169,6 +252,9 @@ const EditorModule = {
             document.getElementById('logo-preview-img').classList.add('hidden');
             document.getElementById('logo-placeholder').classList.remove('hidden');
             document.getElementById('btn-remove-logo').classList.add('hidden');
+            
+            const companyName = document.getElementById('input-emitter-name') ? document.getElementById('input-emitter-name').value.trim() : '';
+            this.updateHeaderBrand('', companyName);
             this.recalculateAndRender();
         });
 
@@ -310,12 +396,20 @@ const EditorModule = {
             </td>
         `;
 
-        // Force integer quantity on change
-        tr.querySelector('.item-qty').addEventListener('change', (e) => {
-            const val = parseInt(e.target.value, 10) || 1;
-            e.target.value = Math.max(1, val);
-            this.recalculateAndRender();
-        });
+        // Force integer quantity on input and change
+        const qtyInp = tr.querySelector('.item-qty');
+        if (qtyInp) {
+            qtyInp.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                if (e.target.value && parseInt(e.target.value, 10) < 1) e.target.value = '1';
+                this.recalculateAndRender();
+            });
+            qtyInp.addEventListener('change', (e) => {
+                const val = parseInt(e.target.value, 10) || 1;
+                e.target.value = Math.max(1, val);
+                this.recalculateAndRender();
+            });
+        }
 
         // Listen for row edits
         tr.querySelectorAll('input').forEach(inp => {
@@ -587,6 +681,10 @@ const EditorModule = {
 
         this.renderEmitterProfileOptions();
 
+        if (select.value && select.value !== 'new') {
+            this.loadSelectedEmitterProfile(select.value);
+        }
+
         if (!select.dataset.bound) {
             select.dataset.bound = 'true';
             select.addEventListener('change', (e) => {
@@ -636,7 +734,74 @@ const EditorModule = {
                 img.classList.remove('hidden');
                 placeholder.classList.add('hidden');
             }
+        } else {
+            this.state.logoDataUrl = '';
+            const img = document.getElementById('logo-preview-img');
+            const placeholder = document.getElementById('logo-placeholder');
+            if (img && placeholder) {
+                img.src = '';
+                img.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+            }
         }
+        this.updateHeaderBrand(found.logo || '', found.name || '');
+    },
+
+    updateHeaderBrand(logoUrl, companyName) {
+        const headerLogo = document.getElementById('header-custom-logo');
+        const headerIcon = document.getElementById('header-default-icon');
+        const headerSubtitle = document.getElementById('header-company-name');
+
+        if (logoUrl && headerLogo && headerIcon) {
+            headerLogo.src = logoUrl;
+            headerLogo.classList.remove('hidden');
+            headerIcon.classList.add('hidden');
+        } else if (headerLogo && headerIcon) {
+            headerLogo.src = '';
+            headerLogo.classList.add('hidden');
+            headerIcon.classList.remove('hidden');
+        }
+
+        if (headerSubtitle) {
+            headerSubtitle.textContent = companyName ? companyName : 'Cotizaciones & Facturas Profesionales';
+        }
+    },
+
+    formatRut(rut) {
+        if (!rut) return '';
+        let clean = rut.replace(/[^0-9kK]/g, '').toUpperCase();
+        if (clean.length < 2) return clean;
+        let body = clean.slice(0, -1);
+        let dv = clean.slice(-1);
+        body = body.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        return `${body}-${dv}`;
+    },
+
+    isValidRut(rut) {
+        if (!rut) return true;
+        let clean = rut.replace(/[^0-9kK]/g, '').toUpperCase();
+        if (clean.length < 7 || clean.length > 10) return false;
+        let body = clean.slice(0, -1);
+        let dv = clean.slice(-1);
+        let sum = 0;
+        let multiplier = 2;
+        for (let i = body.length - 1; i >= 0; i--) {
+            sum += parseInt(body.charAt(i), 10) * multiplier;
+            multiplier = multiplier === 7 ? 2 : multiplier + 1;
+        }
+        let expectedDv = 11 - (sum % 11);
+        let expectedDvChar = expectedDv === 11 ? '0' : expectedDv === 10 ? 'K' : String(expectedDv);
+        return dv === expectedDvChar;
+    },
+
+    isValidEmail(email) {
+        if (!email) return true;
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    },
+
+    isValidPhone(phone) {
+        if (!phone) return true;
+        return /^[\d\s+\-()]{6,20}$/.test(phone.trim());
     },
 
     saveCurrentAsEmitterProfile() {
@@ -648,8 +813,30 @@ const EditorModule = {
         const bankEl = document.getElementById('input-bank-details');
 
         const name = nameEl ? nameEl.value.trim() : '';
-        if (!name) {
-            if (typeof showToast === 'function') showToast('⚠️ Escribe la Razón Social o Nombre de Empresa para guardar el perfil.', 'error');
+        if (!name || name.length < 2) {
+            if (typeof showToast === 'function') showToast('⚠️ Escribe una Razón Social o Nombre de Empresa válido para guardar.', 'error');
+            if (nameEl) nameEl.focus();
+            return null;
+        }
+
+        const taxId = taxIdEl ? taxIdEl.value.trim() : '';
+        if (taxId && !this.isValidRut(taxId)) {
+            if (typeof showToast === 'function') showToast('⚠️ La Identificación Fiscal (RUT) no es válida. (Ej: 76.123.456-7 o 12.345.678-K).', 'error');
+            if (taxIdEl) taxIdEl.focus();
+            return null;
+        }
+
+        const email = emailEl ? emailEl.value.trim() : '';
+        if (email && !this.isValidEmail(email)) {
+            if (typeof showToast === 'function') showToast('⚠️ El Correo Electrónico ingresado no es válido (ej: contacto@empresa.com).', 'error');
+            if (emailEl) emailEl.focus();
+            return null;
+        }
+
+        const phone = phoneEl ? phoneEl.value.trim() : '';
+        if (phone && !this.isValidPhone(phone)) {
+            if (typeof showToast === 'function') showToast('⚠️ El Teléfono ingresado no es válido (ej: +56 9 1234 5678).', 'error');
+            if (phoneEl) phoneEl.focus();
             return null;
         }
 
@@ -657,13 +844,15 @@ const EditorModule = {
         const profileData = {
             id: profileId,
             name: name,
-            taxId: taxIdEl ? taxIdEl.value : '',
-            email: emailEl ? emailEl.value : '',
-            phone: phoneEl ? phoneEl.value : '',
-            address: addressEl ? addressEl.value : '',
-            bankDetails: bankEl ? bankEl.value : '',
+            taxId: taxId ? this.formatRut(taxId) : '',
+            email: email,
+            phone: phone,
+            address: addressEl ? addressEl.value.trim() : '',
+            bankDetails: bankEl ? bankEl.value.trim() : '',
             logo: this.state.logoDataUrl || ''
         };
+
+        if (taxIdEl && profileData.taxId) taxIdEl.value = profileData.taxId;
 
         if (typeof StorageManager !== 'undefined') {
             StorageManager.saveMultiEmitterProfile(profileData);
@@ -672,5 +861,53 @@ const EditorModule = {
             if (typeof showToast === 'function') showToast(`🏢 Perfil de empresa "${name}" guardado exitosamente.`, 'success');
         }
         return profileId;
+    },
+
+    deleteCurrentEmitterProfile() {
+        const select = document.getElementById('select-emitter-profile');
+        if (!select) return;
+
+        const profileId = select.value;
+        if (!profileId || profileId === 'new') {
+            if (typeof showToast === 'function') showToast('⚠️ Selecciona un perfil guardado para eliminar.', 'info');
+            return;
+        }
+
+        const profiles = typeof StorageManager !== 'undefined' ? StorageManager.getEmitterProfiles() : [];
+        const found = profiles.find(p => p.id === profileId);
+        const profileName = found ? found.name : 'Perfil';
+
+        if (!confirm(`¿Estás seguro de que deseas eliminar el perfil de empresa "${profileName}"?`)) {
+            return;
+        }
+
+        if (typeof StorageManager !== 'undefined') {
+            StorageManager.deleteMultiEmitterProfile(profileId);
+        }
+
+        const remaining = typeof StorageManager !== 'undefined' ? StorageManager.getEmitterProfiles() : [];
+        const nextSelected = remaining.length > 0 ? remaining[0].id : null;
+
+        this.renderEmitterProfileOptions(nextSelected);
+
+        if (nextSelected) {
+            this.loadSelectedEmitterProfile(nextSelected);
+        } else {
+            ['input-emitter-name', 'input-emitter-taxid', 'input-emitter-email', 'input-emitter-phone', 'input-emitter-address', 'input-bank-details'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            this.state.logoDataUrl = '';
+            const img = document.getElementById('logo-preview-img');
+            const placeholder = document.getElementById('logo-placeholder');
+            if (img && placeholder) {
+                img.src = '';
+                img.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+            }
+        }
+
+        this.recalculateAndRender();
+        if (typeof showToast === 'function') showToast(`🗑️ Perfil de empresa "${profileName}" eliminado exitosamente de la base de datos.`, 'success');
     }
 };

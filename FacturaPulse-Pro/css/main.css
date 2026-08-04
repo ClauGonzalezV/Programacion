@@ -630,12 +630,22 @@ body {
 .card-box-header {
     background-color: var(--bg-card-header);
     padding: 14px 18px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 14px;
     user-select: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.card-box-header:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.card-box.is-open .card-box-header {
+    border-bottom: 1px solid var(--border-color);
 }
 
 .card-box-header h3 {
@@ -666,20 +676,46 @@ body {
     flex-shrink: 0;
 }
 
-.card-collapse-icon {
-    margin-left: 8px !important;
-    flex-shrink: 0;
+.accordion-chevron-icon {
+    font-size: 0.85rem;
     color: var(--text-muted);
-    font-size: 0.75rem;
-    transition: transform 0.2s ease;
+    transition: transform 0.25s ease;
+    margin-left: 10px;
+    flex-shrink: 0;
 }
 
-.card-box-body {
+.card-box.is-open .accordion-chevron-icon {
+    transform: rotate(90deg);
+}
+
+/* Accordeon Collapsed Default Logic */
+.editor-pane .card-box .card-box-body {
+    display: none !important;
     padding: 16px;
 }
 
-.card-box-body.no-padding {
-    padding: 0;
+.editor-pane .card-box.is-open .card-box-body {
+    display: block !important;
+}
+
+.editor-pane .card-box.is-open .card-box-body.grid-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.editor-pane .card-box.is-open .card-box-body.grid-3 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+}
+
+.editor-pane .card-box.is-open .card-box-body.no-padding {
+    padding: 0 !important;
+}
+
+.editor-pane .card-box:not(.is-open) .card-box-header {
+    border-bottom: none !important;
 }
 
 /* --- Form Fields & Controls --- */

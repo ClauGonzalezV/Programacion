@@ -34,7 +34,6 @@ const App = {
         try { this.renderAllViews(); } catch (e) { console.error('renderAllViews error:', e); }
         try { this.initTheme(); } catch (e) { console.error('initTheme error:', e); }
         try { this.initResizer(); } catch (e) { console.error('initResizer error:', e); }
-        try { this.initCollapsibleCards(); } catch (e) { console.error('initCollapsibleCards error:', e); }
     },
 
     initResizer() {
@@ -74,31 +73,6 @@ const App = {
                 document.body.style.cursor = '';
                 document.body.style.userSelect = '';
             }
-        });
-    },
-
-    initCollapsibleCards() {
-        document.querySelectorAll('.card-box-header').forEach(header => {
-            header.style.cursor = 'pointer';
-            if (!header.querySelector('.card-collapse-icon')) {
-                const icon = document.createElement('i');
-                icon.className = 'fa-solid fa-chevron-down card-collapse-icon';
-                header.appendChild(icon);
-            }
-
-            header.addEventListener('click', (e) => {
-                if (e.target.closest('button') || e.target.closest('input') || e.target.closest('label') || e.target.closest('.header-tools')) {
-                    return;
-                }
-                const card = header.closest('.card-box');
-                if (card) {
-                    card.classList.toggle('collapsed');
-                    const icon = header.querySelector('.card-collapse-icon');
-                    if (icon) {
-                        icon.style.transform = card.classList.contains('collapsed') ? 'rotate(-90deg)' : 'rotate(0deg)';
-                    }
-                }
-            });
         });
     },
 
@@ -377,12 +351,38 @@ const App = {
         if (formClient) {
             formClient.addEventListener('submit', (e) => {
                 e.preventDefault();
+                const name = document.getElementById('modal-client-name') ? document.getElementById('modal-client-name').value.trim() : '';
+                const taxId = document.getElementById('modal-client-taxid') ? document.getElementById('modal-client-taxid').value.trim() : '';
+                const email = document.getElementById('modal-client-email') ? document.getElementById('modal-client-email').value.trim() : '';
+                const phone = document.getElementById('modal-client-phone') ? document.getElementById('modal-client-phone').value.trim() : '';
+                const address = document.getElementById('modal-client-address') ? document.getElementById('modal-client-address').value.trim() : '';
+
+                if (!name) {
+                    showToast('⚠️ Ingresa la Razón Social o Nombre del Cliente.', 'error');
+                    return;
+                }
+
+                if (taxId && typeof EditorModule !== 'undefined' && !EditorModule.isValidRut(taxId)) {
+                    showToast('⚠️ La Identificación Fiscal (RUT) del cliente no es válida (ej: 12.345.678-K).', 'error');
+                    return;
+                }
+
+                if (email && typeof EditorModule !== 'undefined' && !EditorModule.isValidEmail(email)) {
+                    showToast('⚠️ El Correo Electrónico del cliente no es válido (ej: contacto@cliente.com).', 'error');
+                    return;
+                }
+
+                if (phone && typeof EditorModule !== 'undefined' && !EditorModule.isValidPhone(phone)) {
+                    showToast('⚠️ El Teléfono del cliente no es válido (ej: +56 9 1234 5678).', 'error');
+                    return;
+                }
+
                 const client = {
-                    name: document.getElementById('modal-client-name') ? document.getElementById('modal-client-name').value : '',
-                    taxId: document.getElementById('modal-client-taxid') ? document.getElementById('modal-client-taxid').value : '',
-                    email: document.getElementById('modal-client-email') ? document.getElementById('modal-client-email').value : '',
-                    phone: document.getElementById('modal-client-phone') ? document.getElementById('modal-client-phone').value : '',
-                    address: document.getElementById('modal-client-address') ? document.getElementById('modal-client-address').value : ''
+                    name,
+                    taxId: (taxId && typeof EditorModule !== 'undefined') ? EditorModule.formatRut(taxId) : taxId,
+                    email,
+                    phone,
+                    address
                 };
                 StorageManager.addClient(client);
                 const modal = document.getElementById('modal-client');
