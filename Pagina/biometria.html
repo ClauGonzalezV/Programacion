@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gladiator Control - Equipos Biométricos de Acceso (Facial y Huella)</title>
+  
+  <meta name="description" content="Equipos de control de acceso biométrico facial y huella dactilar. Modelos 309, FR26 y 310 IP65 para condominios, empresas, colegios u hospitales en Chile y Perú.">
+  <meta name="keywords" content="Biometría facial, huella dactilar, control acceso biométrico, Modelo 309, Modelo FR26, Modelo 310 IP65, Gladiator Control">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gladiator Control - Equipos Biométricos de Acceso">
+  <meta property="og:description" content="Reconocimiento facial y huella dactilar de alta precisión para condominios y empresas.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://static.wixstatic.com/media/017f74_89bc4f37d2a14cc18db8605885730bde~mv2.png" type="image/png">
+
+  <!-- External Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <style>
+    .biometria-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .vertical-product-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #cbd5e1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .vertical-product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,242,254,0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER & NAVBAR ================= -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="index.html" class="logo">
+          <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+          <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">HOME</a></li>
+          <li><a href="productos.html" class="nav-link active" style="color: var(--primary-cyan);">PRODUCTOS</a></li>
+          <li><a href="index.html#soluciones" class="nav-link">SOLUCIONES</a></li>
+          <li><a href="index.html#infraestructuras" class="nav-link">NOSOTROS</a></li>
+          <li><a href="index.html#sedes" class="nav-link">SEDES</a></li>
+          <li><a href="index.html#contacto" class="nav-link">CONTACTO</a></li>
+        </ul>
+
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+          <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20Equipos%20Biom%C3%A9tricos" target="_blank" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Whatsapp click aquí
+          </a>
+          <button class="mobile-toggle" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero" style="padding-top: 140px; padding-bottom: 40px;">
+    <div class="container">
+      <div style="margin-bottom: 1.5rem;">
+        <a href="productos.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary-cyan); font-weight: 600; font-size: 0.9rem;">
+          <i class="fa-solid fa-arrow-left"></i> Volver a Catálogo de Productos
+        </a>
+      </div>
+
+      <div class="text-center mx-auto" style="max-width: 900px;">
+        <div class="section-tag">
+          <i class="fa-solid fa-fingerprint"></i> Tecnología Biométrica de Alta Precisión
+        </div>
+        <h1 class="gradient-text" style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">
+          EQUIPOS BIOMÉTRICOS DE ACCESO (FACIAL Y HUELLA)
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
+          Control de acceso inteligente basado en Biometría facial o dactilar. Desarrollamos proyectos integrales en Condominios, Colegios, Oficinas y Hospitales de Chile y Perú.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <a href="#fichas-tecnicas-biometria" class="btn btn-secondary" style="padding: 0.85rem 1.8rem;">
+            <i class="fa-solid fa-fingerprint"></i> Ver Fichas de Equipamiento Biométrico
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VERTICAL CARDS SHOWCASE (EXACTLY LIKE MODELO 501 & SIA) ================= -->
+  <section id="fichas-tecnicas-biometria" style="padding: 60px 0; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+    <div class="container">
+      
+      <div class="text-center mx-auto" style="margin-bottom: 3.5rem; max-width: 750px;">
+        <h2 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.75rem;">
+          FICHAS TÉCNICAS OFICIALES DE EQUIPOS BIOMÉTRICOS
+        </h2>
+        <p style="color: var(--text-muted);">
+          Especificaciones de los Modelos 309, FR26, 310 IP65 y Analítica CCTV Facial.
+        </p>
+      </div>
+
+      <!-- 4 VERTICAL CARDS GRID -->
+      <div class="biometria-card-grid">
+
+        <!-- CARD 1: MODELO 309 -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #2563eb; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">BIOMETRÍA MULTIMODAL</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">TERMINAL MODELO 309</div>
+            </div>
+            <div style="background: #ffffff; color: #1e3a8a; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">MODELO 309</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="15" width="90" height="110" rx="10" fill="#0f172a" stroke="#2563eb" stroke-width="3"/>
+                <rect x="35" y="25" width="70" height="50" rx="4" fill="#1e293b"/>
+                <circle cx="70" cy="45" r="12" fill="none" stroke="#00f2fe" stroke-width="2"/>
+                <path d="M 64 43 Q 70 38 76 43" stroke="#38bdf8" stroke-width="1.5" fill="none"/>
+                <circle cx="70" cy="92" r="14" fill="#000000" stroke="#10b981" stroke-width="2"/>
+                <path d="M 64 92 Q 70 85 76 92 Q 70 99 64 92" stroke="#10b981" stroke-width="1.5" fill="none"/>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Capacidad Caras:</strong> 2.000 Rostros / Caras en memoria interna.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Capacidad Huellas:</strong> 3.000 Huellas Dactilares de alta precisión.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Capacidad RFID:</strong> 10.000 Tarjetas de proximidad RFID.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Conectividad:</strong> Puerto TCP/IP, Wiegand Out y relé para puertas.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 2: MODELO FR26 -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #0d9488; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">FACIAL ALTO FLUJO</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">TERMINAL MODELO FR26</div>
+            </div>
+            <div style="background: #ffffff; color: #0f766e; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">FR26</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="15" width="90" height="110" rx="10" fill="#0f172a" stroke="#0d9488" stroke-width="3"/>
+                <rect x="33" y="23" width="74" height="94" rx="6" fill="#1e293b"/>
+                <path d="M 50 45 L 60 45 M 80 45 L 90 45 M 50 75 Q 70 85 90 75" stroke="#00f2fe" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <circle cx="55" cy="55" r="3" fill="#00f2fe"/>
+                <circle cx="85" cy="55" r="3" fill="#00f2fe"/>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Capacidad Caras:</strong> 5.000 Rostros / Caras con IA Liveness.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Capacidad RFID:</strong> 10.000 Tarjetas de proximidad RFID.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Velocidad ultra-rápida:</strong> Reconocimiento en menos de 0.3 segundos.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Uso Recomendado:</strong> Edificios de alto tráfico, colegios y empresas.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 3: MODELO 310 IP65 EXTERIOR -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #7c3aed; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">BIOMETRÍA EXTERIOR</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">MODELO 310 GRADO IP65</div>
+            </div>
+            <div style="background: #ffffff; color: #6d28d9; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">IP65</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="35" y="15" width="70" height="110" rx="8" fill="#0f172a" stroke="#7c3aed" stroke-width="3"/>
+                <circle cx="70" cy="45" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <path d="M 64 45 Q 70 38 76 45 Q 70 52 64 45" stroke="#10b981" stroke-width="2" fill="none"/>
+                <rect x="50" y="80" width="40" height="30" rx="4" fill="#334155"/>
+                <circle cx="70" cy="95" r="5" fill="#f59e0b"/>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Protección IP65:</strong> Carcasa antivandálica resistente a agua y intemperie.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Capacidad Huellas:</strong> 1.500 Huellas dactilares.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Capacidad RFID:</strong> 10.000 Tarjetas de proximidad.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Conectividad:</strong> Puertos TCP/IP y RS485 para integración.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 4: RECONOCIMIENTO FACIAL VÍA CCTV -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #059669; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">CCTV CON ANALÍTICA</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">BIOMETRÍA FACIAL CCTV</div>
+            </div>
+            <div style="background: #ffffff; color: #047857; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">CCTV IA</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="35" width="90" height="60" rx="8" fill="#0f172a" stroke="#059669" stroke-width="3"/>
+                <circle cx="70" cy="65" r="18" fill="#1e293b" stroke="#00f2fe" stroke-width="2"/>
+                <circle cx="70" cy="65" r="8" fill="#00f2fe"/>
+                <polygon points="70,15 85,35 55,35" fill="#047857"/>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Reconocimiento a Distancia:</strong> Captura facial desde cámaras CCTV 4K.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Integración Nativa:</strong> Enlace con el sistema de accesos y molinetes.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Alertas en Tiempo Real:</strong> Lista blanca / lista negra instantánea.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Ideal para:</strong> Colegios, Hospitales y Condominios de alta seguridad.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DIRECT QUOTE CTA BANNER (EXACTLY LIKE MODELO 501 & SIA) ================= -->
+  <section style="padding: 70px 0; background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(59, 130, 246, 0.15)); text-align: center;">
+    <div class="container mx-auto" style="max-width: 800px;">
+      <h3 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-white);">
+        ¿Necesitas Cotizar Equipos Biométricos para tu Proyecto?
+      </h3>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">
+        Contacta a nuestros especialistas en Chile (Santiago / Chillán) o Perú (Lima) para asesoría técnica inmediata y presupuesto personalizado.
+      </p>
+      <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20solicitar%20presupuesto%20para%20Equipos%20Biom%C3%A9tricos" target="_blank" class="btn btn-whatsapp" style="padding: 1.1rem 2.2rem; font-size: 1.1rem;">
+        <i class="fa-brands fa-whatsapp"></i> Hablar por WhatsApp +56 9 7699 1350
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+  <a href="https://api.whatsapp.com/send?phone=+56976991350" target="_blank" class="whatsapp-float" aria-label="WhatsApp Gladiator Control">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="logo">
+            <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+            <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+          </a>
+          <p>
+            Desarrollamos e integramos sistemas inteligentes de acceso, estacionamiento, intercomunicación y seguridad en Chile, Perú y México.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Líneas Destacadas</h4>
+          <ul class="footer-links">
+            <li><a href="biometria.html">Biometría & Accesos</a></li>
+            <li><a href="control-acceso-sia.html">Sistema SIA Integrado</a></li>
+            <li><a href="modelo-501.html">Modelo 501 Universal</a></li>
+            <li><a href="productos.html">Equipos Estacionamiento</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="index.html#infraestructuras">Nosotros</a></li>
+            <li><a href="index.html#sedes">Sedes</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Contacto Chile & Perú</h4>
+          <p style="margin-top: 0; font-size: 0.85rem;">
+            Santiago: 22 840 2124 | Chillán: 42 253 6701<br>
+            Lima Perú: 51905488105<br>
+            <strong>WhatsApp:</strong> +56 9 7699 1350<br>
+            <strong>Email:</strong> gladiatorcontrol@gmail.com
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Gladiator Control - Equipos Estacionamiento y Acceso. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

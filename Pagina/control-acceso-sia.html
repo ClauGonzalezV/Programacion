@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gladiator Control - Control de Accesos Sistema SIA Integrado</title>
+  
+  <meta name="description" content="Sistema de Control de Accesos SIA integrado para condominios, empresas y conjuntos habitacionales. Tecnología RFID, Códigos QR temporizados y APP móvil.">
+  <meta name="keywords" content="Sistema SIA, control de acceso condominios, lector dual RFID QR, invitaciones QR, Gladiator Control">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gladiator Control - Sistema SIA Integrado">
+  <meta property="og:description" content="Soluciones habitacionales y corporativas de control de acceso inteligente.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://static.wixstatic.com/media/017f74_89bc4f37d2a14cc18db8605885730bde~mv2.png" type="image/png">
+
+  <!-- External Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <style>
+    .sia-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .vertical-product-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #cbd5e1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .vertical-product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,242,254,0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER & NAVBAR ================= -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="index.html" class="logo">
+          <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+          <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">HOME</a></li>
+          <li><a href="productos.html" class="nav-link active" style="color: var(--primary-cyan);">PRODUCTOS</a></li>
+          <li><a href="index.html#soluciones" class="nav-link">SOLUCIONES</a></li>
+          <li><a href="index.html#infraestructuras" class="nav-link">NOSOTROS</a></li>
+          <li><a href="index.html#sedes" class="nav-link">SEDES</a></li>
+          <li><a href="index.html#contacto" class="nav-link">CONTACTO</a></li>
+        </ul>
+
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+          <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20el%20Sistema%20SIA%20Integrado" target="_blank" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Whatsapp click aquí
+          </a>
+          <button class="mobile-toggle" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero" style="padding-top: 140px; padding-bottom: 40px;">
+    <div class="container">
+      <div style="margin-bottom: 1.5rem;">
+        <a href="productos.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary-cyan); font-weight: 600; font-size: 0.9rem;">
+          <i class="fa-solid fa-arrow-left"></i> Volver a Catálogo de Productos
+        </a>
+      </div>
+
+      <div class="text-center mx-auto" style="max-width: 900px;">
+        <div class="section-tag">
+          <i class="fa-solid fa-house-lock"></i> Soluciones Habitacionales & Corporativas
+        </div>
+        <h1 class="gradient-text" style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">
+          CONTROL DE ACCESOS SISTEMA SIA INTEGRADO
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
+          Ya sea para un gran conjunto Habitacional o una sola Casa, Gladiator Control ofrece por medio de tecnología inteligente mejorar su seguridad, comunicación y accesos simples y seguros. <strong>La seguridad comienza en el Acceso.</strong>
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <a href="#fichas-tecnicas-sia" class="btn btn-secondary" style="padding: 0.85rem 1.8rem;">
+            <i class="fa-solid fa-layer-group"></i> Ver Fichas de Equipamiento
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VERTICAL CARDS SHOWCASE (EXACTLY LIKE MODELO 501) ================= -->
+  <section id="fichas-tecnicas-sia" style="padding: 60px 0; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+    <div class="container">
+      
+      <div class="text-center mx-auto" style="margin-bottom: 3.5rem; max-width: 750px;">
+        <h2 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.75rem;">
+          FICHAS TÉCNICAS OFICIALES DE EQUIPAMIENTO SIA
+        </h2>
+        <p style="color: var(--text-muted);">
+          Especificaciones detalladas de hardware, módulos controladores, software y kit base del Sistema SIA.
+        </p>
+      </div>
+
+      <!-- 4 VERTICAL CARDS GRID -->
+      <div class="sia-card-grid">
+
+        <!-- CARD 1: LECTOR DUAL RFID / QR -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #2563eb; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">SISTEMA SIA</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">LECTOR DUAL RFID / 2D CMOS</div>
+            </div>
+            <div style="background: #ffffff; color: #1e3a8a; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">RFID & QR</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="15" y="15" width="110" height="110" rx="12" fill="#0f172a" stroke="#00f2fe" stroke-width="3"/>
+                <rect x="30" y="30" width="80" height="80" rx="6" fill="#1e293b"/>
+                <circle cx="70" cy="55" r="14" fill="none" stroke="#00f2fe" stroke-width="2.5"/>
+                <path d="M 60 55 Q 70 45 80 55" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
+                <rect x="45" y="80" width="50" height="20" rx="4" fill="#000000" stroke="#f59e0b" stroke-width="1.5"/>
+                <text x="70" y="93" fill="#f59e0b" font-size="8" font-family="monospace" text-anchor="middle" font-weight="bold">QR SCAN</text>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Lector Dual Integrado:</strong> RFID 125Khz + Escáner 2D CMOS 640*480.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Confirmación Sonora:</strong> Aceptación y denegación por voz pre-grabada.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Dimensión Lector:</strong> 69 x 69 x 15 mm | Rango de lectura: 5 - 50 mm.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Entorno Operativo:</strong> Diseñado para alto volumen (-10 °C a 70 °C).
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 2: CENTRAL CONTROLADOR INDUSTRIAL 12VDC -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #0d9488; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">CENTRAL MODELO 501</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">CONTROLADOR INDUSTRIAL 12VDC</div>
+            </div>
+            <div style="background: #ffffff; color: #0f766e; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">TCP/IP</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="15" y="25" width="110" height="90" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="3"/>
+                <rect x="35" y="17" width="10" height="8" fill="#64748b"/>
+                <rect x="65" y="17" width="10" height="8" fill="#64748b"/>
+                <rect x="95" y="17" width="10" height="8" fill="#64748b"/>
+                <rect x="30" y="40" width="80" height="60" rx="4" fill="#0f172a"/>
+                <circle cx="50" cy="65" r="5" fill="#10b981"/>
+                <circle cx="70" cy="65" r="5" fill="#3b82f6"/>
+                <circle cx="90" cy="65" r="5" fill="#f59e0b"/>
+                <text x="70" y="85" fill="#00f2fe" font-size="7" font-family="monospace" text-anchor="middle">TCP/IP 12V</text>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Capacidad Registros:</strong> Soporta hasta 269.000 usuarios y tarjetas.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Red de Nodos:</strong> Conexión mediante Ethernet TCP/IP o Wi-Fi.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Fuente Regulada:</strong> Fuente de poder 220V a 12 VDC y 5 VDC.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Garantía del Vendedor:</strong> 6 meses de garantía official.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 3: SOFTWARE WINDOWS 11 & APP CELULAR -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #7c3aed; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">SOFTWARE & APP</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">WINDOWS 11 & APP RESIDENTES</div>
+            </div>
+            <div style="background: #ffffff; color: #6d28d9; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">APP QR</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="40" y="15" width="60" height="110" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+                <rect x="45" y="25" width="50" height="85" fill="#1e293b"/>
+                <rect x="55" y="45" width="30" height="30" fill="#ffffff"/>
+                <rect x="58" y="48" width="8" height="8" fill="#000000"/>
+                <rect x="74" y="48" width="8" height="8" fill="#000000"/>
+                <rect x="58" y="64" width="8" height="8" fill="#000000"/>
+                <text x="70" y="95" fill="#00f2fe" font-size="7" font-family="sans-serif" font-weight="bold" text-anchor="middle">APP MÓVIL</text>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Invitaciones QR:</strong> Códigos QR temporizados para visitas y delivery.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Apertura Bluetooth:</strong> Apertura de puertas y portones desde el celular.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Software Win11:</strong> Gestión completa de altas, bajas e historial.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Integración:</strong> Compatible con TAG UHF vehicular y cámaras LPR.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 4: KIT INCLUIDO -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #059669; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">KIT BASE</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">ACCESORIOS INICIALES INCLUIDOS</div>
+            </div>
+            <div style="background: #ffffff; color: #047857; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">KIT BASE</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="30" width="70" height="45" rx="4" fill="#2563eb" stroke="#1d4ed8" stroke-width="2"/>
+                <circle cx="45" cy="52" r="8" fill="none" stroke="#ffffff" stroke-width="2"/>
+                <rect x="45" y="50" width="40" height="25" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+                <rect x="52" y="56" width="12" height="12" fill="#0f172a"/>
+                <circle cx="105" cy="85" r="14" fill="#000000" stroke="#00f2fe" stroke-width="2"/>
+                <text x="70" y="112" fill="#0f172a" font-size="8" font-family="'Outfit', sans-serif" font-weight="bold" text-anchor="middle">KIT INCLUIDO</text>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>10 Tarjetas RFID:</strong> Codificadas en blanco para alta de usuarios.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>3 Códigos QR Estáticos:</strong> Para puntos de escaneo fijos.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Programación Rápida:</strong> Alta y baja simple de tarjetas.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Escalable:</strong> Ampliable a miles de credenciales extra.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DIRECT QUOTE CTA BANNER (EXACTLY LIKE MODELO 501) ================= -->
+  <section style="padding: 70px 0; background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(59, 130, 246, 0.15)); text-align: center;">
+    <div class="container mx-auto" style="max-width: 800px;">
+      <h3 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-white);">
+        ¿Necesitas Cotizar la Solución Sistema SIA para tu Proyecto?
+      </h3>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">
+        Contacta a nuestros especialistas en Chile (Santiago / Chillán) o Perú (Lima) para asesoría técnica inmediata y presupuesto personalizado.
+      </p>
+      <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20solicitar%20presupuesto%20para%20el%20Sistema%20SIA%20Integrado" target="_blank" class="btn btn-whatsapp" style="padding: 1.1rem 2.2rem; font-size: 1.1rem;">
+        <i class="fa-brands fa-whatsapp"></i> Hablar por WhatsApp +56 9 7699 1350
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+  <a href="https://api.whatsapp.com/send?phone=+56976991350" target="_blank" class="whatsapp-float" aria-label="WhatsApp Gladiator Control">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="logo">
+            <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+            <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+          </a>
+          <p>
+            Desarrollamos e integramos sistemas inteligentes de acceso, estacionamiento, intercomunicación y seguridad en Chile, Perú y México.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Líneas Destacadas</h4>
+          <ul class="footer-links">
+            <li><a href="control-acceso-sia.html">Sistema SIA Integrado</a></li>
+            <li><a href="modelo-501.html">Modelo 501 Universal</a></li>
+            <li><a href="productos.html">Equipos Estacionamiento</a></li>
+            <li><a href="productos.html">Biometría & Accesos</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="index.html#infraestructuras">Nosotros</a></li>
+            <li><a href="index.html#sedes">Sedes</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Contacto Chile & Perú</h4>
+          <p style="margin-top: 0; font-size: 0.85rem;">
+            Santiago: 22 840 2124 | Chillán: 42 253 6701<br>
+            Lima Perú: 51905488105<br>
+            <strong>WhatsApp:</strong> +56 9 7699 1350<br>
+            <strong>Email:</strong> gladiatorcontrol@gmail.com
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Gladiator Control - Equipos Estacionamiento y Acceso. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

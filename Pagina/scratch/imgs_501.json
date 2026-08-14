@@ -1,0 +1,86 @@
+[
+  {
+    "fetchpriority": "high",
+    "sizes": "145px",
+    "srcset": "https://static.wixstatic.com/media/017f74_8aaea903193842979eccb0a28aab99df~mv2.png/v1/fill/w_145,h_96,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/017f74_8aaea903193842979eccb0a28aab99df~mv2.png 1x, https://static.wixstatic.com/media/017f74_8aaea903193842979eccb0a28aab99df~mv2.png/v1/fill/w_290,h_192,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/017f74_8aaea903193842979eccb0a28aab99df~mv2.png 2x",
+    "id": "img_comp-mrl1dc5e",
+    "src": "/static/productos5_files/017f74_8aaea903193842979eccb0a28aab99df~mv2.png",
+    "alt": "logo gladiator azul.png",
+    "style": "object-fit:cover",
+    "class": "gRkIq0 sFiSiq",
+    "width": "145",
+    "height": "96"
+  },
+  {
+    "fetchpriority": "high",
+    "sizes": "270px",
+    "srcset": "https://static.wixstatic.com/media/017f74_9b1c7ff0fec54c31935f84e3ba625cf9~mv2.png/v1/fill/w_270,h_189,al_c,lg_1,q_85,enc_avif,quality_auto/67.png 1x, https://static.wixstatic.com/media/017f74_9b1c7ff0fec54c31935f84e3ba625cf9~mv2.png/v1/fill/w_372,h_261,al_c,lg_1,q_85,enc_avif,quality_auto/67.png 2x",
+    "id": "img_comp-k4empjmr",
+    "src": "/static/productos5_files/67.png",
+    "alt": "control vehiculos",
+    "style": "object-fit:cover",
+    "class": "KDamZi sFiSiq",
+    "width": "270",
+    "height": "189"
+  },
+  {
+    "fetchpriority": "high",
+    "sizes": "252px",
+    "srcset": "https://static.wixstatic.com/media/017f74_80f11929769a4812abdc2c22fafb9ac9~mv2_d_1240_1754_s_2.jpg/v1/fill/w_252,h_351,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/folleto%20%20ANTENA%20%20TAG%20UHF%2010.jpg 1x, https://static.wixstatic.com/media/017f74_80f11929769a4812abdc2c22fafb9ac9~mv2_d_1240_1754_s_2.jpg/v1/fill/w_504,h_702,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/folleto%20%20ANTENA%20%20TAG%20UHF%2010.jpg 2x",
+    "id": "img_comp-k4eqjd1f",
+    "src": "/static/productos5_files/folleto  ANTENA  TAG UHF 10.jpg",
+    "alt": "folleto  ANTENA",
+    "style": "object-fit:cover",
+    "class": "KDamZi sFiSiq",
+    "width": "252",
+    "height": "351"
+  },
+  {
+    "fetchpriority": "high",
+    "sizes": "249px",
+    "srcset": "https://static.wixstatic.com/media/017f74_1bf837401a984a3e9e21fe12fd3eba26~mv2_d_1240_1754_s_2.jpg/v1/fill/w_249,h_351,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/folleto%20TAG%20UHF.jpg 1x, https://static.wixstatic.com/media/017f74_1bf837401a984a3e9e21fe12fd3eba26~mv2_d_1240_1754_s_2.jpg/v1/fill/w_498,h_702,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/folleto%20TAG%20UHF.jpg 2x",
+    "id": "img_comp-k4eqlhhe",
+    "src": "/static/productos5_files/folleto TAG UHF.jpg",
+    "alt": "folleto TAG UHF",
+    "style": "object-fit:cover",
+    "class": "KDamZi sFiSiq",
+    "width": "249",
+    "height": "351"
+  },
+  {
+    "fetchpriority": "high",
+    "sizes": "249px",
+    "srcset": "https://static.wixstatic.com/media/017f74_b2ba21969e844d38a48f13f17e684d18~mv2_d_1240_1754_s_2.jpg/v1/fill/w_249,h_351,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/folleto%20%20CENTRAL%20UHF%2010.jpg 1x, https://static.wixstatic.com/media/017f74_b2ba21969e844d38a48f13f17e684d18~mv2_d_1240_1754_s_2.jpg/v1/fill/w_498,h_702,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/folleto%20%20CENTRAL%20UHF%2010.jpg 2x",
+    "id": "img_comp-k4eqp9jo",
+    "src": "/static/productos5_files/folleto  CENTRAL UHF 10.jpg",
+    "alt": "folleto  CENTRAL UHF 10",
+    "style": "object-fit:cover",
+    "class": "KDamZi sFiSiq",
+    "width": "249",
+    "height": "351"
+  },
+  {
+    "loading": "lazy",
+    "sizes": "1413px",
+    "srcset": "https://static.wixstatic.com/media/017f74_8093ba1dd3ea44269ee6b41dd40aaff4~mv2.png/v1/fill/w_1413,h_485,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/image.png 1x, https://static.wixstatic.com/media/017f74_8093ba1dd3ea44269ee6b41dd40aaff4~mv2.png/v1/fill/w_2121,h_728,al_c,q_90,enc_avif,quality_auto/image.png 2x",
+    "id": "img_comp-mrl5657q",
+    "src": "/static/productos5_files/image.png",
+    "alt": "image.png",
+    "style": "object-fit:cover",
+    "class": "gRkIq0 sFiSiq",
+    "width": "1413",
+    "height": "485"
+  },
+  {
+    "loading": "lazy",
+    "sizes": "118px",
+    "srcset": "https://static.wixstatic.com/media/017f74_8aaea903193842979eccb0a28aab99df~mv2.png/v1/fill/w_118,h_80,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/017f74_8aaea903193842979eccb0a28aab99df~mv2.png 1x, https://static.wixstatic.com/media/017f74_8aaea903193842979eccb0a28aab99df~mv2.png/v1/fill/w_236,h_160,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/017f74_8aaea903193842979eccb0a28aab99df~mv2.png 2x",
+    "id": "img_comp-mrla87cb",
+    "src": "/static/productos5_files/017f74_8aaea903193842979eccb0a28aab99df~mv2(1).png",
+    "alt": "logo gladiator azul.png",
+    "style": "object-fit:cover",
+    "class": "gRkIq0 sFiSiq",
+    "width": "118",
+    "height": "80"
+  }
+]

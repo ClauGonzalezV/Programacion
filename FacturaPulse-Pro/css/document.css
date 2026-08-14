@@ -5,19 +5,23 @@
 /* Multi-page document wrapper (transparent, stacks pages vertically) */
 .document-paper {
     width: 210mm;
-    background: transparent;
-    box-shadow: none;
-    border-radius: 0;
-    padding: 0;
+    max-width: 100%;
+    margin: 0 auto;
+    background: #ffffff;
+    color: #1e293b;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    gap: 20px; /* visual gap between pages */
-    box-sizing: border-box;
+    gap: 20px;
 }
 
 /* Individual A4 page sheet */
 .doc-page {
     width: 210mm;
+    max-width: 100%;
     min-height: 297mm;
     background-color: #ffffff;
     color: #1e293b;
@@ -29,6 +33,7 @@
     position: relative;
     box-sizing: border-box;
     transition: box-shadow 0.3s ease;
+    overflow-x: auto;
 }
 
 /* Base Template Structure */

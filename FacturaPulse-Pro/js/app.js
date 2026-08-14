@@ -34,6 +34,38 @@ const App = {
         try { this.renderAllViews(); } catch (e) { console.error('renderAllViews error:', e); }
         try { this.initTheme(); } catch (e) { console.error('initTheme error:', e); }
         try { this.initResizer(); } catch (e) { console.error('initResizer error:', e); }
+        try { this.initAutoDocumentScaler(); } catch (e) { console.error('initAutoDocumentScaler error:', e); }
+    },
+
+    initAutoDocumentScaler() {
+        const fitScaler = () => {
+            const wrapper = document.querySelector('.paper-container-wrapper');
+            const paper = document.getElementById('document-paper');
+            if (!wrapper || !paper) return;
+
+            const padding = 20;
+            const availableWidth = wrapper.clientWidth - padding;
+            const paperWidth = 794; // Ancho A4 en píxeles (210mm)
+
+            if (availableWidth > 0 && availableWidth < paperWidth) {
+                const scale = availableWidth / paperWidth;
+                paper.style.transform = `scale(${scale})`;
+                paper.style.transformOrigin = 'top center';
+                paper.style.marginBottom = `-${(paper.offsetHeight || 1123) * (1 - scale)}px`;
+            } else {
+                paper.style.transform = 'none';
+                paper.style.transformOrigin = 'top center';
+                paper.style.marginBottom = '0px';
+            }
+        };
+
+        window.addEventListener('resize', fitScaler);
+        window.addEventListener('orientationchange', fitScaler);
+        document.addEventListener('DOMContentLoaded', fitScaler);
+        setTimeout(fitScaler, 200);
+        setTimeout(fitScaler, 800);
+
+        window.fitDocumentPaperToContainer = fitScaler;
     },
 
     initResizer() {

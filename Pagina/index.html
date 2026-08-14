@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gladiator Control | Equipos estacionamiento y acceso</title>
+  
+  <meta name="description" content="Soluciones inteligentes para infraestructuras modernas. En Gladiator desarrollamos e integramos sistemas de acceso, intercomunicación y seguridad inteligente en Chile, Perú y México.">
+  <meta name="keywords" content="Gladiator Control, control de acceso, estacionamientos inteligentes, biometria, tarjetas, e-lockers, relojes medicos, Las Condes Santiago">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gladiator Control | Equipos estacionamiento y acceso">
+  <meta property="og:description" content="Desarrollamos soluciones inteligentes para edificios corporativos, hospitales y condominios.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.gladiatorcontrol.com">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://static.wixstatic.com/media/017f74_89bc4f37d2a14cc18db8605885730bde~mv2.png" type="image/png">
+
+  <!-- External Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ================= HEADER & NAVBAR ================= -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="index.html" class="logo">
+          <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+          <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">HOME</a></li>
+          <li><a href="productos.html" class="nav-link">PRODUCTOS</a></li>
+          <li><a href="#soluciones" class="nav-link">SOLUCIONES</a></li>
+          <li><a href="#infraestructuras" class="nav-link">NOSOTROS</a></li>
+          <li><a href="#sedes" class="nav-link">SEDES</a></li>
+          <li><a href="#contacto" class="nav-link">CONTACTO</a></li>
+        </ul>
+
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+          <a href="https://api.whatsapp.com/send?phone=+56976991350" target="_blank" class="btn btn-whatsapp" id="nav-wa-click">
+            <i class="fa-brands fa-whatsapp"></i> Whatsapp click aquí
+          </a>
+          <button class="mobile-toggle" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero" id="inicio">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="section-tag">
+            <i class="fa-solid fa-layer-group"></i> Soluciones Inteligentes
+          </div>
+          <h1>
+            Soluciones inteligentes para <span style="color: var(--primary-cyan);">infraestructuras modernas</span>
+          </h1>
+          <p>
+            En Gladiator desarrollamos e integramos sistemas de acceso, intercomunicación y seguridad inteligente que optimizan la gestión, protegen lo que más importa y mejoran la experiencia de usuarios en todo tipo de espacios.
+          </p>
+
+          <div class="hero-actions">
+            <a href="productos.html" class="btn btn-primary">
+              <i class="fa-solid fa-boxes-stacked"></i> VER LÍNEAS DE PRODUCTOS
+            </a>
+            <a href="#contacto" class="btn btn-secondary">
+              <i class="fa-solid fa-envelope"></i> Contáctanos
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-card-preview">
+          <div style="background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-glow);">
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+              <i class="fa-solid fa-shield-halved" style="font-size: 3rem; color: var(--primary-cyan);"></i>
+              <h3 style="margin-top: 1rem; font-size: 1.4rem;">Sistema Condominio Seguro</h3>
+              <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.3rem;">Biometría, Tarjetas - Claves & Gestión de Accesos</p>
+            </div>
+            <div style="display: grid; gap: 0.75rem;">
+              <div style="background: var(--bg-dark); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.9rem;"><i class="fa-solid fa-circle-check" style="color: var(--accent-emerald);"></i> Control Vehicular LPR</span>
+                <span style="font-size: 0.75rem; color: var(--primary-cyan); font-weight: 700;">ACTIVO</span>
+              </div>
+              <div style="background: var(--bg-dark); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.9rem;"><i class="fa-solid fa-circle-check" style="color: var(--accent-emerald);"></i> Biometría Facial B-Access</span>
+                <span style="font-size: 0.75rem; color: var(--primary-cyan); font-weight: 700;">ACTIVO</span>
+              </div>
+              <div style="background: var(--bg-dark); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.9rem;"><i class="fa-solid fa-circle-check" style="color: var(--accent-emerald);"></i> e-Lockers Computacionales</span>
+                <span style="font-size: 0.75rem; color: var(--primary-cyan); font-weight: 700;">ACTIVO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CORE OFFERINGS (PILARS) ================= -->
+  <section class="pillars-section" id="soluciones">
+    <div class="container">
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon"><i class="fa-solid fa-square-parking"></i></div>
+          <h3>Estacionamientos Inteligentes</h3>
+          <p>Control y automatización de accesos vehiculares para una operación más eficiente y segura.</p>
+          <a href="productos.html?cat=estacionamiento" style="display: inline-block; margin-top: 1rem; font-weight: 600; font-size: 0.9rem;">Ver Equipos de Parking &rarr;</a>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon"><i class="fa-solid fa-user-shield"></i></div>
+          <h3>Control de Acceso</h3>
+          <p>Soluciones para gestionar y monitorear el acceso de personas en tiempo real.</p>
+          <a href="productos.html?cat=acceso" style="display: inline-block; margin-top: 1rem; font-weight: 600; font-size: 0.9rem;">Ver Biometría & Accesos &rarr;</a>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon"><i class="fa-solid fa-building-shield"></i></div>
+          <h3>Comunicación e Interfonía para Condominios</h3>
+          <p>Biometría, tarjetas - claves, sistema de condominio seguro para comunidades residenciales.</p>
+          <a href="productos.html?cat=condominio" style="display: inline-block; margin-top: 1rem; font-weight: 600; font-size: 0.9rem;">Ver Condominio Seguro &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURES HIGHLIGHTS ================= -->
+  <section class="features-bar">
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature-box">
+          <i class="fa-solid fa-lock"></i>
+          <h4>Comunicación Segura</h4>
+          <p>Conectividad segura entre conserjería, departamentos y residentes.</p>
+        </div>
+
+        <div class="feature-box">
+          <i class="fa-solid fa-bolt"></i>
+          <h4>Respuesta Rápida</h4>
+          <p>Sistemas optimizados para una fluidez de acceso en milisegundos.</p>
+        </div>
+
+        <div class="feature-box">
+          <i class="fa-solid fa-chart-line"></i>
+          <h4>Gestión Eficiente</h4>
+          <p>Plataformas de monitoreo y análisis de datos en tiempo real.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INFRAESTRUCTURAS ATENDIDAS ================= -->
+  <section class="pillars-section" id="infraestructuras" style="background: var(--bg-card); border-y: 1px solid var(--border-light);">
+    <div class="container">
+      <div class="text-center mx-auto">
+        <div class="section-tag">
+          <i class="fa-solid fa-city"></i> Áreas de Aplicación
+        </div>
+        <h2 class="section-title">Tecnología para cada lugar que importa</h2>
+        <p class="section-subtitle mx-auto">
+          Desarrollamos soluciones inteligentes para edificios corporativos, hospitales y condominios. Integrando seguridad, automatización y análisis de datos.
+        </p>
+      </div>
+
+      <div class="pillars-grid">
+        <div class="pillar-card" style="background: var(--bg-dark);">
+          <div class="pillar-icon" style="color: var(--accent-amber); background: rgba(245, 158, 11, 0.1);"><i class="fa-solid fa-building"></i></div>
+          <h3>Condominios</h3>
+          <p>Control y seguridad para comunidades residenciales y acceso de visitas.</p>
+        </div>
+
+        <div class="pillar-card" style="background: var(--bg-dark);">
+          <div class="pillar-icon" style="color: var(--primary-cyan); background: rgba(0, 242, 254, 0.1);"><i class="fa-solid fa-car-side"></i></div>
+          <h3>Estacionamientos</h3>
+          <p>Sistemas inteligentes de control vehicular y parking.</p>
+        </div>
+
+        <div class="pillar-card" style="background: var(--bg-dark);">
+          <div class="pillar-icon" style="color: var(--primary-blue); background: rgba(59, 130, 246, 0.1);"><i class="fa-solid fa-briefcase"></i></div>
+          <h3>Edificios Corporativos</h3>
+          <p>Soluciones integrales para oficinas y empresas.</p>
+        </div>
+      </div>
+
+      <div class="text-center" style="margin-top: 3rem;">
+        <a href="productos.html" class="btn btn-primary">
+          <i class="fa-solid fa-boxes-stacked"></i> Ir al Catálogo de Productos (24 Líneas)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NEWSLETTER SECTION ================= -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-box">
+        <div class="newsletter-text">
+          <h3>Únete a nuestra lista de correo</h3>
+          <p>No te pierdas ninguna actualización</p>
+        </div>
+
+        <form class="newsletter-form" id="newsletter-form">
+          <input type="email" class="newsletter-input" placeholder="Ingresa tu correo electrónico" required>
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-paper-plane"></i> Suscríbete ahora
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRESENCIA INTERNACIONAL & SEDES ================= -->
+  <section class="offices-section" id="sedes">
+    <div class="container">
+      <div class="text-center mx-auto">
+        <div class="section-tag">
+          <i class="fa-solid fa-globe"></i> Presencia Internacional
+        </div>
+        <h2 class="section-title">Oficinas y Cobertura</h2>
+        <p class="section-subtitle mx-auto">
+          Brindamos desarrollo, instalación y soporte técnico directo en Chile, Perú y México.
+        </p>
+      </div>
+
+      <div class="offices-grid" id="offices-container">
+        <!-- Rendered via js/app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT FORM ================= -->
+  <section class="contact-section" id="contacto">
+    <div class="container">
+      <div class="text-center mx-auto">
+        <div class="section-tag">
+          <i class="fa-solid fa-headset"></i> Atención Especializada
+        </div>
+        <h2 class="section-title">Contáctanos</h2>
+        <p class="section-subtitle mx-auto">
+          Nuestro equipo te ayudará a encontrar la solución perfecta para tu espacio.
+        </p>
+      </div>
+
+      <div class="contact-grid mx-auto" style="max-width: 800px;">
+        <div class="contact-box" style="grid-column: 1 / -1;">
+          <form id="main-contact-form">
+            <div class="form-group">
+              <label for="form-name">Nombre Completo *</label>
+              <input type="text" id="form-name" class="form-control" placeholder="Ingresa tu nombre" required>
+            </div>
+
+            <div class="form-group">
+              <label for="form-email">Correo Electrónico *</label>
+              <input type="email" id="form-email" class="form-control" placeholder="ejemplo@dominio.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="form-phone">Teléfono / WhatsApp *</label>
+              <input type="tel" id="form-phone" class="form-control" placeholder="+56 9 7699 1350" required>
+            </div>
+
+            <div class="form-group">
+              <label for="form-msg">Mensaje o Detalle del Requerimiento *</label>
+              <textarea id="form-msg" class="form-control" placeholder="¿En qué espacio o proyecto podemos ayudarte? Describa aquí..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <i class="fa-solid fa-paper-plane"></i> Enviar Mensaje a Gladiator Control
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+  <a href="https://api.whatsapp.com/send?phone=+56976991350" target="_blank" class="whatsapp-float" aria-label="WhatsApp Gladiator Control">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="logo">
+            <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+            <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+          </a>
+          <p>
+            Desarrollamos e integramos sistemas inteligentes de acceso, estacionamiento, intercomunicación y seguridad en Chile, Perú y México.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Soluciones</h4>
+          <ul class="footer-links">
+            <li><a href="productos.html">Equipos Estacionamiento</a></li>
+            <li><a href="productos.html">Biometría & Accesos</a></li>
+            <li><a href="productos.html">Sistema Condominio Seguro</a></li>
+            <li><a href="productos.html">e-Lockers Inteligentes</a></li>
+            <li><a href="productos.html">Relojes Médicos</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="#infraestructuras">Nosotros</a></li>
+            <li><a href="#sedes">Sedes</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Contacto Chile</h4>
+          <p style="margin-top: 0; font-size: 0.85rem;">
+            Badajoz 100 Of. 502, Las Condes<br>
+            Santiago, Chile (CP 7560908)<br>
+            <strong>WhatsApp:</strong> +56 9 7699 1350<br>
+            <strong>Email:</strong> gladiatorcontrol@gmail.com
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Gladiator Control - Equipos Estacionamiento y Acceso. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -543,6 +543,9 @@ const EditorModule = {
         const data = this.getCollectFormData();
         const paperContainer = document.getElementById('document-paper');
         TemplatesEngine.renderDocument(data, paperContainer);
+        if (window.fitDocumentPaperToContainer) {
+            window.fitDocumentPaperToContainer();
+        }
     },
 
     loadSampleData() {

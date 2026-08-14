@@ -1,0 +1,61 @@
+initialTimestamp: now,
+initialRequestTimestamp: Math.round(performance.timeOrigin ? performance.timeOrigin + activationStart : now - performance.now() + activationStart)
+#SITE_CONTAINER.focus-ring-active
+:not(.has-custom-focus):not(.ignore-focus):not([tabindex='-1']):focus,
+#SITE_CONTAINER.focus-ring-active
+:not(.has-custom-focus):not(.ignore-focus):not([tabindex='-1']):focus
+Control de Accesos de Vehículos con TAG o Patentes Vehiculares - Gladiator Control
+'Email: ' + email + '\n' +
+'Teléfono: ' + telefono + '\n' +
+'Dirección: ' + direccion + '\n' +
+'Email: ' + email + '\n' +
+'Teléfono: ' + telefono + '\n' +
+'Dirección: ' + direccion + '\n' +
+'Email: ' + email + '\n' +
+'Teléfono: ' + telefono + '\n' +
+'Dirección: ' + direccion + '\n' +
+if (window.ResizeObserver &&
+const div = document.createElement('div')
+div.style.overflowY = 'scroll'
+div.style.width = '50px'
+div.style.height = '50px'
+div.style.visibility = 'hidden'
+document.body.appendChild(div)
+const scrollbarWidth= div.offsetWidth - div.clientWidth
+document.body.removeChild(div)
+top of page
+Ir al contenido principal
+Gladiator
+control
+HOME
+PRODUCTOS
+CONTACTO
+SOLUCIONES
+TIENDA
+SOPORTE
+Whatsapp click aqui
+Iniciar sesión
+SISTEMA CONTROL DE VEHICULOS TAG  UHF
+Perfeccionamos los antiguos Sistemas de Control de Acceso hasta llegar a  la casi Perfección del Control de Acceso por medio de TAGS de papel autoadhesivos al vidrio de los vehiculos.
+Conozca hoy el nuevo Sistema de Control de TAG  UHF  que tenemos a su disposición.
+FONO RAPIDO
+SANTIAGO  228402124
+LIMA  17397602
+GLADIATORCONTROL@GMAIL.COM
+Contáctanos
+Nuestro equipo te ayudará a encontrar la solución perfecta para tu espacio.
+CONTACTO
+Contáctanos
+Nuestro equipo te ayudará a encontrar la solución perfecta para tu espacio.
+CONTACTO
+Gladiator
+control
+bottom of page
+if (
+typeof Promise === 'undefined' ||
+typeof Set === 'undefined' ||
+typeof Object.assign === 'undefined' ||
+typeof Array.from === 'undefined' ||
+typeof Symbol === 'undefined'
+// send bi in order to detect the browsers in which polyfills are not working
+["location","window","site","seo","user"]

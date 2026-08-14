@@ -6,30 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Emitia Pro - Plataforma comercial de cotizaciones, presupuestos y facturas en PDF. Diseños profesionales, firma digital y cálculo automático en la nube.">
-    <meta name="keywords" content="facturas, cotizaciones, presupuestos, emitia pro, facturación chile, PDF comercial, cobrar online, flow, mercado pago">
+    <meta name="keywords"
+        content="facturas, cotizaciones, presupuestos, emitia pro, facturación chile, PDF comercial, cobrar online, flow, mercado pago">
     <meta name="robots" content="index, follow">
     <meta name="google-site-verification" content="googleeed7bceb38d59ea5" />
     <link rel="canonical" href="https://emitia-pro.vercel.app/">
-    
+
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://emitia-pro.vercel.app/">
     <meta property="og:title" content="Emitia Pro | Sistema de Facturación y Cotizaciones">
-    <meta property="og:description" content="Genera cotizaciones, facturas y presupuestos PDF profesionales en segundos. Firma digital, cobro online y almacenamiento en la nube.">
+    <meta property="og:description"
+        content="Genera cotizaciones, facturas y presupuestos PDF profesionales en segundos. Firma digital, cobro online y almacenamiento en la nube.">
     <meta property="og:image" content="https://emitia-pro.vercel.app/icons/icon-512.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://emitia-pro.vercel.app/">
     <meta property="twitter:title" content="Emitia Pro | Sistema de Facturación y Cotizaciones">
-    <meta property="twitter:description" content="Genera cotizaciones, facturas y presupuestos PDF profesionales en segundos.">
+    <meta property="twitter:description"
+        content="Genera cotizaciones, facturas y presupuestos PDF profesionales en segundos.">
 
     <title>Emitia Pro | Sistema de Facturación y Cotizaciones</title>
     <!-- Favicon & PWA Manifest -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
     <link rel="shortcut icon" href="favicon.svg?v=2">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4f46e5">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Emitia Pro">
+    <meta name="mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="favicon.svg?v=2">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,9 +61,11 @@
         <!-- Top Navigation Header -->
         <header class="app-header" id="app-header">
             <div class="header-brand">
-                <div class="brand-logo" id="header-brand-logo-container" style="overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <div class="brand-logo" id="header-brand-logo-container"
+                    style="overflow: hidden; display: flex; align-items: center; justify-content: center;">
                     <i class="fa-solid fa-bolt-lightning" id="header-default-icon"></i>
-                    <img id="header-custom-logo" class="hidden" alt="Logo Empresa" style="max-height: 28px; max-width: 32px; object-fit: contain; border-radius: 4px;">
+                    <img id="header-custom-logo" class="hidden" alt="Logo Empresa"
+                        style="max-height: 28px; max-width: 32px; object-fit: contain; border-radius: 4px;">
                 </div>
                 <div class="brand-info">
                     <h1 class="brand-title">Emitia <span class="badge-pro">PRO</span></h1>
@@ -101,7 +110,8 @@
                     <i class="fa-solid fa-user"></i>
                     <span class="btn-text">Iniciar Sesión</span>
                 </button>
-                <button type="button" class="icon-btn" id="btn-nav-admin-panel" title="Panel Desarrollador & Pruebas (Ctrl + Shift + A)"
+                <button type="button" class="icon-btn" id="btn-nav-admin-panel"
+                    title="Panel Desarrollador & Pruebas (Ctrl + Shift + A)"
                     onclick="AuthSubscription.showAdminPanel()">
                     <i class="fa-solid fa-screwdriver-wrench font-accent"></i>
                 </button>
@@ -278,16 +288,25 @@
 
                             <!-- Section: Emitter (My Business) -->
                             <div class="card-box">
-                                <div class="card-box-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                                <div class="card-box-header"
+                                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                                     <h3><i class="fa-solid fa-building"></i> Mis Datos (Emisor)</h3>
                                     <div style="display: flex; align-items: center; gap: 8px;">
-                                        <select id="select-emitter-profile" class="form-select form-select-sm" style="max-width: 180px; font-size: 0.8rem; padding: 4px 8px;">
+                                        <select id="select-emitter-profile" class="form-select form-select-sm"
+                                            style="max-width: 180px; font-size: 0.8rem; padding: 4px 8px;">
                                             <option value="default">🏢 Perfil Principal</option>
                                         </select>
-                                        <button type="button" class="btn btn-outline btn-xs" id="btn-save-emitter-profile" onclick="EditorModule.saveCurrentAsEmitterProfile()" title="Guardar datos como Perfil de Empresa">
+                                        <button type="button" class="btn btn-outline btn-xs"
+                                            id="btn-save-emitter-profile"
+                                            onclick="EditorModule.saveCurrentAsEmitterProfile()"
+                                            title="Guardar datos como Perfil de Empresa">
                                             <i class="fa-solid fa-floppy-disk"></i> Guardar Perfil
                                         </button>
-                                        <button type="button" class="btn btn-ghost text-danger btn-xs" id="btn-delete-emitter-profile" onclick="EditorModule.deleteCurrentEmitterProfile()" title="Eliminar el perfil de empresa seleccionado" style="color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.08); font-weight: 600;">
+                                        <button type="button" class="btn btn-ghost text-danger btn-xs"
+                                            id="btn-delete-emitter-profile"
+                                            onclick="EditorModule.deleteCurrentEmitterProfile()"
+                                            title="Eliminar el perfil de empresa seleccionado"
+                                            style="color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.08); font-weight: 600;">
                                             <i class="fa-solid fa-trash"></i> Eliminar
                                         </button>
                                     </div>
@@ -543,12 +562,15 @@
                                 </div>
                                 <div class="card-box-body">
                                     <div class="attachments-upload-zone">
-                                        <input type="file" id="input-attachment-files" multiple accept="image/*,.pdf,.doc,.docx,.zip" class="file-input-hidden">
-                                        <button type="button" class="btn btn-sm btn-outline" id="btn-trigger-attachment">
+                                        <input type="file" id="input-attachment-files" multiple
+                                            accept="image/*,.pdf,.doc,.docx,.zip" class="file-input-hidden">
+                                        <button type="button" class="btn btn-sm btn-outline"
+                                            id="btn-trigger-attachment">
                                             <i class="fa-solid fa-cloud-arrow-up"></i> Adjuntar Archivos / Documentos
                                         </button>
                                         <small style="color: var(--text-muted); margin-top: 6px; display: block;">
-                                            <i class="fa-solid fa-circle-info"></i> Los nombres de los documentos adjuntos figurarán en el pie del PDF.
+                                            <i class="fa-solid fa-circle-info"></i> Los nombres de los documentos
+                                            adjuntos figurarán en el pie del PDF.
                                         </small>
                                     </div>
                                     <div id="attachments-list-container" class="attachments-list margin-top-12">
@@ -587,11 +609,12 @@
                                 </div>
                                 <div class="preview-actions-divider"></div>
                                 <div class="action-group-primary">
-                                    <button type="button" class="btn btn-xs btn-outline btn-save-action" id="btn-save-draft"
-                                        title="Guardar borrador en memoria">
+                                    <button type="button" class="btn btn-xs btn-outline btn-save-action"
+                                        id="btn-save-draft" title="Guardar borrador en memoria">
                                         <i class="fa-solid fa-floppy-disk"></i> Guardar
                                     </button>
-                                    <button type="button" class="btn btn-xs btn-primary btn-print-action" id="btn-print-direct">
+                                    <button type="button" class="btn btn-xs btn-primary btn-print-action"
+                                        id="btn-print-direct">
                                         <i class="fa-solid fa-print"></i> Imprimir / PDF
                                     </button>
                                 </div>
@@ -614,7 +637,8 @@
                     <div class="section-header-row">
                         <div>
                             <h2><i class="fa-solid fa-chart-pie"></i> Dashboard de Estadísticas</h2>
-                            <p class="section-desc">Resumen visual de tus ventas, clientes top y documentos pendientes.</p>
+                            <p class="section-desc">Resumen visual de tus ventas, clientes top y documentos pendientes.
+                            </p>
                         </div>
                         <button type="button" class="btn btn-outline" id="btn-export-accounting-report">
                             <i class="fa-solid fa-file-invoice-dollar" style="color: #10b981;"></i> Reporte Contable PDF
@@ -824,24 +848,30 @@
             <div class="modal-body">
                 <form id="form-modal-catalog">
                     <input type="hidden" id="modal-catalog-id">
-                    
+
                     <!-- Imagen del Producto / Servicio -->
                     <div class="form-group">
                         <label>Imagen del Producto / Servicio (Opcional)</label>
-                        <div class="catalog-image-upload-wrap" style="display: flex; align-items: center; gap: 12px; margin-top: 6px; padding: 10px; border: 1px dashed var(--border-color); border-radius: 8px; background: var(--bg-input);">
-                            <div id="modal-catalog-img-preview" style="width: 54px; height: 54px; border-radius: 6px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; background: var(--bg-card); overflow: hidden; flex-shrink: 0;">
+                        <div class="catalog-image-upload-wrap"
+                            style="display: flex; align-items: center; gap: 12px; margin-top: 6px; padding: 10px; border: 1px dashed var(--border-color); border-radius: 8px; background: var(--bg-input);">
+                            <div id="modal-catalog-img-preview"
+                                style="width: 54px; height: 54px; border-radius: 6px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; background: var(--bg-card); overflow: hidden; flex-shrink: 0;">
                                 <i class="fa-solid fa-camera" style="font-size: 1.2rem; color: var(--text-muted);"></i>
                             </div>
                             <div style="flex: 1;">
-                                <label class="btn btn-xs btn-outline" style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+                                <label class="btn btn-xs btn-outline"
+                                    style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
                                     <i class="fa-solid fa-upload"></i> Subir Foto
-                                    <input type="file" id="modal-catalog-img-input" accept="image/*" style="display: none;">
+                                    <input type="file" id="modal-catalog-img-input" accept="image/*"
+                                        style="display: none;">
                                 </label>
-                                <button type="button" class="btn btn-xs btn-ghost text-danger" id="modal-catalog-img-remove" style="display: none; margin-left: 6px;">
+                                <button type="button" class="btn btn-xs btn-ghost text-danger"
+                                    id="modal-catalog-img-remove" style="display: none; margin-left: 6px;">
                                     <i class="fa-solid fa-trash"></i> Eliminar
                                 </button>
                                 <input type="hidden" id="modal-catalog-image">
-                                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Sube una foto del producto para adjuntarla automáticamente a tus facturas y cotizaciones.</p>
+                                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Sube una foto
+                                    del producto para adjuntarla automáticamente a tus facturas y cotizaciones.</p>
                             </div>
                         </div>
                     </div>
@@ -912,69 +942,96 @@
 
     <!-- MODAL: LOGIN / REGISTER (AUTH) -->
     <div class="modal-backdrop hidden" id="modal-auth">
-        <div class="modal-card auth-card-glass" style="max-width: 440px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(20px) saturate(180%); box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.25); overflow: hidden; position: relative;">
+        <div class="modal-card auth-card-glass"
+            style="max-width: 440px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(20px) saturate(180%); box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.25); overflow: hidden; position: relative;">
             <!-- Ambient Gradient Glow Background -->
-            <div style="position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 240px; height: 160px; background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(147, 51, 234, 0.15) 70%, transparent 100%); filter: blur(40px); pointer-events: none;"></div>
+            <div
+                style="position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 240px; height: 160px; background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(147, 51, 234, 0.15) 70%, transparent 100%); filter: blur(40px); pointer-events: none;">
+            </div>
 
-            <div class="modal-header" style="background: transparent; padding: 26px 28px 10px 28px; border-bottom: none; position: relative; z-index: 2; display: flex; align-items: flex-start; justify-content: space-between;">
+            <div class="modal-header"
+                style="background: transparent; padding: 26px 28px 10px 28px; border-bottom: none; position: relative; z-index: 2; display: flex; align-items: flex-start; justify-content: space-between;">
                 <div>
-                    <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 20px; font-size: 0.72rem; font-weight: 700; color: #a5b4fc; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 10px;">
+                    <div
+                        style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 20px; font-size: 0.72rem; font-weight: 700; color: #a5b4fc; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 10px;">
                         <i class="fa-solid fa-shield-halved" style="color: #6366f1;"></i> Acceso Seguro Emitia Pro
                     </div>
-                    <h3 id="modal-auth-title" style="font-size: 1.45rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <h3 id="modal-auth-title"
+                        style="font-size: 1.45rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; margin: 0; display: flex; align-items: center; gap: 10px;">
                         <i class="fa-solid fa-right-to-bracket" style="color: #818cf8;"></i> Iniciar Sesión
                     </h3>
                 </div>
-                <button type="button" class="modal-close" data-close="modal-auth" style="color: #94a3b8; font-size: 1.5rem; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); border: none; cursor: pointer; transition: all 0.2s ease;">&times;</button>
+                <button type="button" class="modal-close" data-close="modal-auth"
+                    style="color: #94a3b8; font-size: 1.5rem; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); border: none; cursor: pointer; transition: all 0.2s ease;">&times;</button>
             </div>
 
             <div class="modal-body" style="padding: 16px 28px 28px 28px; position: relative; z-index: 2;">
                 <form id="form-modal-auth">
                     <input type="hidden" id="modal-auth-is-register" value="false">
-                    
+
                     <div class="form-group margin-top-8">
-                        <label for="modal-auth-email" style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #94a3b8; margin-bottom: 6px; display: block;">
+                        <label for="modal-auth-email"
+                            style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #94a3b8; margin-bottom: 6px; display: block;">
                             Correo Electrónico
                         </label>
                         <div style="position: relative;">
-                            <i class="fa-solid fa-envelope" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #64748b; font-size: 0.95rem;"></i>
-                            <input type="email" id="modal-auth-email" class="form-input custom-auth-input" placeholder="tu@empresa.com" required style="padding-left: 44px; height: 48px; font-size: 0.92rem; border-radius: 12px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.12); color: #fff; width: 100%; transition: all 0.2s ease;">
+                            <i class="fa-solid fa-envelope"
+                                style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #64748b; font-size: 0.95rem;"></i>
+                            <input type="email" id="modal-auth-email" class="form-input custom-auth-input"
+                                placeholder="tu@empresa.com" required
+                                style="padding-left: 44px; height: 48px; font-size: 0.92rem; border-radius: 12px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.12); color: #fff; width: 100%; transition: all 0.2s ease;">
                         </div>
                     </div>
 
                     <div class="form-group margin-top-16">
-                        <label for="modal-auth-password" style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #94a3b8; margin-bottom: 6px; display: block;">
+                        <label for="modal-auth-password"
+                            style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #94a3b8; margin-bottom: 6px; display: block;">
                             Contraseña
                         </label>
                         <div style="position: relative;">
-                            <i class="fa-solid fa-lock" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #64748b; font-size: 0.95rem;"></i>
-                            <input type="password" id="modal-auth-password" class="form-input custom-auth-input" placeholder="••••••••" required minlength="6" style="padding-left: 44px; height: 48px; font-size: 0.92rem; border-radius: 12px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.12); color: #fff; width: 100%; transition: all 0.2s ease;">
+                            <i class="fa-solid fa-lock"
+                                style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #64748b; font-size: 0.95rem;"></i>
+                            <input type="password" id="modal-auth-password" class="form-input custom-auth-input"
+                                placeholder="••••••••" required minlength="6"
+                                style="padding-left: 44px; height: 48px; font-size: 0.92rem; border-radius: 12px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.12); color: #fff; width: 100%; transition: all 0.2s ease;">
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-full" id="modal-auth-submit" style="margin-top: 24px !important; height: 48px; min-height: 48px; font-size: 0.95rem; font-weight: 700; border-radius: 14px; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #9333ea 100%); box-shadow: 0 8px 25px -4px rgba(99, 102, 241, 0.5); border: none; cursor: pointer; transition: all 0.2s ease; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;">
+                    <button type="submit" class="btn btn-primary btn-full" id="modal-auth-submit"
+                        style="margin-top: 24px !important; height: 48px; min-height: 48px; font-size: 0.95rem; font-weight: 700; border-radius: 14px; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #9333ea 100%); box-shadow: 0 8px 25px -4px rgba(99, 102, 241, 0.5); border: none; cursor: pointer; transition: all 0.2s ease; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;">
                         <i class="fa-solid fa-right-to-bracket"></i> <span>Ingresar a Emitia Pro</span>
                     </button>
                 </form>
 
-                <div class="auth-divider" style="display: flex; align-items: center; text-align: center; margin: 22px 0; color: #64748b; font-size: 0.8rem; font-weight: 600;">
-                    <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
+                <div class="auth-divider"
+                    style="display: flex; align-items: center; text-align: center; margin: 22px 0; color: #64748b; font-size: 0.8rem; font-weight: 600;">
+                    <div
+                        style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);">
+                    </div>
                     <span style="padding: 0 12px; text-transform: lowercase; color: #94a3b8;">o bien</span>
-                    <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
+                    <div
+                        style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);">
+                    </div>
                 </div>
 
-                <button type="button" class="btn btn-full" id="btn-auth-google" style="height: 48px; border-radius: 14px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff; font-size: 0.92rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: all 0.2s ease; width: 100%;">
+                <button type="button" class="btn btn-full" id="btn-auth-google"
+                    style="height: 48px; border-radius: 14px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff; font-size: 0.92rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: all 0.2s ease; width: 100%;">
                     <svg width="18" height="18" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        <path fill="#4285F4"
+                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                        <path fill="#34A853"
+                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                        <path fill="#FBBC05"
+                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                        <path fill="#EA4335"
+                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
                     </svg>
                     <span>Continuar con Google</span>
                 </button>
 
                 <div class="text-center margin-top-20">
-                    <button type="button" class="btn-link" id="btn-toggle-auth-mode" style="background: transparent; border: none; color: #a5b4fc; font-size: 0.88rem; font-weight: 600; cursor: pointer; text-decoration: none; padding: 6px 12px; border-radius: 8px; transition: all 0.2s ease;">
+                    <button type="button" class="btn-link" id="btn-toggle-auth-mode"
+                        style="background: transparent; border: none; color: #a5b4fc; font-size: 0.88rem; font-weight: 600; cursor: pointer; text-decoration: none; padding: 6px 12px; border-radius: 8px; transition: all 0.2s ease;">
                         ¿No tienes cuenta? Regístrate aquí
                     </button>
                 </div>
@@ -984,50 +1041,70 @@
 
     <!-- MODAL: USER ACCOUNT PROFILE -->
     <div class="modal-backdrop hidden" id="modal-account">
-        <div class="modal-card auth-card-glass" style="max-width: 440px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(24px) saturate(180%); box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.25); overflow: hidden; position: relative;">
+        <div class="modal-card auth-card-glass"
+            style="max-width: 440px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(24px) saturate(180%); box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.25); overflow: hidden; position: relative;">
             <!-- Ambient Glow Effect -->
-            <div style="position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 240px; height: 160px; background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(16, 185, 129, 0.2) 70%, transparent 100%); filter: blur(40px); pointer-events: none;"></div>
+            <div
+                style="position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 240px; height: 160px; background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(16, 185, 129, 0.2) 70%, transparent 100%); filter: blur(40px); pointer-events: none;">
+            </div>
 
-            <div class="modal-header" style="background: transparent; padding: 24px 28px 12px 28px; border-bottom: none; position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between;">
-                <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; margin: 0; display: flex; align-items: center; gap: 10px;">
+            <div class="modal-header"
+                style="background: transparent; padding: 24px 28px 12px 28px; border-bottom: none; position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between;">
+                <h3
+                    style="font-size: 1.25rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; margin: 0; display: flex; align-items: center; gap: 10px;">
                     <i class="fa-solid fa-circle-user" style="color: #818cf8;"></i> Perfil de Cuenta
                 </h3>
-                <button type="button" class="modal-close" data-close="modal-account" style="color: #94a3b8; font-size: 1.5rem; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); border: none; cursor: pointer; transition: all 0.2s ease;">&times;</button>
+                <button type="button" class="modal-close" data-close="modal-account"
+                    style="color: #94a3b8; font-size: 1.5rem; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); border: none; cursor: pointer; transition: all 0.2s ease;">&times;</button>
             </div>
-            
+
             <div class="modal-body" style="padding: 12px 28px 28px 28px; position: relative; z-index: 2;">
                 <!-- User Avatar & Identity Header -->
                 <div class="text-center" style="margin-bottom: 20px;">
-                    <div style="width: 76px; height: 76px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #10b981); padding: 3px; box-shadow: 0 0 25px rgba(99, 102, 241, 0.45);">
-                        <div style="width: 100%; height: 100%; border-radius: 50%; background: #0f172a; display: flex; align-items: center; justify-content: center;">
-                            <span id="modal-account-avatar-initials" style="font-size: 1.6rem; font-weight: 800; color: #818cf8;">US</span>
+                    <div
+                        style="width: 76px; height: 76px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #10b981); padding: 3px; box-shadow: 0 0 25px rgba(99, 102, 241, 0.45);">
+                        <div
+                            style="width: 100%; height: 100%; border-radius: 50%; background: #0f172a; display: flex; align-items: center; justify-content: center;">
+                            <span id="modal-account-avatar-initials"
+                                style="font-size: 1.6rem; font-weight: 800; color: #818cf8;">US</span>
                         </div>
                     </div>
-                    
-                    <h4 id="modal-account-display-name-view" style="margin-top: 12px; margin-bottom: 2px; font-size: 1.15rem; font-weight: 700; color: #ffffff;">
+
+                    <h4 id="modal-account-display-name-view"
+                        style="margin-top: 12px; margin-bottom: 2px; font-size: 1.15rem; font-weight: 700; color: #ffffff;">
                         usuario
                     </h4>
-                    <p id="modal-account-email" style="margin: 0 0 10px 0; font-size: 0.85rem; color: #94a3b8; word-break: break-all;">
+                    <p id="modal-account-email"
+                        style="margin: 0 0 10px 0; font-size: 0.85rem; color: #94a3b8; word-break: break-all;">
                         usuario@empresa.com
                     </p>
 
-                    <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; color: #10b981; background: rgba(16, 185, 129, 0.1); padding: 4px 14px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.25);">
-                        <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
+                    <div
+                        style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; color: #10b981; background: rgba(16, 185, 129, 0.1); padding: 4px 14px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.25);">
+                        <span
+                            style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
                         Cloud Sync Activo
                     </div>
                 </div>
 
                 <!-- Username Selection Box -->
-                <div style="background: rgba(30, 41, 59, 0.75); border-radius: 16px; padding: 18px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; text-align: left;">
-                    <label for="modal-account-input-username" style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #a5b4fc; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-                        <span><i class="fa-solid fa-user-pen" style="margin-right: 6px; color: #818cf8;"></i> Nombre de Usuario Único</span>
+                <div
+                    style="background: rgba(30, 41, 59, 0.75); border-radius: 16px; padding: 18px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; text-align: left;">
+                    <label for="modal-account-input-username"
+                        style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #a5b4fc; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                        <span><i class="fa-solid fa-user-pen" style="margin-right: 6px; color: #818cf8;"></i> Nombre de
+                            Usuario Único</span>
                     </label>
 
                     <div style="display: flex; gap: 8px; margin-bottom: 6px;">
                         <div style="position: relative; flex: 1;">
-                            <input type="text" id="modal-account-input-username" class="form-input custom-auth-input" placeholder="tu_usuario" style="padding-left: 14px; height: 42px; font-size: 0.9rem; border-radius: 10px; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff;">
+                            <input type="text" id="modal-account-input-username" class="form-input custom-auth-input"
+                                placeholder="tu_usuario"
+                                style="padding-left: 14px; height: 42px; font-size: 0.9rem; border-radius: 10px; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff;">
                         </div>
-                        <button type="button" class="btn btn-primary" id="btn-save-username" onclick="AuthSubscription.saveUsernameProfile()" style="height: 42px; font-size: 0.85rem; font-weight: 700; border-radius: 10px; background: linear-gradient(135deg, #6366f1, #4f46e5); border: none; cursor: pointer; padding: 0 16px; white-space: nowrap;">
+                        <button type="button" class="btn btn-primary" id="btn-save-username"
+                            onclick="AuthSubscription.saveUsernameProfile()"
+                            style="height: 42px; font-size: 0.85rem; font-weight: 700; border-radius: 10px; background: linear-gradient(135deg, #6366f1, #4f46e5); border: none; cursor: pointer; padding: 0 16px; white-space: nowrap;">
                             <i class="fa-solid fa-floppy-disk"></i> Guardar
                         </button>
                     </div>
@@ -1038,10 +1115,14 @@
 
                 <!-- Action Buttons -->
                 <div style="display:flex; flex-direction:column; gap:10px; text-align: center;">
-                    <button type="button" class="btn btn-outline" id="btn-open-admin-panel" style="width: 100%; border-radius: 12px; padding: 11px; border-color: rgba(99, 102, 241, 0.4); color: #a5b4fc; background: rgba(99, 102, 241, 0.08);" onclick="AuthSubscription.showAdminPanel()">
-                        <i class="fa-solid fa-screwdriver-wrench" style="margin-right: 6px;"></i> Panel Desarrollador & Pruebas
+                    <button type="button" class="btn btn-outline" id="btn-open-admin-panel"
+                        style="width: 100%; border-radius: 12px; padding: 11px; border-color: rgba(99, 102, 241, 0.4); color: #a5b4fc; background: rgba(99, 102, 241, 0.08);"
+                        onclick="AuthSubscription.showAdminPanel()">
+                        <i class="fa-solid fa-screwdriver-wrench" style="margin-right: 6px;"></i> Panel Desarrollador &
+                        Pruebas
                     </button>
-                    <button type="button" class="btn btn-danger-outline" id="btn-auth-logout" style="width: 100%; border-radius: 12px; padding: 11px; border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; background: rgba(239, 68, 68, 0.05); font-weight: 600;">
+                    <button type="button" class="btn btn-danger-outline" id="btn-auth-logout"
+                        style="width: 100%; border-radius: 12px; padding: 11px; border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; background: rgba(239, 68, 68, 0.05); font-weight: 600;">
                         <i class="fa-solid fa-right-from-bracket" style="margin-right: 6px;"></i> Cerrar Sesión
                     </button>
                 </div>
@@ -1092,7 +1173,8 @@
                             <li><i class="fa-solid fa-check text-success"></i> Las 8 plantillas profesionales</li>
                             <li><i class="fa-solid fa-check text-success"></i> Cobertura total en 7 Idiomas</li>
                             <li><i class="fa-solid fa-check text-success"></i> Retención 13.75%, Fotos y Anexos</li>
-                            <li><i class="fa-solid fa-check text-success"></i> Respaldo Cloud (Firebase) e Historial</li>
+                            <li><i class="fa-solid fa-check text-success"></i> Respaldo Cloud (Firebase) e Historial
+                            </li>
                         </ul>
                         <button type="button" class="btn btn-primary btn-full margin-top-16" id="btn-subscribe-pro">
                             <i class="fa-solid fa-bolt"></i> Suscribirse y Activar PLAN PRO
@@ -1101,14 +1183,17 @@
                 </div>
 
                 <!-- PAYMENT GATEWAYS BADGE FOOTER -->
-                <div class="modal-footer margin-top-16" style="justify-content: center; gap: 14px; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap;">
+                <div class="modal-footer margin-top-16"
+                    style="justify-content: center; gap: 14px; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap;">
                     <span><i class="fa-solid fa-shield-halved text-success"></i> Pagos Seguros SSL</span>
                     <span><i class="fa-solid fa-bolt" style="color:#0ea5e9;"></i> Flow.cl & Webpay</span>
                     <span><i class="fa-solid fa-wallet" style="color:#009ee3;"></i> Mercado Pago</span>
                     <span>•</span>
                     <a href="#" data-open-legal="terms" style="color: #94a3b8; text-decoration: underline;">Términos</a>
-                    <a href="#" data-open-legal="privacy" style="color: #94a3b8; text-decoration: underline;">Privacidad</a>
-                    <a href="#" data-open-legal="cookies" style="color: #94a3b8; text-decoration: underline;">Cookies</a>
+                    <a href="#" data-open-legal="privacy"
+                        style="color: #94a3b8; text-decoration: underline;">Privacidad</a>
+                    <a href="#" data-open-legal="cookies"
+                        style="color: #94a3b8; text-decoration: underline;">Cookies</a>
                 </div>
             </div>
         </div>
@@ -1116,61 +1201,86 @@
 
     <!-- MODAL SELECTOR DE PASARELAS DE PAGO -->
     <div id="modal-payment-gateways" class="modal-backdrop hidden">
-        <div class="modal-card auth-card-glass" style="max-width: 540px; border-radius: 28px; border: 1px solid rgba(255, 255, 255, 0.12); background: linear-gradient(145deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.94) 100%); backdrop-filter: blur(28px) saturate(190%); box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.85), 0 0 50px rgba(99, 102, 241, 0.2); overflow: hidden; position: relative;">
-            
-            <!-- DECORATIVE GLOW ACCENTS -->
-            <div style="position: absolute; top: -60px; right: -60px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(0, 0, 0, 0) 70%); pointer-events: none;"></div>
-            <div style="position: absolute; bottom: -60px; left: -60px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(0, 158, 227, 0.2) 0%, rgba(0, 0, 0, 0) 70%); pointer-events: none;"></div>
+        <div class="modal-card auth-card-glass"
+            style="max-width: 540px; border-radius: 28px; border: 1px solid rgba(255, 255, 255, 0.12); background: linear-gradient(145deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.94) 100%); backdrop-filter: blur(28px) saturate(190%); box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.85), 0 0 50px rgba(99, 102, 241, 0.2); overflow: hidden; position: relative;">
 
-            <div class="modal-header" style="background: transparent; padding: 28px 32px 14px 32px; border-bottom: none; display: flex; align-items: flex-start; justify-content: space-between; position: relative; z-index: 2;">
+            <!-- DECORATIVE GLOW ACCENTS -->
+            <div
+                style="position: absolute; top: -60px; right: -60px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(0, 0, 0, 0) 70%); pointer-events: none;">
+            </div>
+            <div
+                style="position: absolute; bottom: -60px; left: -60px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(0, 158, 227, 0.2) 0%, rgba(0, 0, 0, 0) 70%); pointer-events: none;">
+            </div>
+
+            <div class="modal-header"
+                style="background: transparent; padding: 28px 32px 14px 32px; border-bottom: none; display: flex; align-items: flex-start; justify-content: space-between; position: relative; z-index: 2;">
                 <div>
-                    <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffffff; margin: 0 0 6px 0; display: flex; align-items: center; gap: 10px; letter-spacing: -0.3px;">
-                        <i class="fa-solid fa-credit-card" style="color: #6366f1; font-size: 1.3rem;"></i> Opciones de Pago PLAN PRO
+                    <h3
+                        style="font-size: 1.4rem; font-weight: 800; color: #ffffff; margin: 0 0 6px 0; display: flex; align-items: center; gap: 10px; letter-spacing: -0.3px;">
+                        <i class="fa-solid fa-credit-card" style="color: #6366f1; font-size: 1.3rem;"></i> Opciones de
+                        Pago PLAN PRO
                     </h3>
                     <p style="margin: 0; font-size: 0.83rem; color: #94a3b8; font-weight: 400;">
                         Selecciona tu plataforma para activar tu membresía ilimitada:
                     </p>
                 </div>
-                <button type="button" class="modal-close" onclick="PaymentsModule.closePaymentModal()" style="color: #94a3b8; font-size: 1.4rem; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); cursor: pointer; transition: all 0.2s ease;">&times;</button>
+                <button type="button" class="modal-close" onclick="PaymentsModule.closePaymentModal()"
+                    style="color: #94a3b8; font-size: 1.4rem; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); cursor: pointer; transition: all 0.2s ease;">&times;</button>
             </div>
 
             <div class="modal-body" style="padding: 10px 32px 32px 32px; position: relative; z-index: 2;">
                 <div style="display: flex; flex-direction: column; gap: 16px;">
-                    
+
                     <!-- Mercado Pago Card Option -->
-                    <button type="button" onclick="PaymentsModule.payWithMercadoPago()" class="payment-card-option" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(0, 158, 227, 0.35); border-radius: 20px; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); color: #ffffff; position: relative; overflow: hidden;" onmouseover="this.style.borderColor='#009ee3'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 25px -5px rgba(0, 158, 227, 0.35)'; this.style.background='rgba(30, 41, 59, 0.95)';" onmouseout="this.style.borderColor='rgba(0, 158, 227, 0.35)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='rgba(30, 41, 59, 0.7)';">
+                    <button type="button" onclick="PaymentsModule.payWithMercadoPago()" class="payment-card-option"
+                        style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(0, 158, 227, 0.35); border-radius: 20px; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); color: #ffffff; position: relative; overflow: hidden;"
+                        onmouseover="this.style.borderColor='#009ee3'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 25px -5px rgba(0, 158, 227, 0.35)'; this.style.background='rgba(30, 41, 59, 0.95)';"
+                        onmouseout="this.style.borderColor='rgba(0, 158, 227, 0.35)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='rgba(30, 41, 59, 0.7)';">
                         <div style="display: flex; align-items: center; gap: 16px; text-align: left;">
-                            <div style="width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, rgba(0, 158, 227, 0.3) 0%, rgba(0, 158, 227, 0.1) 100%); border: 1px solid rgba(0, 158, 227, 0.4); display: flex; align-items: center; justify-content: center; color: #009ee3; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(0, 158, 227, 0.2);">
+                            <div
+                                style="width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, rgba(0, 158, 227, 0.3) 0%, rgba(0, 158, 227, 0.1) 100%); border: 1px solid rgba(0, 158, 227, 0.4); display: flex; align-items: center; justify-content: center; color: #009ee3; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(0, 158, 227, 0.2);">
                                 <i class="fa-solid fa-wallet"></i>
                             </div>
                             <div>
-                                <div style="font-weight: 800; font-size: 1.05rem; color: #ffffff; margin-bottom: 2px; display: flex; align-items: center; gap: 8px;">
-                                    Mercado Pago <i class="fa-solid fa-circle-check" style="color: #009ee3; font-size: 0.82rem;"></i>
+                                <div
+                                    style="font-weight: 800; font-size: 1.05rem; color: #ffffff; margin-bottom: 2px; display: flex; align-items: center; gap: 8px;">
+                                    Mercado Pago <i class="fa-solid fa-circle-check"
+                                        style="color: #009ee3; font-size: 0.82rem;"></i>
                                 </div>
-                                <div style="font-size: 0.78rem; color: #94a3b8; font-weight: 400;">Tarjetas de Crédito, Débito y Saldo Mercado Pago</div>
+                                <div style="font-size: 0.78rem; color: #94a3b8; font-weight: 400;">Tarjetas de Crédito,
+                                    Débito y Saldo Mercado Pago</div>
                             </div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="background: linear-gradient(135deg, #009ee3 0%, #0284c7 100%); color: #ffffff; font-weight: 800; font-size: 0.9rem; padding: 6px 14px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(0, 158, 227, 0.3);">$9.990</span>
+                            <span
+                                style="background: linear-gradient(135deg, #009ee3 0%, #0284c7 100%); color: #ffffff; font-weight: 800; font-size: 0.9rem; padding: 6px 14px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(0, 158, 227, 0.3);">$9.990</span>
                             <i class="fa-solid fa-chevron-right" style="color: #009ee3; font-size: 0.9rem;"></i>
                         </div>
                     </button>
 
                     <!-- Webpay / Flow Option -->
-                    <button type="button" onclick="PaymentsModule.payWithWebpay()" class="payment-card-option" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(14, 165, 233, 0.35); border-radius: 20px; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); color: #ffffff; position: relative; overflow: hidden;" onmouseover="this.style.borderColor='#0ea5e9'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 25px -5px rgba(14, 165, 233, 0.35)'; this.style.background='rgba(30, 41, 59, 0.95)';" onmouseout="this.style.borderColor='rgba(14, 165, 233, 0.35)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='rgba(30, 41, 59, 0.7)';">
+                    <button type="button" onclick="PaymentsModule.payWithWebpay()" class="payment-card-option"
+                        style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(14, 165, 233, 0.35); border-radius: 20px; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); color: #ffffff; position: relative; overflow: hidden;"
+                        onmouseover="this.style.borderColor='#0ea5e9'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 25px -5px rgba(14, 165, 233, 0.35)'; this.style.background='rgba(30, 41, 59, 0.95)';"
+                        onmouseout="this.style.borderColor='rgba(14, 165, 233, 0.35)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='rgba(30, 41, 59, 0.7)';">
                         <div style="display: flex; align-items: center; gap: 16px; text-align: left;">
-                            <div style="width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, rgba(14, 165, 233, 0.3) 0%, rgba(14, 165, 233, 0.1) 100%); border: 1px solid rgba(14, 165, 233, 0.4); display: flex; align-items: center; justify-content: center; color: #0ea5e9; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);">
+                            <div
+                                style="width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, rgba(14, 165, 233, 0.3) 0%, rgba(14, 165, 233, 0.1) 100%); border: 1px solid rgba(14, 165, 233, 0.4); display: flex; align-items: center; justify-content: center; color: #0ea5e9; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);">
                                 <i class="fa-solid fa-credit-card"></i>
                             </div>
                             <div>
-                                <div style="font-weight: 800; font-size: 1.05rem; color: #ffffff; margin-bottom: 2px; display: flex; align-items: center; gap: 8px;">
-                                    Webpay Plus / Flow <i class="fa-solid fa-bolt" style="color: #0ea5e9; font-size: 0.82rem;"></i>
+                                <div
+                                    style="font-weight: 800; font-size: 1.05rem; color: #ffffff; margin-bottom: 2px; display: flex; align-items: center; gap: 8px;">
+                                    Webpay Plus / Flow <i class="fa-solid fa-bolt"
+                                        style="color: #0ea5e9; font-size: 0.82rem;"></i>
                                 </div>
-                                <div style="font-size: 0.78rem; color: #94a3b8; font-weight: 400;">Tarjetas de Crédito, Débito y Redcompra Transbank</div>
+                                <div style="font-size: 0.78rem; color: #94a3b8; font-weight: 400;">Tarjetas de Crédito,
+                                    Débito y Redcompra Transbank</div>
                             </div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #ffffff; font-weight: 800; font-size: 0.9rem; padding: 6px 14px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);">$9.990</span>
+                            <span
+                                style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #ffffff; font-weight: 800; font-size: 0.9rem; padding: 6px 14px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);">$9.990</span>
                             <i class="fa-solid fa-chevron-right" style="color: #0ea5e9; font-size: 0.9rem;"></i>
                         </div>
                     </button>
@@ -1187,21 +1297,28 @@
                 <h3 style="margin:0; font-size:1.3rem; color: var(--accent-color);">
                     <i class="fa-solid fa-screwdriver-wrench"></i> Panel Desarrollador & Administración
                 </h3>
-                <button type="button" class="btn-modal-close" onclick="AuthSubscription.closeModal('modal-admin-panel')">&times;</button>
+                <button type="button" class="btn-modal-close"
+                    onclick="AuthSubscription.closeModal('modal-admin-panel')">&times;</button>
             </div>
             <div class="modal-body margin-top-16">
-                <div style="background: rgba(99, 102, 241, 0.1); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 0.85rem; color: #cbd5e1;">
-                    <i class="fa-solid fa-circle-info font-accent"></i> Este apartado te permite alternar entre el <strong>Entorno de Pruebas (Sandbox)</strong> y el <strong>Entorno de Producción (En vivo con clientes)</strong>.
+                <div
+                    style="background: rgba(99, 102, 241, 0.1); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 0.85rem; color: #cbd5e1;">
+                    <i class="fa-solid fa-circle-info font-accent"></i> Este apartado te permite alternar entre el
+                    <strong>Entorno de Pruebas (Sandbox)</strong> y el <strong>Entorno de Producción (En vivo con
+                        clientes)</strong>.
                 </div>
 
                 <!-- Entorno Activo -->
                 <div style="margin-bottom: 20px;">
-                    <label style="font-weight:600; display:block; margin-bottom:8px; font-size:0.9rem;">Entorno de Ejecución Actual:</label>
+                    <label style="font-weight:600; display:block; margin-bottom:8px; font-size:0.9rem;">Entorno de
+                        Ejecución Actual:</label>
                     <div style="display:flex; gap: 12px;">
-                        <button type="button" id="btn-env-sandbox" class="btn btn-sm btn-outline" style="flex:1;" onclick="PaymentsModule.setEnvironment('sandbox')">
+                        <button type="button" id="btn-env-sandbox" class="btn btn-sm btn-outline" style="flex:1;"
+                            onclick="PaymentsModule.setEnvironment('sandbox')">
                             <i class="fa-solid fa-vial"></i> Modo Pruebas (Sandbox)
                         </button>
-                        <button type="button" id="btn-env-live" class="btn btn-sm btn-primary" style="flex:1;" onclick="PaymentsModule.setEnvironment('live')">
+                        <button type="button" id="btn-env-live" class="btn btn-sm btn-primary" style="flex:1;"
+                            onclick="PaymentsModule.setEnvironment('live')">
                             <i class="fa-solid fa-globe"></i> Modo Producción (En Vivo)
                         </button>
                     </div>
@@ -1209,48 +1326,60 @@
 
                 <!-- Herramientas de Prueba -->
                 <div style="margin-bottom: 20px;">
-                    <label style="font-weight:600; display:block; margin-bottom:8px; font-size:0.9rem;">Acciones Rápidas de Prueba:</label>
+                    <label style="font-weight:600; display:block; margin-bottom:8px; font-size:0.9rem;">Acciones Rápidas
+                        de Prueba:</label>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <button type="button" class="btn btn-xs btn-outline" onclick="AuthSubscription.setPlan('pro', 1); showToast('Plan PRO activado por 30 días', 'success');">
+                        <button type="button" class="btn btn-xs btn-outline"
+                            onclick="AuthSubscription.setPlan('pro', 1); showToast('Plan PRO activado por 30 días', 'success');">
                             <i class="fa-solid fa-bolt text-warning"></i> Activar Plan PRO 30 Días
                         </button>
-                        <button type="button" class="btn btn-xs btn-outline" onclick="AuthSubscription.setPlan('free'); showToast('Plan cambiado a Gratuito', 'info');">
+                        <button type="button" class="btn btn-xs btn-outline"
+                            onclick="AuthSubscription.setPlan('free'); showToast('Plan cambiado a Gratuito', 'info');">
                             <i class="fa-solid fa-user"></i> Cambiar a Plan Gratuito
                         </button>
-                        <button type="button" class="btn btn-xs btn-outline" onclick="AuthSubscription.userPlan.expiresAt='2020-01-01'; AuthSubscription.checkPlanExpiration();">
+                        <button type="button" class="btn btn-xs btn-outline"
+                            onclick="AuthSubscription.userPlan.expiresAt='2020-01-01'; AuthSubscription.checkPlanExpiration();">
                             <i class="fa-solid fa-clock"></i> Simular Expiración de Plan
                         </button>
-                        <button type="button" class="btn btn-xs btn-outline" onclick="window.location.href='?payment_success=true'">
+                        <button type="button" class="btn btn-xs btn-outline"
+                            onclick="window.location.href='?payment_success=true'">
                             <i class="fa-solid fa-rotate-left"></i> Simular Retorno Flow
                         </button>
                     </div>
                 </div>
 
                 <!-- Credenciales API Flow -->
-                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 0.8rem;">
-                    <div style="font-weight: 700; color: #10b981; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                <div
+                    style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 0.8rem;">
+                    <div
+                        style="font-weight: 700; color: #10b981; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
                         <i class="fa-solid fa-key"></i> Credenciales de Integración API Flow:
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-bottom: 4px;">
                         <span style="color:#94a3b8;">API Key:</span>
-                        <code style="color:#6ee7b7; background:rgba(0,0,0,0.3); padding: 2px 6px; border-radius:4px;">59A13F6C-6D8A-4772-B02C-7180350L27AA</code>
+                        <code
+                            style="color:#6ee7b7; background:rgba(0,0,0,0.3); padding: 2px 6px; border-radius:4px;">59A13F6C-6D8A-4772-B02C-7180350L27AA</code>
                     </div>
                     <div style="display:flex; justify-content:space-between;">
                         <span style="color:#94a3b8;">Secret Key:</span>
-                        <code style="color:#6ee7b7; background:rgba(0,0,0,0.3); padding: 2px 6px; border-radius:4px;">4c8d54e57ad62821e7a406d030af0da6c5e78ad8</code>
+                        <code
+                            style="color:#6ee7b7; background:rgba(0,0,0,0.3); padding: 2px 6px; border-radius:4px;">4c8d54e57ad62821e7a406d030af0da6c5e78ad8</code>
                     </div>
                 </div>
 
                 <!-- Diagnóstico de Estado -->
-                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; font-size: 0.8rem; font-family: monospace;">
+                <div
+                    style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; font-size: 0.8rem; font-family: monospace;">
                     <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
                         <span>Versión Cliente:</span> <strong style="color:var(--accent-color);">Emitia Pro v36</strong>
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <span>Estado Firebase:</span> <strong id="admin-diag-firebase" style="color:#10b981;">Conectado Cloud Firestore</strong>
+                        <span>Estado Firebase:</span> <strong id="admin-diag-firebase" style="color:#10b981;">Conectado
+                            Cloud Firestore</strong>
                     </div>
                     <div style="display:flex; justify-content:space-between;">
-                        <span>Usuario Activo:</span> <span id="admin-diag-user" style="color:var(--text-muted);">Guest / Local</span>
+                        <span>Usuario Activo:</span> <span id="admin-diag-user" style="color:var(--text-muted);">Guest /
+                            Local</span>
                     </div>
                 </div>
             </div>
@@ -1263,7 +1392,9 @@
             <i class="fa-solid fa-cookie-bite cookie-banner-icon"></i>
             <div class="cookie-banner-text">
                 <strong>Uso de Cookies & Protección de Datos</strong>
-                <p>Utilizamos cookies esenciales y almacenamiento local para garantizar la facturación, autenticación y análisis del servicio. Consulta nuestra <a href="#" data-open-legal="privacy">Política de Privacidad</a> y <a href="#" data-open-legal="terms">Términos y Condiciones</a>.</p>
+                <p>Utilizamos cookies esenciales y almacenamiento local para garantizar la facturación, autenticación y
+                    análisis del servicio. Consulta nuestra <a href="#" data-open-legal="privacy">Política de
+                        Privacidad</a> y <a href="#" data-open-legal="terms">Términos y Condiciones</a>.</p>
             </div>
         </div>
         <div class="cookie-banner-btns">
@@ -1275,33 +1406,52 @@
     <!-- MODAL TÉRMINOS Y CONDICIONES DEL SERVICIO -->
     <div id="modal-terms" class="modal-backdrop hidden">
         <div class="modal-card legal-modal-card auth-card-glass">
-            <div class="modal-header" style="background: transparent; padding: 24px 32px 16px 32px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between;">
-                <h3 style="font-size: 1.3rem; font-weight: 800; color: #ffffff; margin: 0; display: flex; align-items: center; gap: 10px;">
-                    <i class="fa-solid fa-file-contract" style="color: #6366f1;"></i> Términos y Condiciones del Servicio
+            <div class="modal-header"
+                style="background: transparent; padding: 24px 32px 16px 32px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between;">
+                <h3
+                    style="font-size: 1.3rem; font-weight: 800; color: #ffffff; margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-file-contract" style="color: #6366f1;"></i> Términos y Condiciones del
+                    Servicio
                 </h3>
                 <button type="button" class="modal-close" onclick="LegalModule.closeTermsModal()">&times;</button>
             </div>
             <div class="legal-modal-body">
                 <h4><i class="fa-solid fa-circle-check" style="color:#6366f1;"></i> 1. Aceptación de los Términos</h4>
-                <p>Al acceder y utilizar <strong>Emitia Pro</strong>, el usuario acepta regirse por los presentes Términos y Condiciones. Si no está de acuerdo con alguna disposición, deberá abstenerse de utilizar la plataforma.</p>
+                <p>Al acceder y utilizar <strong>Emitia Pro</strong>, el usuario acepta regirse por los presentes
+                    Términos y Condiciones. Si no está de acuerdo con alguna disposición, deberá abstenerse de utilizar
+                    la plataforma.</p>
 
                 <h4><i class="fa-solid fa-bolt" style="color:#6366f1;"></i> 2. Descripción del Servicio y Planes</h4>
-                <p>Emitia Pro proporciona herramientas digitales para la generación, edición, exportación en PDF y gestión comercial de facturas, cotizaciones y documentos contables.</p>
+                <p>Emitia Pro proporciona herramientas digitales para la generación, edición, exportación en PDF y
+                    gestión comercial de facturas, cotizaciones y documentos contables.</p>
                 <ul>
-                    <li><strong>Plan Gratuito:</strong> Permite el uso básico de la plataforma con almacenamiento local en el navegador del usuario y límite de exportaciones.</li>
-                    <li><strong>Plan PRO ($9.990 CLP / $9.99 USD mensual):</strong> Proporciona acceso ilimitado a exportaciones PDF, plantillas profesionales, sincronización en la nube vía Firebase Cloud Firestore, soporte multi-idioma y módulo de cotizaciones avanzadas.</li>
+                    <li><strong>Plan Gratuito:</strong> Permite el uso básico de la plataforma con almacenamiento local
+                        en el navegador del usuario y límite de exportaciones.</li>
+                    <li><strong>Plan PRO ($9.990 CLP / $9.99 USD mensual):</strong> Proporciona acceso ilimitado a
+                        exportaciones PDF, plantillas profesionales, sincronización en la nube vía Firebase Cloud
+                        Firestore, soporte multi-idioma y módulo de cotizaciones avanzadas.</li>
                 </ul>
 
-                <h4><i class="fa-solid fa-credit-card" style="color:#6366f1;"></i> 3. Políticas de Cobro, Suscripciones y Pagos</h4>
-                <p>Los pagos son procesados a través de pasarelas de pago certificadas con encriptación SSL (Flow.cl, Webpay, Mercado Pago, Stripe o PayPal). Las suscripciones se activan de forma digital e inmediata tras la confirmación exitosa del pago.</p>
+                <h4><i class="fa-solid fa-credit-card" style="color:#6366f1;"></i> 3. Políticas de Cobro, Suscripciones
+                    y Pagos</h4>
+                <p>Los pagos son procesados a través de pasarelas de pago certificadas con encriptación SSL (Flow.cl,
+                    Webpay, Mercado Pago, Stripe o PayPal). Las suscripciones se activan de forma digital e inmediata
+                    tras la confirmación exitosa del pago.</p>
 
-                <h4><i class="fa-solid fa-rotate-left" style="color:#6366f1;"></i> 4. Política de Devoluciones y Cancelación</h4>
-                <p>Debido a la naturaleza del software como servicio de acceso digital inmediato, las suscripciones PRO procesadas no son reembolsables una vez activado el periodo de servicio. El usuario puede cancelar la renovación automática de su membresía en cualquier momento sin penalizaciones adicionales.</p>
+                <h4><i class="fa-solid fa-rotate-left" style="color:#6366f1;"></i> 4. Política de Devoluciones y
+                    Cancelación</h4>
+                <p>Debido a la naturaleza del software como servicio de acceso digital inmediato, las suscripciones PRO
+                    procesadas no son reembolsables una vez activado el periodo de servicio. El usuario puede cancelar
+                    la renovación automática de su membresía en cualquier momento sin penalizaciones adicionales.</p>
 
-                <h4><i class="fa-solid fa-shield-halved" style="color:#6366f1;"></i> 5. Garantía de Servicio y Responsabilidad</h4>
-                <p>Emitia Pro se compromete a mantener la disponibilidad del servicio. Sin embargo, no se hace responsable por interrupciones derivadas de mantenimiento programado o fallas en proveedores de infraestructura de terceros (como Google Cloud o Firebase).</p>
+                <h4><i class="fa-solid fa-shield-halved" style="color:#6366f1;"></i> 5. Garantía de Servicio y
+                    Responsabilidad</h4>
+                <p>Emitia Pro se compromete a mantener la disponibilidad del servicio. Sin embargo, no se hace
+                    responsable por interrupciones derivadas de mantenimiento programado o fallas en proveedores de
+                    infraestructura de terceros (como Google Cloud o Firebase).</p>
             </div>
-            <div class="modal-footer" style="padding: 16px 32px; border-top: 1px solid rgba(255, 255, 255, 0.1); justify-content: flex-end;">
+            <div class="modal-footer"
+                style="padding: 16px 32px; border-top: 1px solid rgba(255, 255, 255, 0.1); justify-content: flex-end;">
                 <button type="button" class="btn btn-outline" onclick="LegalModule.closeTermsModal()">Cerrar</button>
             </div>
         </div>
@@ -1310,31 +1460,47 @@
     <!-- MODAL POLÍTICA DE PRIVACIDAD Y TRATAMIENTO DE DATOS -->
     <div id="modal-privacy" class="modal-backdrop hidden">
         <div class="modal-card legal-modal-card auth-card-glass">
-            <div class="modal-header" style="background: transparent; padding: 24px 32px 16px 32px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between;">
-                <h3 style="font-size: 1.3rem; font-weight: 800; color: #ffffff; margin: 0; display: flex; align-items: center; gap: 10px;">
-                    <i class="fa-solid fa-user-shield" style="color: #10b981;"></i> Política de Privacidad y Tratamiento de Datos
+            <div class="modal-header"
+                style="background: transparent; padding: 24px 32px 16px 32px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between;">
+                <h3
+                    style="font-size: 1.3rem; font-weight: 800; color: #ffffff; margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-user-shield" style="color: #10b981;"></i> Política de Privacidad y Tratamiento
+                    de Datos
                 </h3>
                 <button type="button" class="modal-close" onclick="LegalModule.closePrivacyModal()">&times;</button>
             </div>
             <div class="legal-modal-body">
                 <h4><i class="fa-solid fa-database" style="color:#10b981;"></i> 1. Recolección de Información</h4>
-                <p>Recopilamos únicamente los datos necesarios para brindar el servicio de facturación digital, incluyendo:</p>
+                <p>Recopilamos únicamente los datos necesarios para brindar el servicio de facturación digital,
+                    incluyendo:</p>
                 <ul>
                     <li>Dirección de correo electrónico de la cuenta del usuario.</li>
-                    <li>Nombres comerciales, identificadores tributarios (RUT/TAX ID), direcciones y números de contacto ingresados en los documentos.</li>
+                    <li>Nombres comerciales, identificadores tributarios (RUT/TAX ID), direcciones y números de contacto
+                        ingresados en los documentos.</li>
                     <li>Historial de facturas y cotizaciones generadas.</li>
                 </ul>
 
-                <h4><i class="fa-solid fa-lock" style="color:#10b981;"></i> 2. Almacenamiento y Seguridad de los Datos</h4>
-                <p>Toda la información es almacenada mediante estándares de encriptación de nivel industrial en <strong>Google Cloud Firestore</strong> y en el <strong>LocalStorage</strong> cifrado de su navegador. No vendemos, alquilamos ni compartimos sus datos personales con terceros para fines publicitarios.</p>
+                <h4><i class="fa-solid fa-lock" style="color:#10b981;"></i> 2. Almacenamiento y Seguridad de los Datos
+                </h4>
+                <p>Toda la información es almacenada mediante estándares de encriptación de nivel industrial en
+                    <strong>Google Cloud Firestore</strong> y en el <strong>LocalStorage</strong> cifrado de su
+                    navegador. No vendemos, alquilamos ni compartimos sus datos personales con terceros para fines
+                    publicitarios.</p>
 
-                <h4><i class="fa-solid fa-cookie" style="color:#10b981;"></i> 3. Uso de Cookies y Almacenamiento Local</h4>
-                <p>Utilizamos cookies estrictamente necesarias para la autenticación de usuarios, la gestión de sesiones y el mantenimiento de preferencias de la aplicación. El usuario puede configurar sus preferencias de cookies en cualquier momento desde el pie de página del sitio.</p>
+                <h4><i class="fa-solid fa-cookie" style="color:#10b981;"></i> 3. Uso de Cookies y Almacenamiento Local
+                </h4>
+                <p>Utilizamos cookies estrictamente necesarias para la autenticación de usuarios, la gestión de sesiones
+                    y el mantenimiento de preferencias de la aplicación. El usuario puede configurar sus preferencias de
+                    cookies en cualquier momento desde el pie de página del sitio.</p>
 
-                <h4><i class="fa-solid fa-user-gear" style="color:#10b981;"></i> 4. Derechos ARCO (Acceso, Rectificación, Cancelación y Oposición)</h4>
-                <p>El usuario mantiene el control absoluto sobre su información y puede solicitar la eliminación total de sus documentos y datos personales registrados en nuestros servidores a través de la función de eliminación de cuenta o enviando una solicitud a soporte.</p>
+                <h4><i class="fa-solid fa-user-gear" style="color:#10b981;"></i> 4. Derechos ARCO (Acceso,
+                    Rectificación, Cancelación y Oposición)</h4>
+                <p>El usuario mantiene el control absoluto sobre su información y puede solicitar la eliminación total
+                    de sus documentos y datos personales registrados en nuestros servidores a través de la función de
+                    eliminación de cuenta o enviando una solicitud a soporte.</p>
             </div>
-            <div class="modal-footer" style="padding: 16px 32px; border-top: 1px solid rgba(255, 255, 255, 0.1); justify-content: flex-end;">
+            <div class="modal-footer"
+                style="padding: 16px 32px; border-top: 1px solid rgba(255, 255, 255, 0.1); justify-content: flex-end;">
                 <button type="button" class="btn btn-outline" onclick="LegalModule.closePrivacyModal()">Cerrar</button>
             </div>
         </div>
@@ -1346,23 +1512,23 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <!-- JavaScript Scripts -->
-    <script src="js/storage.js?v=58"></script>
-    <script src="js/i18n.js?v=58"></script>
-    <script src="js/templates.js?v=58"></script>
-    <script src="js/editor.js?v=58"></script>
-    <script src="js/export.js?v=58"></script>
-    <script src="js/dashboard.js?v=58"></script>
-    <script src="js/cloud-sync.js?v=58"></script>
-    <script src="js/auth-subscription.js?v=58"></script>
-    <script src="js/payments.js?v=58"></script>
-    <script src="js/legal.js?v=58"></script>
-    <script src="js/app.js?v=58"></script>
+    <script src="js/storage.js?v=65"></script>
+    <script src="js/i18n.js?v=65"></script>
+    <script src="js/templates.js?v=65"></script>
+    <script src="js/editor.js?v=65"></script>
+    <script src="js/export.js?v=65"></script>
+    <script src="js/dashboard.js?v=65"></script>
+    <script src="js/cloud-sync.js?v=65"></script>
+    <script src="js/auth-subscription.js?v=65"></script>
+    <script src="js/payments.js?v=65"></script>
+    <script src="js/legal.js?v=65"></script>
+    <script src="js/app.js?v=65"></script>
 
     <!-- PWA Service Worker Cleanup & Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js?v=58').catch(err => console.log('SW reg error:', err));
+                navigator.serviceWorker.register('./sw.js?v=60').catch(err => console.log('SW reg error:', err));
             });
         }
     </script>
