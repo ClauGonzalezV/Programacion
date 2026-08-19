@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gladiator Control - Soluciones Integrales de Ingeniería</title>
+  
+  <meta name="description" content="Soluciones integrales de seguridad, control de acceso, gestión de estacionamientos y citofonía IP para condominios, empresas, hospitales y gimnasios en Chile, Perú y México.">
+  <meta name="keywords" content="Soluciones Gladiator Control, control acceso condominios, seguridad edificios corporativos, parking inteligente, citofonia IP, antiportonazo">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gladiator Control - Soluciones Integrales de Ingeniería">
+  <meta property="og:description" content="Soluciones a la medida de control vehicular, peatonal y seguridad perimetral.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://static.wixstatic.com/media/017f74_89bc4f37d2a14cc18db8605885730bde~mv2.png" type="image/png">
+
+  <!-- External Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    .soluciones-hero {
+      padding-top: 140px;
+      padding-bottom: 50px;
+      background: radial-gradient(circle at 50% 20%, rgba(0, 242, 254, 0.14) 0%, transparent 65%);
+    }
+
+    .solucion-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 3rem;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+    }
+
+    @media (max-width: 992px) {
+      .solucion-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .solucion-card:hover {
+      border-color: var(--primary-cyan);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .solucion-card-media {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-right: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    [data-theme="light"] .solucion-card-media {
+      background: #f1f5f9;
+      border-right-color: #e2e8f0;
+    }
+
+    .solucion-card-content {
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .solucion-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 242, 254, 0.12);
+      color: var(--primary-cyan);
+      border: 1px solid var(--border-glow);
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .solucion-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text-white);
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+
+    .solucion-desc {
+      font-size: 1.05rem;
+      color: var(--text-main);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .solucion-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2rem 0;
+    }
+
+    .solucion-checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .solucion-checklist i {
+      color: var(--accent-emerald);
+      font-size: 1.1rem;
+      margin-top: 0.15rem;
+    }
+
+    /* --- Dynamic Configurator Widget --- */
+    .configurator-box {
+      background: linear-gradient(135deg, rgba(11, 21, 45, 0.95), rgba(4, 8, 18, 0.98));
+      border: 2px solid var(--border-glow);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      margin-bottom: 4rem;
+    }
+
+    [data-theme="light"] .configurator-box {
+      background: #ffffff;
+      border-color: #0284c7;
+      box-shadow: 0 15px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .configurator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .configurator-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .config-result-box {
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px dashed var(--primary-cyan);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER & NAVBAR ================= -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="index.html" class="logo">
+          <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+          <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">HOME</a></li>
+          <li><a href="productos.html" class="nav-link">PRODUCTOS</a></li>
+          <li><a href="tienda.html" class="nav-link">TIENDA</a></li>
+          <li><a href="soluciones.html" class="nav-link active" style="color: var(--primary-cyan);">SOLUCIONES</a></li>
+          <li><a href="sedes.html" class="nav-link">SEDES</a></li>
+          <li><a href="index.html#contacto" class="nav-link">CONTACTO</a></li>
+        </ul>
+
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+          <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20informacion%20sobre%20sus%20soluciones%20de%20ingenieria" target="_blank" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Whatsapp click aquí
+          </a>
+
+          <button class="mobile-toggle" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO SOLUCIONES ================= -->
+  <section class="soluciones-hero">
+    <div class="container">
+      <div class="text-center mx-auto" style="max-width: 950px;">
+        <div class="section-tag">
+          <i class="fa-solid fa-lightbulb"></i> Soluciones Integrales de Ingeniería
+        </div>
+        <h1 class="gradient-text" style="font-size: 3.2rem; font-weight: 800; margin-bottom: 1.25rem;">
+          SOLUCIONES DE ACCESO & SEGURIDAD A LA MEDIDA
+        </h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
+          Diseñamos, integramos y desplegamos plataformas inteligentes de control vehicular, peatonal, estacionamientos y videovigilancia con IA para comunidades residenciales, edificios corporativos e industrias.
+        </p>
+
+        <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20coordinar%20una%20reunion%20de%20evaluacion%20para%20un%20proyecto" target="_blank" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.05rem;">
+          <i class="fa-solid fa-headset"></i> Solicitar Asesoría de Ingeniería sin Costo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONFIGURADOR INTERACTIVO ================= -->
+  <section style="padding: 20px 0 40px 0;">
+    <div class="container">
+      <div class="configurator-box">
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <span style="color: var(--primary-cyan); font-weight: 800; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">
+            <i class="fa-solid fa-sliders"></i> Asistente de Proyectos
+          </span>
+          <h3 style="font-size: 1.8rem; font-weight: 800; color: var(--text-white); margin-top: 0.25rem;">
+            Encuentra la Solución Ideal para tu Recinto
+          </h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Selecciona tu tipo de espacio y requerimiento principal para obtener la arquitectura técnica sugerida:
+          </p>
+        </div>
+
+        <div class="configurator-grid">
+          <div class="form-group">
+            <label for="config-sector" style="font-weight: 700; color: var(--text-white); margin-bottom: 0.5rem; display: block;">
+              1. Selecciona tu Tipo de Recinto:
+            </label>
+            <select id="config-sector" class="form-control" style="background: var(--bg-dark); color: var(--text-white); border-color: var(--border-light);">
+              <option value="">-- Seleccionar Recinto --</option>
+              <option value="condominio">Condominio / Edificio Residencial</option>
+              <option value="corporativo">Edificio Corporativo / Oficinas</option>
+              <option value="estacionamiento">Estacionamiento Público / Tarifado</option>
+              <option value="gimnasio">Gimnasio / Club Deportivo</option>
+              <option value="colegio">Colegio / Institución Educativa</option>
+              <option value="hospital">Hospital / Clínica de Salud</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="config-necesidad" style="font-weight: 700; color: var(--text-white); margin-bottom: 0.5rem; display: block;">
+              2. Necesidad Principal:
+            </label>
+            <select id="config-necesidad" class="form-control" style="background: var(--bg-dark); color: var(--text-white); border-color: var(--border-light);">
+              <option value="">-- Seleccionar Necesidad --</option>
+              <option value="vehicular">Control Vehicular Automatizado (TAG UHF / LPR)</option>
+              <option value="peatonal">Control Peatonal & Visitas (Biometría / QR)</option>
+              <option value="seguridad">Seguridad Perimetral & Antiportonazo</option>
+              <option value="paqueteria">Gestión de Paquetería & Citofonía IP</option>
+              <option value="asistencia">Control de Asistencia & Membresías</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="config-btn-evaluate" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.85rem; font-size: 1rem;">
+          <i class="fa-solid fa-microchip"></i> Generar Recomendación Técnica
+        </button>
+
+        <div class="config-result-box" id="config-result-display">
+          <h4 style="color: var(--primary-cyan); font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem;" id="config-result-title">
+            Solución Recomendada
+          </h4>
+          <p style="color: var(--text-main); font-size: 1rem; line-height: 1.5; margin-bottom: 1rem;" id="config-result-desc">
+            Descripción de la arquitectura recomendada.
+          </p>
+          <a id="config-result-wa" href="#" target="_blank" class="btn btn-whatsapp" style="display: inline-flex;">
+            <i class="fa-brands fa-whatsapp"></i> Cotizar esta Arquitectura por WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LISTA DE SOLUCIONES DESTACADAS ================= -->
+  <section style="padding-bottom: 80px;">
+    <div class="container">
+
+      <!-- SOLUCIÓN 1: CONDOMINIO SEGURO & TAG VEHICULAR -->
+      <article class="solucion-card" id="solucion-condominios">
+        <div class="solucion-card-media">
+          <div style="width: 100%; height: 260px; display: flex; align-items: center; justify-content: center;">
+            <img src="img/accesos.png" alt="Solución Condominio Seguro" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+        </div>
+        <div class="solucion-card-content">
+          <div>
+            <span class="solucion-badge"><i class="fa-solid fa-building-shield"></i> Condominios & Residenciales</span>
+            <h2 class="solucion-title">Solución Condominio Seguro & TAG Vehicular UHF</h2>
+            <p class="solucion-desc">
+              Elimina los tiempos de espera y portonazos en el acceso de tu condominio mediante el ingreso automatizado de residentes por antenas TAG UHF de largo alcance y lectura de patentes LPR.
+            </p>
+            <ul class="solucion-checklist">
+              <li><i class="fa-solid fa-circle-check"></i> Apertura de portón automático a 7 metros sin bajar la ventana.</li>
+              <li><i class="fa-solid fa-circle-check"></i> Registro digital de visitas mediante escáner de cédula ID ACCESS.</li>
+              <li><i class="fa-solid fa-circle-check"></i> Alarma antiportonazo preventiva con sirena e iluminación SOS.</li>
+              <li><i class="fa-solid fa-circle-check"></i> Auditoría completa de ingresos y salidas almacenada en la nube.</li>
+            </ul>
+          </div>
+          <div>
+            <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20la%20Solucion%20Condominio%20Seguro" target="_blank" class="btn btn-whatsapp">
+              <i class="fa-brands fa-whatsapp"></i> Cotizar Solución para Condominios
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- SOLUCIÓN 2: ESTACIONAMIENTO INTELIGENTE & NO ESTACIONAR -->
+      <article class="solucion-card" id="solucion-estacionamientos">
+        <div class="solucion-card-media">
+          <div style="width: 100%; height: 260px; display: flex; align-items: center; justify-content: center;">
+            <img src="img/parking.png" alt="Solución Estacionamientos Inteligentes" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+        </div>
+        <div class="solucion-card-content">
+          <div>
+            <span class="solucion-badge"><i class="fa-solid fa-square-parking"></i> Estacionamientos & Parqueos</span>
+            <h2 class="solucion-title">Gestión Inteligente de Estacionamientos & Sistema NO Estacionar</h2>
+            <p class="solucion-desc">
+              Protege tus parqueos privados y evita la ocupación no autorizada de accesos de emergencia y portones mediante barreras automáticas, cepos abatibles y cámaras disuasivas.
+            </p>
+            <ul class="solucion-checklist">
+              <li><i class="fa-solid fa-circle-check"></i> Detección y alerta de autos mal estacionados en zonas prohibidas.</li>
+              <li><i class="fa-solid fa-circle-check"></i> Bloqueadores abatibles de parqueo resguardados por App/Control.</li>
+              <li><i class="fa-solid fa-circle-check"></i> Cámaras LPR 4K para control de aforo y cobro de tickets.</li>
+              <li><i class="fa-solid fa-circle-check"></i> Estructuras metálicas de alta resistencia vehicular.</li>
+            </ul>
+          </div>
+          <div>
+            <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20la%20Solucion%20para%20Estacionamientos" target="_blank" class="btn btn-whatsapp">
+              <i class="fa-brands fa-whatsapp"></i> Cotizar Solución de Estacionamiento
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- SOLUCIÓN 3: CITOFONÍA IP & LOCKERS PAQUETERÍA -->
+      <article class="solucion-card" id="solucion-citofonia">
+        <div class="solucion-card-media">
+          <div style="width: 100%; height: 260px; display: flex; align-items: center; justify-content: center;">
+            <img src="img/media_1786674850872.png" alt="Citofonía IP y Lockers" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+        </div>
+        <div class="solucion-card-content">
+          <div>
+            <span class="solucion-badge"><i class="fa-solid fa-phone-volume"></i> Intercomunicación & Paquetería</span>
+            <h2 class="solucion-title">Citofonía - Interfonía IP & e-Lockers de Paquetería</h2>
+            <p class="solucion-desc">
+              Moderniza la comunicación de tu comunidad con centrales IP sin cables a departamentos y custodia automatizada de correspondencia 24/7.
+            </p>
+            <ul class="solucion-checklist">
+              <li><i class="fa-solid fa-circle-check"></i> Llamadas de conserjería directamente al celular del residente.</li>
+              <li><i class="fa-solid fa-circle-check"></i> Casilleros e-Lockers con apertura por código QR o SMS.</li>
+              <li><i class="fa-solid fa-circle-check"></i> Totems exteriores antivandálicos de acero de 1.5mm.</li>
+              <li><i class="fa-solid fa-circle-check"></i> Software SIA Paquetería con notificación automática.</li>
+            </ul>
+          </div>
+          <div>
+            <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20Citofonia%20IP%20y%20Lockers" target="_blank" class="btn btn-whatsapp">
+              <i class="fa-brands fa-whatsapp"></i> Cotizar Citofonía & Paquetería
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- SOLUCIÓN 4: SECTORES ESPECIALES (GIMNASIOS, COLEGIOS, HOSPITALES) -->
+      <article class="solucion-card" id="solucion-especiales">
+        <div class="solucion-card-media">
+          <div style="width: 100%; height: 260px; display: flex; align-items: center; justify-content: center;">
+            <img src="img/watches.png" alt="Soluciones Especiales" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+        </div>
+        <div class="solucion-card-content">
+          <div>
+            <span class="solucion-badge"><i class="fa-solid fa-cubes"></i> Soluciones por Sector</span>
+            <h2 class="solucion-title">Sistemas Especializados para Gimnasios, Colegios & Salud</h2>
+            <p class="solucion-desc">
+              Desarrollamos soluciones verticales adaptadas a la operación de recintos deportivos, colegios, clínicas e institutos.
+            </p>
+            <ul class="solucion-checklist">
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Gym App:</strong> Torniquetes con validación de membresías y morosidad.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Colegios:</strong> Notificación automática al celular del apoderado al entrar el alumno.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Salud:</strong> Lockers higiénicos para remedios y monitoreo de signos vitales.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Eventos & Clubes:</strong> Lectura QR anti-clonación en torniquetes móviles.</li>
+            </ul>
+          </div>
+          <div>
+            <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20Soluciones%20Especiales%20para%20mi%20empresa" target="_blank" class="btn btn-whatsapp">
+              <i class="fa-brands fa-whatsapp"></i> Cotizar Solución Especializada
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ================= DIRECT QUOTE CTA BANNER ================= -->
+  <section style="padding: 70px 0; background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(59, 130, 246, 0.18)); text-align: center;">
+    <div class="container mx-auto" style="max-width: 850px;">
+      <h3 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-white);">
+        ¿Tienes un Proyecto o Licitación en Desarrollo?
+      </h3>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">
+        Nuestros ingenieros preparan la propuesta técnica y económica formal adaptada a los requerimientos de tu comunidad o empresa.
+      </p>
+      <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Tengo%20un%20proyecto%20o%20licitacion%20y%20necesito%20una%20propuesta" target="_blank" class="btn btn-whatsapp" style="padding: 1.1rem 2.2rem; font-size: 1.1rem;">
+        <i class="fa-brands fa-whatsapp"></i> Contactar a un Ingeniero de Proyectos +56 9 7699 1350
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+  <a href="https://api.whatsapp.com/send?phone=+56976991350" target="_blank" class="whatsapp-float" aria-label="WhatsApp Gladiator Control">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="logo">
+            <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+            <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+          </a>
+          <p>
+            Desarrollamos e integramos soluciones inteligentes de acceso, estacionamiento y seguridad en Chile, Perú y México.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Soluciones Destacadas</h4>
+          <ul class="footer-links">
+            <li><a href="soluciones.html#solucion-condominios">Condominio Seguro & TAG</a></li>
+            <li><a href="soluciones.html#solucion-estacionamientos">Sistema NO Estacionar</a></li>
+            <li><a href="soluciones.html#solucion-citofonia">Citofonía IP & Lockers</a></li>
+            <li><a href="soluciones.html#solucion-especiales">Gym App & Colegios</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="tienda.html">Tienda</a></li>
+            <li><a href="soluciones.html">Soluciones</a></li>
+            <li><a href="sedes.html">Sedes</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Contacto Ingenieros</h4>
+          <p style="margin-top: 0; font-size: 0.85rem;">
+            Santiago: 22 840 2124 | Chillán: 42 253 6701<br>
+            Lima Perú: 51905488105<br>
+            <strong>WhatsApp:</strong> +56 9 7699 1350<br>
+            <strong>Email:</strong> gladiatorcontrol@gmail.com
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Gladiator Control - Soluciones Integrales. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products-data.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Lógica Asistente de Proyectos / Configurador -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const evalBtn = document.getElementById('config-btn-evaluate');
+      const sectorSelect = document.getElementById('config-sector');
+      const necesidadSelect = document.getElementById('config-necesidad');
+      const resultBox = document.getElementById('config-result-display');
+      const resultTitle = document.getElementById('config-result-title');
+      const resultDesc = document.getElementById('config-result-desc');
+      const resultWa = document.getElementById('config-result-wa');
+
+      if (evalBtn && sectorSelect && necesidadSelect) {
+        evalBtn.addEventListener('click', () => {
+          const sec = sectorSelect.value;
+          const nec = necesidadSelect.value;
+
+          if (!sec || !nec) {
+            alert('Por favor selecciona tanto el Tipo de Recinto como la Necesidad Principal.');
+            return;
+          }
+
+          let title = '';
+          let desc = '';
+
+          if (sec === 'condominio') {
+            title = 'Arquitectura Recomendada: Sistema Condominio Seguro + TAG UHF10';
+            desc = 'Recomendamos la instalación de la Central Control RFID UHF10 con antenas de largo alcance en portería, lectura de cédulas ID ACCESS y barreras automáticas con sistema antiportonazo.';
+          } else if (sec === 'corporativo') {
+            title = 'Arquitectura Recomendada: Biometría Facial & Citofonía IP Corporativa';
+            desc = 'Recomendamos molinetes peatones con reconocimiento facial 3D de 0.2s, citofonía IP hacia smartphones de ejecutivos y e-Lockers para correspondencia.';
+          } else if (sec === 'estacionamiento') {
+            title = 'Arquitectura Recomendada: LPR Lectura de Placas & Sistema NO Estacionar';
+            desc = 'Recomendamos cámaras LPR 4K para control de cobro/aforo, barreras de alto flujo y cepos/alarmas disuasivas para zonas no estacionables.';
+          } else if (sec === 'gimnasio') {
+            title = 'Arquitectura Recomendada: Gym App + Torniquetes Peatonales';
+            desc = 'Recomendamos torniquetes integrados al software de gimnasio para bloqueo automático de usuarios morosos y registro por huella o código QR en celular.';
+          } else if (sec === 'colegio') {
+            title = 'Arquitectura Recomendada: Control Escolar Interactivo + WhatsApp Apoderados';
+            desc = 'Recomendamos molinetes con lector de credenciales escolares y envío automático de notificación WhatsApp/SMS al apoderado cuando el alumno ingresa al recinto.';
+          } else {
+            title = 'Arquitectura Recomendada: Solución Personalizada de Ingeniería Gladiator';
+            desc = 'Recomendamos una evaluación técnica presencial con nuestros ingenieros para levantar planos y requerimientos específicos de tu instalación.';
+          }
+
+          resultTitle.textContent = title;
+          resultDesc.textContent = desc;
+
+          const text = encodeURIComponent(`Hola Gladiator Control! Utilicé el Asistente de Proyectos para un recinto (${sec}) con necesidad (${nec}) y deseo cotizar la recomendación: ${title}`);
+          resultWa.href = `https://api.whatsapp.com/send?phone=+56976991350&text=${text}`;
+
+          resultBox.style.display = 'block';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gladiator Control - Lockers para Hospitales y Clínicas</title>
+  
+  <meta name="description" content="Sistemas automatizados de casilleros inteligentes para entrega de fármacos, medicamentos e insumos en hospitales y clínicas con trazabilidad 24/7.">
+  <meta name="keywords" content="Lockers hospitales, casilleros clinicas, entrega medicamentos, lockers farmacia, Gladiator Control">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gladiator Control - Lockers para Hospitales y Clínicas">
+  <meta property="og:description" content="Automatización y entrega segura de medicamentos en el sector salud en Chile y Perú.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://static.wixstatic.com/media/017f74_89bc4f37d2a14cc18db8605885730bde~mv2.png" type="image/png">
+
+  <!-- External Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../css/styles.css">
+  
+  <style>
+    .lockers-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .vertical-product-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #cbd5e1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .vertical-product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,242,254,0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER & NAVBAR ================= -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="../index.html" class="logo">
+          <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+          <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="../index.html" class="nav-link">HOME</a></li>
+          <li><a href="../productos.html" class="nav-link active" style="color: var(--primary-cyan);">PRODUCTOS</a></li>
+          <li><a href="../index.html#soluciones" class="nav-link">SOLUCIONES</a></li>
+          <li><a href="../index.html#infraestructuras" class="nav-link">NOSOTROS</a></li>
+          <li><a href="../index.html#sedes" class="nav-link">SEDES</a></li>
+          <li><a href="../index.html#contacto" class="nav-link">CONTACTO</a></li>
+        </ul>
+
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+          <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20Lockers%20para%20Hospitales%20y%20Clinicas" target="_blank" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Whatsapp click aquí
+          </a>
+          <button class="mobile-toggle" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero" style="padding-top: 140px; padding-bottom: 40px;">
+    <div class="container">
+      <div style="margin-bottom: 1.5rem;">
+        <a href="../productos.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary-cyan); font-weight: 600; font-size: 0.9rem;">
+          <i class="fa-solid fa-arrow-left"></i> Volver a Catálogo de Productos
+        </a>
+      </div>
+
+      <div class="text-center mx-auto" style="max-width: 900px;">
+        <div class="section-tag">
+          <i class="fa-solid fa-hospital-user"></i> Automatización Farmacéutica y Hospitalaria
+        </div>
+        <h1 class="gradient-text" style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">
+          LOCKERS PARA HOSPITALES Y CLÍNICAS
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
+          Cada vez es más común el uso del casillero inteligente en el mundo de la Salud. Entrega automatizada de medicinas y fármacos a pacientes y custodia higiénica de insumos médicos con aviso por Email y clave PIN de retiro 24/7.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <a href="#fichas-tecnicas-hospitales" class="btn btn-secondary" style="padding: 0.85rem 1.8rem;">
+            <i class="fa-solid fa-hospital"></i> Ver Módulos de Lockers de Salud
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VERTICAL CARDS SHOWCASE ================= -->
+  <section id="fichas-tecnicas-hospitales" style="padding: 60px 0; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+    <div class="container">
+      
+      <div class="text-center mx-auto" style="margin-bottom: 3.5rem; max-width: 750px;">
+        <h2 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.75rem;">
+          SOLUCIONES DE CASILLEROS INTELIGENTES PARA EL SECTOR SALUD
+        </h2>
+        <p style="color: var(--text-muted);">
+          Entrega de medicamentos a pacientes crónicos, control de insumos y custodia de vestuario médico.
+        </p>
+      </div>
+
+      <!-- 4 VERTICAL CARDS GRID -->
+      <div class="lockers-card-grid">
+
+        <!-- CARD 1: ENTREGA AUTOMATIZADA DE MEDICAMENTOS -->
+        <div class="vertical-product-card">
+          <div style="background: #0d9488; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">ENTREGA DE MEDICINAS</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">PACIENTES Y FÁRMACOS PERIÓDICOS</div>
+            </div>
+            <div style="background: #ffffff; color: #0f766e; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">FARMACIA</div>
+          </div>
+
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="15" width="90" height="110" rx="6" fill="#0f172a" stroke="#0d9488" stroke-width="3"/>
+                <rect x="35" y="25" width="70" height="90" rx="4" fill="#1e293b"/>
+                <rect x="63" y="45" width="14" height="40" fill="#10b981"/>
+                <rect x="50" y="58" width="40" height="14" fill="#10b981"/>
+              </svg>
+            </div>
+
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #0d9488; font-weight: bold;">•</span>
+                <strong>Retiro Automatizado 24/7:</strong> Envío de correo o mensaje con clave PIN de retiro único al paciente.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #0d9488; font-weight: bold;">•</span>
+                <strong>Sin Filas de Espera:</strong> Agiliza la distribución de recetarios de farmacia de forma autónoma.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #0d9488; font-weight: bold;">•</span>
+                <strong>Registro Auditable:</strong> Confirmación del instante exacto en que el medicamento es retirado.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #0d9488; font-weight: bold;">•</span>
+                <strong>Superficie Sanitaria:</strong> Material de fácil limpieza e higienización periódica.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 2: CUSTODIA DE INSUMOS MÉDICOS & EQUIPAMIENTO -->
+        <div class="vertical-product-card">
+          <div style="background: #2563eb; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">INSUMOS MÉDICOS</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">EQUIPOS & INSTRUMENTAL</div>
+            </div>
+            <div style="background: #ffffff; color: #1e3a8a; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">INSUMOS</div>
+          </div>
+
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="25" width="90" height="90" rx="8" fill="#0f172a" stroke="#2563eb" stroke-width="2.5"/>
+                <rect x="40" y="40" width="60" height="40" fill="#1e293b" stroke="#00f2fe" stroke-width="1"/>
+                <text x="70" y="65" fill="#00f2fe" font-size="8" font-family="monospace" text-anchor="middle">CONTROL RUT/HUELLA</text>
+              </svg>
+            </div>
+
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Acceso Biométrico / RUT:</strong> Habilitación de retiro exclusiva para personal médico autorizado.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Control de Trazabilidad:</strong> Bitácora de quién abre el casillero e insumos retirados.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Cerraduras Electromagnéticas:</strong> Bloqueo industrial de máxima seguridad.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Prevención de Pérdidas:</strong> Elimina pérdidas o extravíos de insumos quirúrgicos.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 3: VESTUARIO Y CASILLEROS DE PERSONAL CLÍNICO -->
+        <div class="vertical-product-card">
+          <div style="background: #7c3aed; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">PERSONAL CLÍNICO</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">UNIFORMES Y VESTIDORES</div>
+            </div>
+            <div style="background: #ffffff; color: #6d28d9; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">VESTUARIO</div>
+          </div>
+
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="25" width="90" height="90" rx="8" fill="#0f172a" stroke="#7c3aed" stroke-width="3"/>
+                <rect x="35" y="35" width="70" height="40" fill="#1e293b"/>
+                <circle cx="70" cy="55" r="10" fill="#10b981"/>
+                <text x="70" y="95" fill="#00f2fe" font-size="7" font-family="monospace" text-anchor="middle">VESTUARIO 24/7</text>
+              </svg>
+            </div>
+
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Custodia de Uniformes:</strong> Casilleros para médicos, enfermeros y personal de turno.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Apertura por Credencial RFID:</strong> Tarjeta institucional o huella para apertura.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Ventilación Pasiva:</strong> Módulos con rejillas de aireación para mantener higiene.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Cero Llaves Físicas:</strong> Elimina extravíos y copias de llaves metálicas.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 4: MÓDULOS DE REFRIGERACIÓN Y GESTIÓN CLOUD -->
+        <div class="vertical-product-card">
+          <div style="background: #059669; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">REFRIGERACIÓN & CLOUD</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">MÓDULOS CON CONTROL DE FRÍO</div>
+            </div>
+            <div style="background: #ffffff; color: #047857; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">REFRIGERADO</div>
+          </div>
+
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="25" width="90" height="90" rx="8" fill="#0f172a" stroke="#059669" stroke-width="3"/>
+                <path d="M 70 35 L 70 85 M 45 60 L 95 60" stroke="#00f2fe" stroke-width="2.5"/>
+                <text x="70" y="103" fill="#00f2fe" font-size="7" font-family="monospace" text-anchor="middle">CONTROL TEMP 2-8°C</text>
+              </svg>
+            </div>
+
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Módulos Refrigerados Opcionales:</strong> Control térmico constante (2°C a 8°C) para vacunas o insumos sensibles.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Monitoreo de Temperatura:</strong> Alerta automática por variaciones térmicas.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Consola Cloud:</strong> Gestión remota de estado de casilleros disponibles y ocupados.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Cumplimiento de Norma Sanitaria:</strong> Garantiza la cadena de frío y seguridad farmacéutica.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DIRECT QUOTE CTA BANNER ================= -->
+  <section style="padding: 70px 0; background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(59, 130, 246, 0.15)); text-align: center;">
+    <div class="container mx-auto" style="max-width: 800px;">
+      <h3 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-white);">
+        ¿Necesitas Cotizar Lockers Inteligentes para tu Hospital o Clínica?
+      </h3>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">
+        Contacta a nuestros especialistas en Chile (Santiago / Chillán) o Perú (Lima) para asesoría técnica inmediata y presupuesto personalizado.
+      </p>
+      <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20solicitar%20presupuesto%20para%20Lockers%20para%20Hospitales%20y%20Clinicas" target="_blank" class="btn btn-whatsapp" style="padding: 1.1rem 2.2rem; font-size: 1.1rem;">
+        <i class="fa-brands fa-whatsapp"></i> Hablar por WhatsApp +56 9 7699 1350
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+  <a href="https://api.whatsapp.com/send?phone=+56976991350" target="_blank" class="whatsapp-float" aria-label="WhatsApp Gladiator Control">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="../index.html" class="logo">
+            <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+            <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+          </a>
+          <p>
+            Desarrollamos e integramos sistemas inteligentes de acceso, estacionamiento, intercomunicación y seguridad en Chile, Perú y México.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Líneas Destacadas</h4>
+          <ul class="footer-links">
+            <li><a href="lockers-hospitales.html">Lockers para Hospitales</a></li>
+            <li><a href="sistema-e-lockers.html">Lockers Inteligentes</a></li>
+            <li><a href="tag-vehicular.html">TAG Vehicular UHF</a></li>
+            <li><a href="control-acceso-sia.html">Sistema SIA Integrado</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../productos.html">Productos</a></li>
+            <li><a href="../index.html#infraestructuras">Nosotros</a></li>
+            <li><a href="../index.html#sedes">Sedes</a></li>
+            <li><a href="../index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Contacto Chile & Perú</h4>
+          <p style="margin-top: 0; font-size: 0.85rem;">
+            Santiago: 22 840 2124 | Chillán: 42 253 6701<br>
+            Lima Perú: 51905488105<br>
+            <strong>WhatsApp:</strong> +56 9 7699 1350<br>
+            <strong>Email:</strong> gladiatorcontrol@gmail.com
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Gladiator Control - Equipos Estacionamiento y Acceso. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/products-data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

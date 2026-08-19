@@ -231,6 +231,7 @@ const GLADIATOR_SOLUTIONS = [
     subtitle: "Control de acceso biométrico de alta precisión sin contacto",
     badge: "Biometría",
     icon: "fa-solid fa-fingerprint",
+    image: "img/media_1786674859206.png",
     imageSvg: `<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
       <rect x="65" y="20" width="70" height="110" rx="10" fill="#0f172a" stroke="#00f2fe" stroke-width="2"/>
       <circle cx="100" cy="65" r="14" fill="none" stroke="#00f2fe" stroke-width="1.5"/>
@@ -250,6 +251,7 @@ const GLADIATOR_SOLUTIONS = [
     subtitle: "Controladores de proximidad Mifare 13.56MHz y teclados numéricos",
     badge: "RFID / Clave",
     icon: "fa-solid fa-id-card",
+    image: "img/media_1786674867344.png",
     imageSvg: `<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
       <rect x="40" y="35" width="120" height="80" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
       <rect x="55" y="50" width="30" height="25" fill="#f59e0b"/>
@@ -340,6 +342,7 @@ const GLADIATOR_SOLUTIONS = [
     subtitle: "Registro digital y escáner de cédulas de identidad / pasaportes",
     badge: "ID ACCESS",
     icon: "fa-solid fa-address-book",
+    image: "img/media_1786674850872.png",
     imageSvg: `<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
       <rect x="45" y="30" width="110" height="90" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
     </svg>`,
@@ -482,6 +485,7 @@ const GLADIATOR_SOLUTIONS = [
     subtitle: "Videovigilancia con analítica de IA para búsqueda inmediata",
     badge: "CCTV IA",
     icon: "fa-solid fa-video",
+    image: "img/media_1786674855275.png",
     imageSvg: `<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
       <path d="M 60 50 A 40 40 0 0 1 140 50 Z" fill="#1e293b" stroke="#00f2fe" stroke-width="2"/>
     </svg>`,

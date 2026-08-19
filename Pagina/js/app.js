@@ -1,6 +1,7 @@
-// ==========================================================================
-// GLADIATOR CONTROL - LÓGICA ULTRA-PREMIUM Y BUSCADOR DE PRODUCTOS
-// ==========================================================================
+// Immediate theme apply
+(function() {
+  document.documentElement.setAttribute('data-theme', 'dark');
+})();
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
@@ -112,14 +113,19 @@ function renderGridProducts(categoryFilter = 'all') {
     ? GLADIATOR_SOLUTIONS 
     : GLADIATOR_SOLUTIONS.filter(s => s.category === categoryFilter);
 
-  container.innerHTML = filtered.map(item => `
+  container.innerHTML = filtered.map(item => {
+    const imgDisplay = item.image 
+      ? `<img src="${item.image}" alt="${item.name}" style="max-height: 140px; max-width: 100%; object-fit: contain;">`
+      : item.imageSvg;
+
+    return `
     <div class="product-card">
       <div class="card-top">
         <span class="card-badge">${item.badge}</span>
         <div class="card-icon"><i class="${item.icon}"></i></div>
       </div>
       <div class="card-image-box">
-        ${item.imageSvg}
+        ${imgDisplay}
       </div>
       <h3 class="card-title">${item.name}</h3>
       <p class="card-subtitle">${item.subtitle}</p>
@@ -138,7 +144,8 @@ function renderGridProducts(categoryFilter = 'all') {
         </button>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 /* --- Product Technical Specification Modal --- */
@@ -206,9 +213,13 @@ function openProductModal(productId) {
     `;
   }
 
+  const modalImg = product.image 
+    ? `<img src="${product.image}" alt="${product.name}" style="max-height: 220px; max-width: 100%; object-fit: contain;">`
+    : product.imageSvg;
+
   modalBody.innerHTML = `
     <div style="text-align: center; margin-bottom: 1.5rem; background: rgba(0,0,0,0.4); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-glow);">
-      ${product.imageSvg}
+      ${modalImg}
     </div>
     <p style="font-size: 1.05rem; color: var(--text-main); margin-bottom: 1.25rem; line-height: 1.5;">${product.description}</p>
     
@@ -257,7 +268,6 @@ function renderOffices() {
   container.innerHTML = GLADIATOR_OFFICES.map(office => `
     <div class="office-card">
       <div class="office-header">
-        <span class="office-flag">${office.flag}</span>
         <h3>${office.country}</h3>
       </div>
       <p class="office-address"><i class="fa-solid fa-location-dot"></i> ${office.address}</p>

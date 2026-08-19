@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gladiator Control - Sedes y Ubicación Internacional</title>
+  
+  <meta name="description" content="Sedes oficiales y ubicaciones de Gladiator Control en Chile (Santiago / Chillán), Perú (Lima) y México. Mapas interactivos de Google Maps y datos de contacto directos.">
+  <meta name="keywords" content="Sedes Gladiator Control, oficina Santiago, oficina Lima, oficina Chillan, Gladiator Control Chile Peru Mexico">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gladiator Control - Sedes y Ubicación Internacional">
+  <meta property="og:description" content="Oficinas comerciales y mapas interactivos en Chile, Perú y México.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://static.wixstatic.com/media/017f74_89bc4f37d2a14cc18db8605885730bde~mv2.png" type="image/png">
+
+  <!-- External Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <style>
+    .sedes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .sede-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sede-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-cyan);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .sede-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .sede-flag {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+
+    .sede-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-white);
+      margin: 0;
+    }
+
+    .sede-info-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+      flex-grow: 1;
+    }
+
+    .sede-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      margin-bottom: 0.9rem;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .sede-info-item i {
+      color: var(--primary-cyan);
+      font-size: 1.1rem;
+      margin-top: 0.2rem;
+      min-width: 20px;
+    }
+
+    .maps-section-title {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .maps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .map-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .map-card-header {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    [data-theme="light"] .map-card-header {
+      background: #f1f5f9;
+    }
+
+    .map-card-header h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-white);
+
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .map-iframe-container {
+      width: 100%;
+      height: 340px;
+      position: relative;
+    }
+
+    .map-iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER & NAVBAR ================= -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="index.html" class="logo">
+          <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+          <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">HOME</a></li>
+          <li><a href="productos.html" class="nav-link">PRODUCTOS</a></li>
+          <li><a href="index.html#soluciones" class="nav-link">SOLUCIONES</a></li>
+          <li><a href="index.html#infraestructuras" class="nav-link">NOSOTROS</a></li>
+          <li><a href="sedes.html" class="nav-link active" style="color: var(--primary-cyan);">SEDES</a></li>
+          <li><a href="index.html#contacto" class="nav-link">CONTACTO</a></li>
+        </ul>
+
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+          <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20informacion%20sobre%20sus%20sedes" target="_blank" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Whatsapp click aquí
+          </a>
+          <button class="mobile-toggle" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero" style="padding-top: 140px; padding-bottom: 40px;">
+    <div class="container">
+      <div class="text-center mx-auto" style="max-width: 900px;">
+        <div class="section-tag">
+          <i class="fa-solid fa-globe"></i> Presencia Internacional & Oficinas Comerciales
+        </div>
+        <h1 class="gradient-text" style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">
+          SEDES Y UBICACIÓN INTERNACIONAL
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
+          Brindamos cobertura integral, soporte técnico y distribución directa de sistemas de seguridad en Chile (Santiago & Chillán), Perú (Lima) y México.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CARDS INFORMACIÓN DE SEDES ================= -->
+  <section style="padding: 40px 0;">
+    <div class="container">
+      
+      <div class="sedes-grid">
+
+        <!-- SEDE CHILE -->
+        <div class="sede-card">
+          <div class="sede-header">
+            <div>
+              <h2 class="sede-title">CHILE</h2>
+              <span style="font-size: 0.85rem; color: var(--primary-cyan); font-weight: 600;">CASA MATRIZ & SUCURSAL SUR</span>
+            </div>
+          </div>
+
+          <ul class="sede-info-list">
+            <li class="sede-info-item">
+              <i class="fa-solid fa-building-user"></i>
+              <div>
+                <strong>Santiago:</strong> Badajoz 100 Of. 502, Las Condes
+              </div>
+            </li>
+            <li class="sede-info-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <strong>Chillán:</strong> 42 253 6701 | 22 840 2124
+              </div>
+            </li>
+            <li class="sede-info-item">
+              <i class="fa-brands fa-whatsapp"></i>
+              <div>
+                <strong>WhatsApp Chile:</strong> +56 9 7699 1350
+              </div>
+            </li>
+            <li class="sede-info-item">
+              <i class="fa-solid fa-mail-bulk"></i>
+              <div>
+                <strong>Código Postal:</strong> 7560908 - SANTIAGO
+              </div>
+            </li>
+            <li class="sede-info-item">
+              <i class="fa-solid fa-envelope"></i>
+              <div>
+                <strong>Email:</strong> gladiatorcontrol@gmail.com
+              </div>
+            </li>
+          </ul>
+
+          <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control%20Chile!" target="_blank" class="btn btn-whatsapp" style="width: 100%; text-align: center;">
+            <i class="fa-brands fa-whatsapp"></i> Contactar Sede Chile
+          </a>
+        </div>
+
+        <!-- SEDE PERÚ -->
+        <div class="sede-card">
+          <div class="sede-header">
+            <div>
+              <h2 class="sede-title">PERÚ</h2>
+              <span style="font-size: 0.85rem; color: var(--primary-cyan); font-weight: 600;">OFICINA CENTRAL LIMA</span>
+            </div>
+          </div>
+
+          <ul class="sede-info-list">
+            <li class="sede-info-item">
+              <i class="fa-solid fa-building-user"></i>
+              <div>
+                <strong>Lima:</strong> Av. Nicolás Arriola 314 Of. D 1101, Santa Catalina, La Victoria
+              </div>
+            </li>
+            <li class="sede-info-item">
+              <i class="fa-brands fa-whatsapp"></i>
+              <div>
+                <strong>WhatsApp Perú:</strong> +51 984 209 008 / +51 905 488 105
+              </div>
+            </li>
+            <li class="sede-info-item">
+              <i class="fa-solid fa-mail-bulk"></i>
+              <div>
+                <strong>Código Postal:</strong> 15019 - LIMA
+              </div>
+            </li>
+            <li class="sede-info-item">
+              <i class="fa-solid fa-envelope"></i>
+              <div>
+                <strong>Email:</strong> gladiatorcontrol@gmail.com
+              </div>
+            </li>
+          </ul>
+
+          <a href="https://api.whatsapp.com/send?phone=+51984209008&text=Hola%20Gladiator%20Control%20Peru!" target="_blank" class="btn btn-whatsapp" style="width: 100%; text-align: center;">
+            <i class="fa-brands fa-whatsapp"></i> Contactar Sede Perú
+          </a>
+        </div>
+
+        <!-- SEDE MÉXICO -->
+        <div class="sede-card">
+          <div class="sede-header">
+            <div>
+              <h2 class="sede-title">MÉXICO</h2>
+              <span style="font-size: 0.85rem; color: var(--primary-cyan); font-weight: 600;">ATENCIÓN COMERCIAL & PROYECTOS</span>
+            </div>
+          </div>
+
+          <ul class="sede-info-list">
+            <li class="sede-info-item">
+              <i class="fa-solid fa-building-user"></i>
+              <div>
+                <strong>Cobertura:</strong> Atención de proyectos comerciales en todo México
+              </div>
+            </li>
+            <li class="sede-info-item">
+              <i class="fa-brands fa-whatsapp"></i>
+              <div>
+                <strong>WhatsApp México:</strong> +52 984 238 7784
+              </div>
+            </li>
+            <li class="sede-info-item">
+              <i class="fa-solid fa-envelope"></i>
+              <div>
+                <strong>Email Oficial:</strong> gladiatorcontrol@gmail.com
+              </div>
+            </li>
+            <li class="sede-info-item">
+              <i class="fa-solid fa-clock"></i>
+              <div>
+                <strong>Horario de Atención:</strong> Lunes a Viernes 9:00 - 18:00 hrs
+              </div>
+            </li>
+          </ul>
+
+          <a href="https://api.whatsapp.com/send?phone=+529842387784&text=Hola%20Gladiator%20Control%20Mexico!" target="_blank" class="btn btn-whatsapp" style="width: 100%; text-align: center;">
+            <i class="fa-brands fa-whatsapp"></i> Contactar Sede México
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= MAPAS INTERACTIVOS GOOGLE MAPS ================= -->
+  <section style="padding: 60px 0; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+    <div class="container">
+      
+      <div class="maps-section-title">
+        <div style="background: linear-gradient(90deg, var(--primary-cyan), var(--primary-blue)); color: #000000; font-family: var(--font-heading); font-weight: 900; font-size: 1.8rem; padding: 0.6rem 2rem; display: inline-block; border-radius: var(--radius-md); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem; box-shadow: 0 10px 25px rgba(0, 242, 254, 0.3);">
+          ¿Dónde estamos ubicados?
+        </div>
+        <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto;">
+          Navega interactivamente por los mapas de ubicación oficial de nuestras centrales de operación.
+        </p>
+      </div>
+
+      <!-- GRID DE MAPAS GOOGLE -->
+      <div class="maps-grid">
+
+        <!-- MAPA SANTIAGO CHILE -->
+        <div class="map-card">
+          <div class="map-card-header">
+            <h3><span style="font-size: 1.3rem;">🇨🇱</span> Oficina Santiago (Chile)</h3>
+            <span style="font-size: 0.75rem; background: var(--primary-cyan); color: #000000; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 4px;">LAS CONDES</span>
+          </div>
+          <div class="map-iframe-container">
+            <iframe 
+              title="Mapa Oficina Santiago Chile - Badajoz 100"
+              src="https://maps.google.com/maps?q=Badajoz%20100%2C%20Las%20Condes%2C%20Santiago%2C%20Chile&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+        <!-- MAPA LIMA PERÚ -->
+        <div class="map-card">
+          <div class="map-card-header">
+            <h3><span style="font-size: 1.3rem;">🇵🇪</span> Oficina Lima (Perú)</h3>
+            <span style="font-size: 0.75rem; background: var(--primary-cyan); color: #000000; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 4px;">LA VICTORIA</span>
+          </div>
+          <div class="map-iframe-container">
+            <iframe 
+              title="Mapa Oficina Lima Perú - Av. Nicolas Arriola 314"
+              src="https://maps.google.com/maps?q=Av.%20Nicol%C3%A1s%20Arriola%20314%2C%20La%20Victoria%2C%20Lima%2C%20Peru&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DIRECT QUOTE CTA BANNER ================= -->
+  <section style="padding: 70px 0; background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(59, 130, 246, 0.15)); text-align: center;">
+    <div class="container mx-auto" style="max-width: 800px;">
+      <h3 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-white);">
+        ¿Necesitas Asesoría Comercial o una Visita Técnica en tu Sede?
+      </h3>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">
+        Contacta directamente a nuestros ingenieros en Chile, Perú o México para agendar una reunión o demo en terreno.
+      </p>
+      <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20coordinar%20una%20visita%20tecnica%20o%20reunion" target="_blank" class="btn btn-whatsapp" style="padding: 1.1rem 2.2rem; font-size: 1.1rem;">
+        <i class="fa-brands fa-whatsapp"></i> Hablar por WhatsApp +56 9 7699 1350
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+  <a href="https://api.whatsapp.com/send?phone=+56976991350" target="_blank" class="whatsapp-float" aria-label="WhatsApp Gladiator Control">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="logo">
+            <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+            <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+          </a>
+          <p>
+            Desarrollamos e integramos sistemas inteligentes de acceso, estacionamiento, intercomunicación y seguridad en Chile, Perú y México.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Nuestras Sedes</h4>
+          <ul class="footer-links">
+            <li><a href="sedes.html">Sede Chile (Santiago)</a></li>
+            <li><a href="sedes.html">Sede Perú (Lima)</a></li>
+            <li><a href="sedes.html">Sede México</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="index.html#infraestructuras">Nosotros</a></li>
+            <li><a href="sedes.html">Sedes</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Contacto Chile & Perú</h4>
+          <p style="margin-top: 0; font-size: 0.85rem;">
+            Santiago: 22 840 2124 | Chillán: 42 253 6701<br>
+            Lima Perú: 51905488105<br>
+            <strong>WhatsApp:</strong> +56 9 7699 1350<br>
+            <strong>Email:</strong> gladiatorcontrol@gmail.com
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Gladiator Control - Equipos Estacionamiento y Acceso. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

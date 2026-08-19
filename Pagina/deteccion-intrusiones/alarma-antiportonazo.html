@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gladiator Control - Sistema Alarma Antiportonazo para Condominios</title>
+  
+  <meta name="description" content="Sistema de alarma antiportonazo e ingreso seguro con botón de pánico, baliza estroboscópica y exclusas de seguridad en Chile y Perú.">
+  <meta name="keywords" content="Alarma antiportonazo, ingreso seguro condominios, boton panico vehicular, esclusa porton, Gladiator Control">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gladiator Control - Alarma Antiportonazo Condominios">
+  <meta property="og:description" content="Protección activa ante encerronas e intentos de portonazo en accesos residenciales.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://static.wixstatic.com/media/017f74_89bc4f37d2a14cc18db8605885730bde~mv2.png" type="image/png">
+
+  <!-- External Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../css/styles.css">
+  
+  <style>
+    .security-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .vertical-product-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #cbd5e1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .vertical-product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,242,254,0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER & NAVBAR ================= -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="../index.html" class="logo">
+          <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+          <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="../index.html" class="nav-link">HOME</a></li>
+          <li><a href="../productos.html" class="nav-link active" style="color: var(--primary-cyan);">PRODUCTOS</a></li>
+          <li><a href="../index.html#soluciones" class="nav-link">SOLUCIONES</a></li>
+          <li><a href="../index.html#infraestructuras" class="nav-link">NOSOTROS</a></li>
+          <li><a href="../index.html#sedes" class="nav-link">SEDES</a></li>
+          <li><a href="../index.html#contacto" class="nav-link">CONTACTO</a></li>
+        </ul>
+
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+          <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20Alarma%20Antiportonazo%20para%20Condominios" target="_blank" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Whatsapp click aquí
+          </a>
+          <button class="mobile-toggle" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero" style="padding-top: 140px; padding-bottom: 40px;">
+    <div class="container">
+      <div style="margin-bottom: 1.5rem;">
+        <a href="../productos.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary-cyan); font-weight: 600; font-size: 0.9rem;">
+          <i class="fa-solid fa-arrow-left"></i> Volver a Catálogo de Productos
+        </a>
+      </div>
+
+      <div class="text-center mx-auto" style="max-width: 900px;">
+        <div class="section-tag">
+          <i class="fa-solid fa-shield-cat"></i> Protección Anti-Asalto Vehicular
+        </div>
+        <h1 class="gradient-text" style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">
+          SISTEMA ALARMA ANTIPORTONAZO
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
+          Sistema preventivo e integrativo diseñado para resguardar a los residentes en el momento más vulnerable: el ingreso o salida vehicular del condominio. Botón de pánico, exclusas de portón y balizas de alta disuasión en Chile y Perú.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <a href="#fichas-tecnicas-antiportonazo" class="btn btn-secondary" style="padding: 0.85rem 1.8rem;">
+            <i class="fa-solid fa-car-burst"></i> Ver Módulos Antiportonazo
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VERTICAL CARDS SHOWCASE ================= -->
+  <section id="fichas-tecnicas-antiportonazo" style="padding: 60px 0; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+    <div class="container">
+      
+      <div class="text-center mx-auto" style="margin-bottom: 3.5rem; max-width: 750px;">
+        <h2 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.75rem;">
+          MÓDULOS DE SEGURIDAD Y INGRESO SEGURO
+        </h2>
+        <p style="color: var(--text-muted);">
+          Diseño pensado para prevenir encerronas y proteger a las familias antes de cruzar el portón.
+        </p>
+      </div>
+
+      <!-- 4 VERTICAL CARDS GRID -->
+      <div class="security-card-grid">
+
+        <!-- CARD 1: BOTÓN DE PÁNICO INALÁMBRICO VEHICULAR -->
+        <div class="vertical-product-card">
+          <div style="background: #ef4444; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">PÁNICO EN AUTO</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">TRANSMISOR RF SILENCIOSO Y AUDIBLE</div>
+            </div>
+            <div style="background: #ffffff; color: #991b1b; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">PÁNICO</div>
+          </div>
+
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="35" y="35" width="70" height="70" rx="35" fill="#ef4444" stroke="#0f172a" stroke-width="4"/>
+                <circle cx="70" cy="70" r="20" fill="#ffffff"/>
+                <text x="70" y="74" fill="#ef4444" font-size="10" font-weight="900" text-anchor="middle">SOS</text>
+              </svg>
+            </div>
+
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #ef4444; font-weight: bold;">•</span>
+                <strong>Control Llavero de Largo Alcance:</strong> Transmisor RF que funciona hasta a 50 metros antes de llegar.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #ef4444; font-weight: bold;">•</span>
+                <strong>Alarma Silenciosa a Conserjería:</strong> Envío de alerta discreta al monitor del guardia de turno.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #ef4444; font-weight: bold;">•</span>
+                <strong>Sirena Exterior disuasiva (Opcional):</strong> Sirena de alta potencia para espantar delincuentes.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #ef4444; font-weight: bold;">•</span>
+                <strong>Batería de Larga Duración:</strong> Hasta 2 años de autonomía con aviso de batería baja.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 2: ESCLUSA DE SEGURIDAD EN PORTONES -->
+        <div class="vertical-product-card">
+          <div style="background: #2563eb; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">ESCLUSA SEGURIDAD</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">DOBLE PORTÓN CON INTERLOCK</div>
+            </div>
+            <div style="background: #ffffff; color: #1e3a8a; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">ESCLUSA</div>
+          </div>
+
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="25" width="90" height="90" rx="8" fill="#0f172a" stroke="#2563eb" stroke-width="3"/>
+                <line x1="45" y1="25" x2="45" y2="115" stroke="#38bdf8" stroke-width="3"/>
+                <line x1="95" y1="25" x2="95" y2="115" stroke="#38bdf8" stroke-width="3"/>
+                <text x="70" y="74" fill="#00f2fe" font-size="7" font-family="monospace" text-anchor="middle">ZONA SEGURA INTERMEDIA</text>
+              </svg>
+            </div>
+
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Control de Doble Portón Interlock:</strong> El segundo portón no abre hasta que el primero se cierra por completo.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Zona Segura Intermedia:</strong> El vehículo queda resguardado dentro del perímetro antes de entrar a subterráneos.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Apertura Rápida de Emergencia:</strong> Cierre de bloqueo instantáneo si se detecta un auto sospechoso atrás.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Elimina el "Portonazo":</strong> Impide la entrada de asaltantes a pie o en motocicleta detrás del auto.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 3: BALIZAS DE LUZ Y PERFONÍA AUTOMÁTICA -->
+        <div class="vertical-product-card">
+          <div style="background: #0d9488; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">BALIZAS & LUZ</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">DISUASIÓN VISUAL Y AUDITIVA</div>
+            </div>
+            <div style="background: #ffffff; color: #0f766e; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">BALIZAS</div>
+          </div>
+
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="45" y="20" width="50" height="100" rx="6" fill="#0f172a" stroke="#0d9488" stroke-width="2.5"/>
+                <circle cx="70" cy="40" r="14" fill="#00f2fe"/>
+                <rect x="55" y="65" width="30" height="40" fill="#1e293b"/>
+                <text x="70" y="112" fill="#00f2fe" font-size="6" font-family="monospace" text-anchor="middle">FLASH LED 30W</text>
+              </svg>
+            </div>
+
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Foco LED Estroboscópico 30W:</strong> Iluminación intensa que encandila y deja en evidencia a los atacantes.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Sirena de Alta Potencia (115dB):</strong> Alerta sonora que alerta a vecinos y transeúntes.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Activación en Menos de 0.5s:</strong> Respuesta inmediata al accionar el botón del llavero o app.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Alimentación con Batería de Respaldo:</strong> Sigue funcionando ante cortes intencionados de luz.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 4: REGISTRO Y CONEXIÓN A CENTRAL SIA -->
+        <div class="vertical-product-card">
+          <div style="background: #059669; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">CONEXIÓN A SIA</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">BITÁCORA Y SEGURIDAD MÓVIL</div>
+            </div>
+            <div style="background: #ffffff; color: #047857; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">CONSERJERÍA</div>
+          </div>
+
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="25" width="90" height="90" rx="8" fill="#0f172a" stroke="#059669" stroke-width="3"/>
+                <rect x="35" y="35" width="70" height="40" fill="#1e293b"/>
+                <circle cx="70" cy="55" r="10" fill="#10b981"/>
+                <text x="70" y="95" fill="#00f2fe" font-size="7" font-family="monospace" text-anchor="middle">REPORTE SOS CONDOMINIO</text>
+              </svg>
+            </div>
+
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Identificación del Departamento:</strong> La central informa exactamente qué unidad activó el pánico.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Grabación Automática de Cámaras:</strong> Respaldo de video del evento desde 30s antes de la alarma.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Aviso Telefónico Automático:</strong> Llamada por red celular o GSM a números de emergencia prefijados.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Compatibilidad 100% Condominios:</strong> Fácil integración en portones automáticos existentes.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DIRECT QUOTE CTA BANNER ================= -->
+  <section style="padding: 70px 0; background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(59, 130, 246, 0.15)); text-align: center;">
+    <div class="container mx-auto" style="max-width: 800px;">
+      <h3 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-white);">
+        ¿Necesitas Instalar el Sistema Alarma Antiportonazo en tu Condominio?
+      </h3>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">
+        Contacta a nuestros especialistas en Chile (Santiago / Chillán) o Perú (Lima) para asesoría técnica inmediata y presupuesto personalizado.
+      </p>
+      <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20solicitar%20presupuesto%20para%20Sistema%20Alarma%20Antiportonazo" target="_blank" class="btn btn-whatsapp" style="padding: 1.1rem 2.2rem; font-size: 1.1rem;">
+        <i class="fa-brands fa-whatsapp"></i> Hablar por WhatsApp +56 9 7699 1350
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+  <a href="https://api.whatsapp.com/send?phone=+56976991350" target="_blank" class="whatsapp-float" aria-label="WhatsApp Gladiator Control">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="../index.html" class="logo">
+            <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+            <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+          </a>
+          <p>
+            Desarrollamos e integramos sistemas inteligentes de acceso, estacionamiento, intercomunicación y seguridad en Chile, Perú y México.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Líneas Destacadas</h4>
+          <ul class="footer-links">
+            <li><a href="alarma-antiportonazo.html">Alarma Antiportonazo</a></li>
+            <li><a href="vigilancia-remota.html">Vigilancia Remota</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../productos.html">Productos</a></li>
+            <li><a href="../index.html#infraestructuras">Nosotros</a></li>
+            <li><a href="../index.html#sedes">Sedes</a></li>
+            <li><a href="../index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Contacto Chile & Perú</h4>
+          <p style="margin-top: 0; font-size: 0.85rem;">
+            Santiago: 22 840 2124 | Chillán: 42 253 6701<br>
+            Lima Perú: 51905488105<br>
+            <strong>WhatsApp:</strong> +56 9 7699 1350<br>
+            <strong>Email:</strong> gladiatorcontrol@gmail.com
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Gladiator Control - Equipos Estacionamiento y Acceso. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/products-data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

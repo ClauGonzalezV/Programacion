@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gladiator Control - Tienda Online Oficial de Equipamiento</title>
+  
+  <meta name="description" content="Tienda oficial de Gladiator Control. Compra directa de controladores de acceso, sistemas de estacionamiento, antenas TAG UHF, biometría y cámaras LPR con envío e instalación.">
+  <meta name="keywords" content="Tienda Gladiator Control, comprar control de acceso, comprar TAG UHF, precio barrera vehicular, tienda seguridad Chile Peru Mexico">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gladiator Control - Tienda Online Oficial">
+  <meta property="og:description" content="Equipamiento tecnológico de acceso, estacionamiento y seguridad en Chile, Perú y México.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://static.wixstatic.com/media/017f74_89bc4f37d2a14cc18db8605885730bde~mv2.png" type="image/png">
+
+  <!-- External Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    .store-hero {
+      padding-top: 140px;
+      padding-bottom: 40px;
+      background: radial-gradient(circle at 50% 20%, rgba(0, 242, 254, 0.12) 0%, transparent 60%);
+    }
+
+    .store-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .store-filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      color: var(--text-main);
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .store-filter-btn:hover, .store-filter-btn.active {
+      background: var(--primary-cyan);
+      color: #000000;
+      border-color: var(--primary-cyan);
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+    }
+
+    .store-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .store-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .store-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary-cyan);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .store-badge-stock {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(16, 185, 129, 0.9);
+      color: #ffffff;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      z-index: 2;
+    }
+
+    .store-card-img {
+      width: 100%;
+      height: 190px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    [data-theme="light"] .store-card-img {
+      background: #f8fafc;
+    }
+
+    .store-card-body {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .store-card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-white);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .store-card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.45;
+      flex-grow: 1;
+    }
+
+    .store-price-box {
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .store-price {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary-cyan);
+    }
+
+    .store-price-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .store-card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    /* --- Side Cart Drawer --- */
+    .cart-drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .cart-drawer-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 100%;
+      max-width: 420px;
+      height: 100%;
+      background: var(--bg-card);
+      border-left: 1px solid var(--border-glow);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+      z-index: 10001;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cart-drawer.active {
+      right: 0;
+    }
+
+    .cart-drawer-header {
+      padding: 1.25rem 1.5rem;
+      background: rgba(0, 0, 0, 0.4);
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cart-drawer-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-white);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .cart-drawer-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .cart-drawer-close:hover {
+      color: #ef4444;
+    }
+
+    .cart-items-container {
+      padding: 1.25rem;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.9rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.85rem;
+      align-items: center;
+    }
+
+    [data-theme="light"] .cart-item {
+      background: #f8fafc;
+    }
+
+    .cart-item-info {
+      flex-grow: 1;
+    }
+
+    .cart-item-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+    }
+
+    .cart-item-price {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--primary-cyan);
+    }
+
+    .cart-qty-btn {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-light);
+      color: var(--text-main);
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .cart-drawer-footer {
+      padding: 1.5rem;
+      background: rgba(0, 0, 0, 0.4);
+      border-top: 1px solid var(--border-light);
+    }
+
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-white);
+    }
+
+    .nav-cart-btn {
+      position: relative;
+      background: rgba(0, 242, 254, 0.15);
+      color: var(--primary-cyan);
+      border: 1px solid var(--border-glow);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
+    }
+
+    .nav-cart-btn:hover {
+      background: var(--primary-cyan);
+      color: #000000;
+    }
+
+    .nav-cart-count {
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER & NAVBAR ================= -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="index.html" class="logo">
+          <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+          <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">HOME</a></li>
+          <li><a href="productos.html" class="nav-link">PRODUCTOS</a></li>
+          <li><a href="tienda.html" class="nav-link active" style="color: var(--primary-cyan);">TIENDA</a></li>
+          <li><a href="index.html#soluciones" class="nav-link">SOLUCIONES</a></li>
+          <li><a href="sedes.html" class="nav-link">SEDES</a></li>
+          <li><a href="index.html#contacto" class="nav-link">CONTACTO</a></li>
+        </ul>
+
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+          <button class="nav-cart-btn" id="open-cart-btn" aria-label="Ver Carrito de Compras">
+            <i class="fa-solid fa-cart-shopping"></i> Carrito <span class="nav-cart-count" id="cart-count-badge">0</span>
+          </button>
+          
+          <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20productos%20de%20la%20tienda" target="_blank" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Whatsapp click aquí
+          </a>
+
+          <button class="mobile-toggle" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO TIENDA ================= -->
+  <section class="store-hero">
+    <div class="container">
+      <div class="text-center mx-auto" style="max-width: 900px;">
+        <div class="section-tag">
+          <i class="fa-solid fa-cart-flatbed"></i> E-Commerce Oficial Gladiator Control
+        </div>
+        <h1 class="gradient-text" style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">
+          TIENDA ONLINE DE EQUIPAMIENTO
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
+          Adquiere directamente controladores de acceso, sistemas de estacionamiento, biometría, antenas TAG UHF y accesorios con garantía oficial y soporte de instalación.
+        </p>
+
+        <!-- Buscador de Tienda -->
+        <div style="max-width: 550px; margin: 0 auto 2.5rem auto; position: relative;">
+          <input type="text" id="store-search-input" class="form-control" placeholder="🔍 Buscar por producto, modelo o tecnología (ej: TAG, Biometría, Modelo 501...)" style="padding-left: 1.25rem; font-size: 1rem; border-radius: var(--radius-full);">
+        </div>
+      </div>
+
+      <!-- Filtros por Categoría -->
+      <div class="store-filters">
+        <button class="store-filter-btn active" data-cat="all">Todos los Productos</button>
+        <button class="store-filter-btn" data-cat="estacionamiento">Estacionamiento & Barreras</button>
+        <button class="store-filter-btn" data-cat="acceso">Control de Acceso & Biometría</button>
+        <button class="store-filter-btn" data-cat="cctv">I.A. CCTV & Lectura LPR</button>
+        <button class="store-filter-btn" data-cat="salud">Salud & Relojes Médicos</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CATÁLOGO DE PRODUCTOS EN TIENDA ================= -->
+  <section style="padding-bottom: 60px;">
+    <div class="container">
+      <div class="store-grid" id="store-products-grid">
+        <!-- Renderizado dinámico de productos en JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BANNER GARANTÍA Y ENVÍOS ================= -->
+  <section style="padding: 60px 0; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; text-align: center;">
+        <div>
+          <div style="font-size: 2.2rem; color: var(--primary-cyan); margin-bottom: 0.75rem;"><i class="fa-solid fa-truck-fast"></i></div>
+          <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--text-white); margin-bottom: 0.4rem;">Envío a Regiones & Cobertura</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">Despacho express para Chile, Perú y México.</p>
+        </div>
+
+        <div>
+          <div style="font-size: 2.2rem; color: var(--primary-cyan); margin-bottom: 0.75rem;"><i class="fa-solid fa-shield-check"></i></div>
+          <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--text-white); margin-bottom: 0.4rem;">Garantía Oficial Gladiator</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">2 Años de garantía directa de fábrica.</p>
+        </div>
+
+        <div>
+          <div style="font-size: 2.2rem; color: var(--primary-cyan); margin-bottom: 0.75rem;"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+          <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--text-white); margin-bottom: 0.4rem;">Soporte de Instalación</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">Asesoría técnica remota o en terreno por ingenieros.</p>
+        </div>
+
+        <div>
+          <div style="font-size: 2.2rem; color: var(--primary-cyan); margin-bottom: 0.75rem;"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+          <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--text-white); margin-bottom: 0.4rem;">Facturación Formal</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">Emisión de Factura electrónica para empresas y condominios.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SIDE CART DRAWER ================= -->
+  <div class="cart-drawer-overlay" id="cart-overlay"></div>
+  
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-header">
+      <h3 class="cart-drawer-title"><i class="fa-solid fa-cart-shopping" style="color: var(--primary-cyan);"></i> Tu Carrito de Compras</h3>
+      <button class="cart-drawer-close" id="close-cart-btn" aria-label="Cerrar carrito">&times;</button>
+    </div>
+
+    <div class="cart-items-container" id="cart-items-list">
+      <!-- Ítems agregados dinámicamente -->
+    </div>
+
+    <div class="cart-drawer-footer">
+      <div class="cart-total-row">
+        <span>Total a Pagar:</span>
+        <span style="color: var(--primary-cyan);" id="cart-total-price">$0 CLP</span>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <input type="text" id="cart-customer-name" class="form-control" placeholder="Tu Nombre / Empresa *" style="margin-bottom: 0.5rem; font-size: 0.88rem;" required>
+        <input type="text" id="cart-customer-city" class="form-control" placeholder="Ciudad / Dirección de Entrega *" style="font-size: 0.88rem;" required>
+      </div>
+
+      <button id="checkout-wa-btn" class="btn btn-whatsapp" style="width: 100%; justify-content: center; padding: 0.9rem; font-size: 1rem;">
+        <i class="fa-brands fa-whatsapp"></i> Finalizar Pedido por WhatsApp
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= MODAL PRODUCTO ================= -->
+  <dialog id="product-modal" class="modal-dialog">
+    <div class="modal-content">
+      <button id="modal-close-btn" class="modal-close" aria-label="Cerrar modal">&times;</button>
+      <h3 id="modal-product-title" class="modal-header-title">Ficha Técnica de Producto</h3>
+      <div id="modal-product-body" class="modal-body-content"></div>
+      <div class="modal-footer-actions">
+        <a id="modal-wa-link" href="#" target="_blank" class="btn btn-whatsapp" style="width: 100%;">
+          <i class="fa-brands fa-whatsapp"></i> Consultar este modelo por WhatsApp
+        </a>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+  <a href="https://api.whatsapp.com/send?phone=+56976991350" target="_blank" class="whatsapp-float" aria-label="WhatsApp Gladiator Control">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="logo">
+            <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+            <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+          </a>
+          <p>
+            Tienda oficial de equipamiento tecnológico para accesos, estacionamientos y seguridad corporativa.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Categorías Tienda</h4>
+          <ul class="footer-links">
+            <li><a href="tienda.html">Controladores Modelo 501</a></li>
+            <li><a href="tienda.html">TAGs UHF Parabrisas</a></li>
+            <li><a href="tienda.html">Biometría & Asistencia</a></li>
+            <li><a href="tienda.html">Cámaras LPR 4K</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="tienda.html">Tienda Online</a></li>
+            <li><a href="sedes.html">Sedes</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Atención de Ventas</h4>
+          <p style="margin-top: 0; font-size: 0.85rem;">
+            <strong>WhatsApp Ventas:</strong> +56 9 7699 1350<br>
+            <strong>Email:</strong> gladiatorcontrol@gmail.com<br>
+            <strong>Atención:</strong> Lunes a Viernes 9:00 - 18:00 hrs
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Gladiator Control - Tienda Online Oficial. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products-data.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Lógica E-Commerce Carrito Tienda -->
+  <script>
+    // Precios de referencia para e-commerce
+    const STORE_PRICES = {
+      "controlador-modelo-501": 189900,
+      "tag-uhf-vehicular": 185000,
+      "sistema-no-estacionar": 149900,
+      "bloqueo-estacionamientos": 129900,
+      "biometria-rostro-huella": 179900,
+      "tarjetas-claves": 49900,
+      "citofonia-interfonia": 159900,
+      "lockers-inteligentes": 480000,
+      "lockers-hospitales": 390000,
+      "gym-app-control": 220000,
+      "condominio-seguro": 350000,
+      "libro-id-access": 190000,
+      "colegios-interactivo": 280000,
+      "vehiculos-transporte": 165000,
+      "control-eventos-clubes": 210000,
+      "sistemas-lpr-placas": 320000,
+      "cctv-inteligente-placas": 290000,
+      "cctv-lpr-asaltos": 310000,
+      "vigilancia-remota": 240000,
+      "reloj-inteligente-medico": 89900,
+      "deteccion-incendios": 210000
+    };
+
+    let cartState = JSON.parse(localStorage.getItem('gladiator-cart') || '[]');
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderStoreProducts('all');
+      initStoreFilters();
+      initCartDrawer();
+      updateCartUI();
+    });
+
+    function formatCLP(val) {
+      return '$' + val.toLocaleString('es-CL') + ' CLP';
+    }
+
+    function renderStoreProducts(categoryFilter = 'all', searchQuery = '') {
+      const container = document.getElementById('store-products-grid');
+      if (!container) return;
+
+      let filtered = categoryFilter === 'all' 
+        ? GLADIATOR_SOLUTIONS 
+        : GLADIATOR_SOLUTIONS.filter(s => s.category === categoryFilter);
+
+      if (searchQuery.trim() !== '') {
+        const q = searchQuery.toLowerCase().trim();
+        filtered = filtered.filter(s => s.name.toLowerCase().includes(q) || s.description.toLowerCase().includes(q));
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem;">
+            <i class="fa-solid fa-box-open" style="font-size: 3rem; color: var(--text-dim); margin-bottom: 1rem;"></i>
+            <h3 style="color: var(--text-white);">No se encontraron productos</h3>
+            <p style="color: var(--text-muted);">Intenta buscando otro término o seleccionando otra categoría.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => {
+        const price = STORE_PRICES[item.id] || 149900;
+        const imgDisplay = item.image 
+          ? `<img src="${item.image}" alt="${item.name}" style="max-height: 160px; max-width: 100%; object-fit: contain;">`
+          : item.imageSvg;
+
+        return `
+          <div class="store-card">
+            <span class="store-badge-stock"><i class="fa-solid fa-check"></i> En Stock</span>
+            <div class="store-card-img">
+              ${imgDisplay}
+            </div>
+            <div class="store-card-body">
+              <h3 class="store-card-title">${item.name}</h3>
+              <p class="store-card-desc">${item.subtitle}</p>
+              
+              <div class="store-price-box">
+                <span class="store-price">${formatCLP(price)}</span>
+                <span class="store-price-label">+ IVA</span>
+              </div>
+
+              <div class="store-card-actions">
+                <button onclick="addToCart('${item.id}')" class="btn btn-primary" style="padding: 0.6rem; font-size: 0.85rem;">
+                  <i class="fa-solid fa-cart-plus"></i> Añadir
+                </button>
+                <button onclick="openProductModal('${item.id}')" class="btn" style="background: rgba(255,255,255,0.08); color: var(--text-white); border: 1px solid var(--border-light); padding: 0.6rem; font-size: 0.85rem;">
+                  <i class="fa-solid fa-eye"></i> Ficha
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function initStoreFilters() {
+      const btns = document.querySelectorAll('.store-filter-btn');
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const cat = btn.getAttribute('data-cat');
+          const searchInput = document.getElementById('store-search-input');
+          renderStoreProducts(cat, searchInput ? searchInput.value : '');
+        });
+      });
+
+      const searchInput = document.getElementById('store-search-input');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          const activeBtn = document.querySelector('.store-filter-btn.active');
+          const cat = activeBtn ? activeBtn.getAttribute('data-cat') : 'all';
+          renderStoreProducts(cat, e.target.value);
+        });
+      }
+    }
+
+    /* --- Carrito de Compras Drawer --- */
+    function initCartDrawer() {
+      const openBtn = document.getElementById('open-cart-btn');
+      const closeBtn = document.getElementById('close-cart-btn');
+      const overlay = document.getElementById('cart-overlay');
+      const drawer = document.getElementById('cart-drawer');
+      const checkoutBtn = document.getElementById('checkout-wa-btn');
+
+      if (openBtn && drawer && overlay) {
+        openBtn.addEventListener('click', () => {
+          drawer.classList.add('active');
+          overlay.classList.add('active');
+        });
+      }
+
+      function closeCart() {
+        if (drawer && overlay) {
+          drawer.classList.remove('active');
+          overlay.classList.remove('active');
+        }
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', closeCart);
+      if (overlay) overlay.addEventListener('click', closeCart);
+
+      if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', () => {
+          if (cartState.length === 0) {
+            alert('Tu carrito de compras está vacío.');
+            return;
+          }
+
+          const name = document.getElementById('cart-customer-name').value.trim();
+          const address = document.getElementById('cart-customer-city').value.trim();
+
+          if (!name || !address) {
+            alert('Por favor ingresa tu Nombre y Dirección de Entrega antes de enviar la orden por WhatsApp.');
+            return;
+          }
+
+          let itemsText = cartState.map(i => {
+            const p = STORE_PRICES[i.id] || 149900;
+            return `• ${i.qty}x ${i.name} - ${formatCLP(p * i.qty)}`;
+          }).join('\n');
+
+          const total = cartState.reduce((acc, i) => acc + ((STORE_PRICES[i.id] || 149900) * i.qty), 0);
+
+          const waMsg = encodeURIComponent(
+            `*NUEVO PEDIDO DE TIENDA ONLINE GLADIATOR CONTROL*\n` +
+            `----------------------------------\n` +
+            `👤 Cliente: ${name}\n` +
+            `📍 Dirección / Ciudad: ${address}\n` +
+            `----------------------------------\n` +
+            `📦 ÍTEMS DE LA ORDEN:\n${itemsText}\n` +
+            `----------------------------------\n` +
+            `💰 TOTAL PEDIDO: ${formatCLP(total)} (+ IVA)\n\n` +
+            `Deseo confirmar el método de pago y despacho.`
+          );
+
+          window.open(`https://api.whatsapp.com/send?phone=+56976991350&text=${waMsg}`, '_blank');
+        });
+      }
+    }
+
+    function addToCart(productId) {
+      const product = GLADIATOR_SOLUTIONS.find(p => p.id === productId);
+      if (!product) return;
+
+      const existing = cartState.find(item => item.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cartState.push({
+          id: product.id,
+          name: product.name,
+          qty: 1
+        });
+      }
+
+      saveCartState();
+      updateCartUI();
+
+      // Abrir carrito automáticamente
+      const drawer = document.getElementById('cart-drawer');
+      const overlay = document.getElementById('cart-overlay');
+      if (drawer && overlay) {
+        drawer.classList.add('active');
+        overlay.classList.add('active');
+      }
+    }
+
+    function updateCartQty(productId, delta) {
+      const item = cartState.find(i => i.id === productId);
+      if (!item) return;
+
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cartState = cartState.filter(i => i.id !== productId);
+      }
+
+      saveCartState();
+      updateCartUI();
+    }
+
+    function removeCartItem(productId) {
+      cartState = cartState.filter(i => i.id !== productId);
+      saveCartState();
+      updateCartUI();
+    }
+
+    function saveCartState() {
+      localStorage.setItem('gladiator-cart', JSON.stringify(cartState));
+    }
+
+    function updateCartUI() {
+      const countBadge = document.getElementById('cart-count-badge');
+      const container = document.getElementById('cart-items-list');
+      const totalPriceEl = document.getElementById('cart-total-price');
+
+      const totalCount = cartState.reduce((acc, item) => acc + item.qty, 0);
+      if (countBadge) countBadge.textContent = totalCount;
+
+      if (!container) return;
+
+      if (cartState.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 3rem 1rem;">
+            <i class="fa-solid fa-cart-shopping" style="font-size: 2.5rem; color: var(--text-dim); margin-bottom: 1rem;"></i>
+            <p style="color: var(--text-muted);">Tu carrito está vacío.</p>
+          </div>
+        `;
+        if (totalPriceEl) totalPriceEl.textContent = '$0 CLP';
+        return;
+      }
+
+      let grandTotal = 0;
+      container.innerHTML = cartState.map(item => {
+        const unitPrice = STORE_PRICES[item.id] || 149900;
+        const itemTotal = unitPrice * item.qty;
+        grandTotal += itemTotal;
+
+        return `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <div class="cart-item-title">${item.name}</div>
+              <div class="cart-item-price">${formatCLP(itemTotal)}</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.4rem;">
+              <button onclick="updateCartQty('${item.id}', -1)" class="cart-qty-btn">-</button>
+              <span style="font-weight: 800; font-size: 0.9rem; min-width: 18px; text-align: center;">${item.qty}</span>
+              <button onclick="updateCartQty('${item.id}', 1)" class="cart-qty-btn">+</button>
+              <button onclick="removeCartItem('${item.id}')" style="background: none; border: none; color: #ef4444; cursor: pointer; margin-left: 0.4rem;" title="Eliminar">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (totalPriceEl) totalPriceEl.textContent = formatCLP(grandTotal);
+    }
+  </script>
+</body>
+</html>

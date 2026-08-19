@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gladiator Control - Tarjetas y Claves para Control de Acceso</title>
+  <title>Gladiator Control - Sistema Bloqueo Estacionamientos</title>
   
-  <meta name="description" content="Sistemas de control de acceso con tarjetas de proximidad RFID, teclados digitales con clave PIN y credenciales personalizadas en Chile y Perú.">
-  <meta name="keywords" content="Tarjetas RFID, teclados clave PIN, credenciales PVC, llaveros RFID, tarjetas proximidad, Gladiator Control">
+  <meta name="description" content="Sistemas de bloqueo de estacionamientos, cepos automáticos control remoto, barreras solares y reserva de espacios en Chile y Perú.">
+  <meta name="keywords" content="Bloqueo estacionamiento, cepos automaticos, trabas solares, reservado PMR, Gladiator Control">
   
   <!-- Open Graph -->
-  <meta property="og:title" content="Gladiator Control - Tarjetas y Claves para Acceso">
-  <meta property="og:description" content="Tarjetas de proximidad RFID, teclados PIN y credenciales de acceso.">
+  <meta property="og:title" content="Gladiator Control - Sistema Bloqueo Estacionamientos">
+  <meta property="og:description" content="Protección y reserva de espacios de estacionamiento con cepos automáticos y solares.">
   <meta property="og:type" content="website">
 
   <!-- Favicon -->
@@ -23,10 +23,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="../css/styles.css">
   
   <style>
-    .tarjetas-card-grid {
+    .parking-card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
@@ -56,22 +56,22 @@
   <header class="header">
     <div class="container">
       <nav class="navbar">
-        <a href="index.html" class="logo">
+        <a href="../index.html" class="logo">
           <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
           <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
         </a>
 
         <ul class="nav-menu">
-          <li><a href="index.html" class="nav-link">HOME</a></li>
-          <li><a href="productos.html" class="nav-link active" style="color: var(--primary-cyan);">PRODUCTOS</a></li>
-          <li><a href="index.html#soluciones" class="nav-link">SOLUCIONES</a></li>
-          <li><a href="index.html#infraestructuras" class="nav-link">NOSOTROS</a></li>
-          <li><a href="index.html#sedes" class="nav-link">SEDES</a></li>
-          <li><a href="index.html#contacto" class="nav-link">CONTACTO</a></li>
+          <li><a href="../index.html" class="nav-link">HOME</a></li>
+          <li><a href="../productos.html" class="nav-link active" style="color: var(--primary-cyan);">PRODUCTOS</a></li>
+          <li><a href="../index.html#soluciones" class="nav-link">SOLUCIONES</a></li>
+          <li><a href="../index.html#infraestructuras" class="nav-link">NOSOTROS</a></li>
+          <li><a href="../index.html#sedes" class="nav-link">SEDES</a></li>
+          <li><a href="../index.html#contacto" class="nav-link">CONTACTO</a></li>
         </ul>
 
         <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
-          <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20Tarjetas%20y%20Claves" target="_blank" class="btn btn-whatsapp">
+          <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20Sistema%20Bloqueo%20Estacionamientos" target="_blank" class="btn btn-whatsapp">
             <i class="fa-brands fa-whatsapp"></i> Whatsapp click aquí
           </a>
           <button class="mobile-toggle" aria-label="Abrir menú">
@@ -86,256 +86,226 @@
   <section class="hero" style="padding-top: 140px; padding-bottom: 40px;">
     <div class="container">
       <div style="margin-bottom: 1.5rem;">
-        <a href="productos.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary-cyan); font-weight: 600; font-size: 0.9rem;">
+        <a href="../productos.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary-cyan); font-weight: 600; font-size: 0.9rem;">
           <i class="fa-solid fa-arrow-left"></i> Volver a Catálogo de Productos
         </a>
       </div>
 
       <div class="text-center mx-auto" style="max-width: 900px;">
         <div class="section-tag">
-          <i class="fa-solid fa-id-card"></i> Identificación & Control de Acceso
+          <i class="fa-solid fa-square-parking"></i> Reserva y Protección de Calzos
         </div>
         <h1 class="gradient-text" style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">
-          TARJETAS Y CLAVES PARA CONTROL DE ACCESO
+          SISTEMA BLOQUEO ESTACIONAMIENTOS
         </h1>
         <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
-          Dependiendo del tipo de aplicación y nivel de seguridad requerido, Gladiator Control integra sistemas de control de acceso con tarjetas de proximidad RFID, credenciales personalizadas y teclados con claves numéricas de ingreso en Chile y Perú.
+          Dispositivos abatibles e inteligentes para evitar la ocupación no autorizada de calzos privados, estacionamientos reservados PMR, cargadores de autos eléctricos y ejecutivos en Chile y Perú.
         </p>
 
         <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-          <a href="#fichas-tecnicas-tarjetas" class="btn btn-secondary" style="padding: 0.85rem 1.8rem;">
-            <i class="fa-solid fa-id-card"></i> Ver Soluciones de Tarjetas y Claves
+          <a href="#fichas-tecnicas-bloqueo" class="btn btn-secondary" style="padding: 0.85rem 1.8rem;">
+            <i class="fa-solid fa-lock"></i> Ver Cepos y Bloqueadores
           </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= VERTICAL CARDS SHOWCASE (EXACTLY LIKE MODELO 501, SIA & BIOMETRIA) ================= -->
-  <section id="fichas-tecnicas-tarjetas" style="padding: 60px 0; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+  <!-- ================= VERTICAL CARDS SHOWCASE ================= -->
+  <section id="fichas-tecnicas-bloqueo" style="padding: 60px 0; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
     <div class="container">
       
       <div class="text-center mx-auto" style="margin-bottom: 3.5rem; max-width: 750px;">
         <h2 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.75rem;">
-          FICHAS TÉCNICAS DE TARJETAS, CREDANCIALES Y TECLADOS
+          SISTEMAS DE BLOQUEO DE ESTACIONAMIENTOS
         </h2>
         <p style="color: var(--text-muted);">
-          Especificaciones de tarjetas RFID/Mifare, teclados numéricos PIN IP68, credenciales de PVC impresas y controles RF.
+          Cepos automáticos por control remoto, trabas solares de intemperie y reserva inteligente SIA.
         </p>
       </div>
 
       <!-- 4 VERTICAL CARDS GRID -->
-      <div class="tarjetas-card-grid">
+      <div class="parking-card-grid">
 
-        <!-- CARD 1: TARJETAS & LLAVEROS RFID -->
+        <!-- CARD 1: CEPO AUTOMÁTICO CONTROL REMOTO / APP -->
         <div class="vertical-product-card">
-          <!-- Top Header Bar -->
           <div style="background: #2563eb; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
             <div>
-              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">PROXIMIDAD RFID</div>
-              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">TARJETAS & LLAVEROS RFID</div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">CEPO AUTOMÁTICO</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">CONTROL REMOTO & ALARMA</div>
             </div>
-            <div style="background: #ffffff; color: #1e3a8a; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">RFID</div>
+            <div style="background: #ffffff; color: #1e3a8a; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">ABATIBLE</div>
           </div>
 
-          <!-- Body -->
           <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
             <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
               <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-                <rect x="25" y="30" width="70" height="45" rx="5" fill="#2563eb" stroke="#1d4ed8" stroke-width="2"/>
-                <circle cx="45" cy="52" r="8" fill="none" stroke="#ffffff" stroke-width="2"/>
-                <circle cx="105" cy="85" r="14" fill="#0f172a" stroke="#00f2fe" stroke-width="2"/>
-                <circle cx="105" cy="85" r="4" fill="#ffffff"/>
+                <rect x="25" y="85" width="90" height="25" rx="4" fill="#0f172a" stroke="#2563eb" stroke-width="2.5"/>
+                <path d="M 45 85 L 70 35 L 95 85" stroke="#38bdf8" stroke-width="5" fill="none"/>
+                <circle cx="70" cy="35" r="7" fill="#ef4444"/>
+                <text x="70" y="102" fill="#00f2fe" font-size="7" font-family="monospace" text-anchor="middle">CEPO CONTROL REMOTO</text>
               </svg>
             </div>
 
-            <!-- Gladiator Badge -->
             <div style="margin-bottom: 1.25rem; text-align: center;">
               <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
             </div>
 
-            <!-- Characteristics -->
             <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
             <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Frecuencia:</strong> 125 KHz (EM-Marin / TK4100) y 13.56 MHz (Mifare S50).
+                <strong>Apertura Inalámbrica:</strong> Control remoto inalámbrico con alcance de hasta 30 metros.
               </li>
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Formatos:</strong> Tarjeta de PVC rígida codificable y Llaveros Gota ABS.
+                <strong>Alarma Antiforzado:</strong> Sirena acústica integrada ante intentos de presión o forzado.
               </li>
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Distancia Lectura:</strong> 2 a 10 cm según lector instalado.
+                <strong>Resistencia de Carga:</strong> Soporta hasta 5 toneladas de peso vehicular por encima.
               </li>
               <li style="padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Durabilidad:</strong> Alta resistencia a fricción e imprevistos cotidianos.
+                <strong>Protección Impermeable IP67:</strong> Chasis de acero fundido resistente a intemperie.
               </li>
             </ul>
           </div>
         </div>
 
-        <!-- CARD 2: TECLADOS AUTÓNOMOS PIN + RFID (IP68) -->
+        <!-- CARD 2: RESERVADO PMR Y AUTOS ELÉCTRICOS -->
         <div class="vertical-product-card">
-          <!-- Top Header Bar -->
           <div style="background: #0d9488; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
             <div>
-              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">TECLADOS CON CLAVE</div>
-              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">TECLADO PIN + LECTOR RFID</div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">RESERVADO PMR & EV</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">MOVILIDAD REDUCIDA & ELECTROLINERAS</div>
             </div>
-            <div style="background: #ffffff; color: #0f766e; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">IP68</div>
+            <div style="background: #ffffff; color: #0f766e; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">PMR & EV</div>
           </div>
 
-          <!-- Body -->
           <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
             <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
               <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-                <rect x="35" y="15" width="70" height="110" rx="6" fill="#0f172a" stroke="#475569" stroke-width="3"/>
-                <rect x="45" y="25" width="50" height="20" rx="3" fill="#1e293b"/>
-                <text x="70" y="38" fill="#10b981" font-size="8" font-family="monospace" text-anchor="middle">**** PASS</text>
-                <!-- Keypad buttons -->
-                <rect x="45" y="55" width="12" height="12" rx="2" fill="#334155"/>
-                <rect x="64" y="55" width="12" height="12" rx="2" fill="#334155"/>
-                <rect x="83" y="55" width="12" height="12" rx="2" fill="#334155"/>
-                <rect x="45" y="72" width="12" height="12" rx="2" fill="#334155"/>
-                <rect x="64" y="72" width="12" height="12" rx="2" fill="#334155"/>
-                <rect x="83" y="72" width="12" height="12" rx="2" fill="#334155"/>
-                <rect x="45" y="89" width="12" height="12" rx="2" fill="#334155"/>
-                <rect x="64" y="89" width="12" height="12" rx="2" fill="#334155"/>
-                <rect x="83" y="89" width="12" height="12" rx="2" fill="#334155"/>
+                <rect x="25" y="25" width="90" height="90" rx="8" fill="#0f172a" stroke="#0d9488" stroke-width="3"/>
+                <circle cx="70" cy="55" r="14" fill="#00f2fe"/>
+                <path d="M 60 85 L 80 85 M 70 70 L 70 95" stroke="#ffffff" stroke-width="3"/>
+                <text x="70" y="106" fill="#00f2fe" font-size="7" font-family="monospace" text-anchor="middle">RESERVADO PMR</text>
               </svg>
             </div>
 
-            <!-- Gladiator Badge -->
             <div style="margin-bottom: 1.25rem; text-align: center;">
               <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
             </div>
 
-            <!-- Characteristics -->
             <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
             <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
-                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Acceso Dual:</strong> Apertura por Clave PIN de 4-8 dígitos o Tarjeta RFID.
+                <span style="position: absolute; left: 0; color: #0d9488; font-weight: bold;">•</span>
+                <strong>Protección Espacios Ley PMR:</strong> Impide que conductores no autorizados ocupen espacios de minusválidos.
               </li>
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
-                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Protección IP68:</strong> Carcasa metálica antivandálica con teclado retroiluminado.
+                <span style="position: absolute; left: 0; color: #0d9488; font-weight: bold;">•</span>
+                <strong>Cargadores EV (Autos Eléctricos):</strong> Bloqueador que libera el calzo solo al iniciar la recarga.
               </li>
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
-                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Capacidad:</strong> Hasta 2.000 usuarios con claves/tarjetas independientes.
+                <span style="position: absolute; left: 0; color: #0d9488; font-weight: bold;">•</span>
+                <strong>Señalética Reflectante:</strong> Visibilidad diurna y nocturna de alto contraste.
               </li>
               <li style="padding-left: 1.2rem; position: relative;">
-                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Relé Salida:</strong> Control directo de chapa eléctrica o portón magnético.
+                <span style="position: absolute; left: 0; color: #0d9488; font-weight: bold;">•</span>
+                <strong>Desbloqueo por App / LPR:</strong> Descenso automático al aproximarse el auto registrado.
               </li>
             </ul>
           </div>
         </div>
 
-        <!-- CARD 3: CREDANCIALES PERSONALIZADAS PVC -->
+        <!-- CARD 3: TRABA SOLAR AUTÓNOMA DE EXTERIOR -->
         <div class="vertical-product-card">
-          <!-- Top Header Bar -->
           <div style="background: #7c3aed; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
             <div>
-              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">CREDENCIALES PVC</div>
-              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">IMPRESIÓN FULL COLOR & QR</div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">TRABA SOLAR AUTÓNOMA</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">PANEL FOTOVOLTAICO IP67</div>
             </div>
-            <div style="background: #ffffff; color: #6d28d9; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">CUSTOM</div>
+            <div style="background: #ffffff; color: #6d28d9; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">SOLAR</div>
           </div>
 
-          <!-- Body -->
           <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
             <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
               <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-                <rect x="25" y="25" width="90" height="90" rx="8" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
-                <rect x="35" y="35" width="30" height="35" rx="3" fill="#e2e8f0"/>
-                <circle cx="50" cy="48" r="8" fill="#64748b"/>
-                <line x1="72" y1="40" x2="105" y2="40" stroke="#0f172a" stroke-width="2"/>
-                <line x1="72" y1="48" x2="98" y2="48" stroke="#64748b" stroke-width="1.5"/>
-                <rect x="72" y="58" width="30" height="20" fill="#000000"/>
-                <rect x="75" y="61" width="8" height="8" fill="#ffffff"/>
-                <rect x="91" y="61" width="8" height="8" fill="#ffffff"/>
+                <rect x="25" y="25" width="90" height="90" rx="8" fill="#0f172a" stroke="#7c3aed" stroke-width="3"/>
+                <circle cx="70" cy="50" r="10" fill="#f59e0b"/>
+                <rect x="45" y="70" width="50" height="20" rx="3" fill="#334155" stroke="#f59e0b"/>
+                <text x="70" y="83" fill="#ffffff" font-size="6" font-family="monospace" text-anchor="middle">PANEL SOLAR</text>
               </svg>
             </div>
 
-            <!-- Gladiator Badge -->
             <div style="margin-bottom: 1.25rem; text-align: center;">
               <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
             </div>
 
-            <!-- Characteristics -->
             <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
             <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Impresión Térmica PVC:</strong> Foto HD, logotipo corporativo y datos del usuario.
+                <strong>Energía Solar Auto-Recargable:</strong> Panel solar integrado que mantiene la batería con carga continua.
               </li>
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Códigos Incorporados:</strong> Código QR impreso estático o de barras.
+                <strong>Instalación Cero Cables:</strong> Montaje directo con pernos de anclaje sobre el pavimento.
               </li>
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Chip Interno:</strong> Opción con chip RFID 125Khz o Mifare 13.56MHz.
+                <strong>Operación Bajo Lluvia / Nieve:</strong> Estanqueidad total IP67 para climas exigentes.
               </li>
               <li style="padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Aplicaciones:</strong> Colegios, Universidades, Condominios y Empresas.
+                <strong>Sensor Anti-Colisión:</strong> Retorno elástico si un vehículo toca el cepo sin romper el mecanismo.
               </li>
             </ul>
           </div>
         </div>
 
-        <!-- CARD 4: CONTROLES REMOTOS RF 433MHz -->
+        <!-- CARD 4: INTEGRACIÓN A SOFTWARE SIA & COBROS -->
         <div class="vertical-product-card">
-          <!-- Top Header Bar -->
           <div style="background: #059669; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
             <div>
-              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">CONTROLES REMOTOS</div>
-              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">RF 433MHz ROLLING CODE</div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">SOFTWARE SIA RESERVAS</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">GESTIÓN CLOUD & APARTADOS</div>
             </div>
-            <div style="background: #ffffff; color: #047857; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">RF 433</div>
+            <div style="background: #ffffff; color: #047857; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">S.I.A.</div>
           </div>
 
-          <!-- Body -->
           <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
             <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
               <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-                <rect x="45" y="20" width="50" height="100" rx="10" fill="#0f172a" stroke="#059669" stroke-width="3"/>
-                <circle cx="70" cy="45" r="8" fill="#2563eb"/>
-                <circle cx="70" cy="65" r="8" fill="#10b981"/>
-                <circle cx="70" cy="85" r="8" fill="#f59e0b"/>
-                <circle cx="70" cy="105" r="4" fill="#64748b"/>
+                <rect x="25" y="25" width="90" height="90" rx="8" fill="#0f172a" stroke="#059669" stroke-width="3"/>
+                <rect x="35" y="35" width="70" height="40" fill="#1e293b"/>
+                <circle cx="70" cy="55" r="10" fill="#10b981"/>
+                <text x="70" y="95" fill="#00f2fe" font-size="7" font-family="monospace" text-anchor="middle">SIA PARK RESERVA</text>
               </svg>
             </div>
 
-            <!-- Gladiator Badge -->
             <div style="margin-bottom: 1.25rem; text-align: center;">
               <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
             </div>
 
-            <!-- Characteristics -->
             <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
             <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Frecuencia:</strong> Radiofrecuencia 433.92 MHz con Rolling Code (Código Variable).
+                <strong>Reserva por App Web:</strong> El usuario reserva y paga el calzo desde su teléfono antes de llegar.
               </li>
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Anticlonación:</strong> Protección frente a duplicados no autorizados.
+                <strong>Descenso Automático por Bluetooth/QR:</strong> Liberación inmediata al validar la reserva.
               </li>
               <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Alcance:</strong> Hasta 50 metros en línea de vista.
+                <strong>Monitoreo de Ocupación:</strong> Reporte gráfico en tiempo real de calzos libres y ocupados.
               </li>
               <li style="padding-left: 1.2rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
-                <strong>Usos:</strong> Portones automáticos, barreras vehiculares y puertas de acceso.
+                <strong>Monetización de Estacionamientos:</strong> Permite rentabilizar espacios desocupados en edificios corporativos.
               </li>
             </ul>
           </div>
@@ -346,16 +316,16 @@
     </div>
   </section>
 
-  <!-- ================= DIRECT QUOTE CTA BANNER (EXACTLY LIKE MODELO 501, SIA & BIOMETRIA) ================= -->
+  <!-- ================= DIRECT QUOTE CTA BANNER ================= -->
   <section style="padding: 70px 0; background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(59, 130, 246, 0.15)); text-align: center;">
     <div class="container mx-auto" style="max-width: 800px;">
       <h3 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-white);">
-        ¿Necesitas Cotizar Tarjetas, Claves o Credenciales para tu Proyecto?
+        ¿Necesitas Cotizar Cepos y Bloqueadores de Estacionamiento?
       </h3>
       <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">
         Contacta a nuestros especialistas en Chile (Santiago / Chillán) o Perú (Lima) para asesoría técnica inmediata y presupuesto personalizado.
       </p>
-      <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20solicitar%20presupuesto%20para%20Tarjetas%20y%20Claves" target="_blank" class="btn btn-whatsapp" style="padding: 1.1rem 2.2rem; font-size: 1.1rem;">
+      <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20solicitar%20presupuesto%20para%20Sistema%20Bloqueo%20Estacionamientos" target="_blank" class="btn btn-whatsapp" style="padding: 1.1rem 2.2rem; font-size: 1.1rem;">
         <i class="fa-brands fa-whatsapp"></i> Hablar por WhatsApp +56 9 7699 1350
       </a>
     </div>
@@ -371,7 +341,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <a href="index.html" class="logo">
+          <a href="../index.html" class="logo">
             <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
             <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
           </a>
@@ -383,21 +353,20 @@
         <div class="footer-col">
           <h4 class="footer-title">Líneas Destacadas</h4>
           <ul class="footer-links">
-            <li><a href="tarjetas-claves.html">Tarjetas y Claves</a></li>
-            <li><a href="biometria.html">Biometría & Accesos</a></li>
-            <li><a href="control-acceso-sia.html">Sistema SIA Integrado</a></li>
-            <li><a href="modelo-501.html">Modelo 501 Universal</a></li>
+            <li><a href="bloqueo-estacionamientos.html">Bloqueo Estacionamientos</a></li>
+            <li><a href="equipos-estacionamientos.html">Equipos Estacionamiento</a></li>
+            <li><a href="sistema-no-estacionar.html">Sistema NO Estacionar</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h4 class="footer-title">Navegación</h4>
           <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="productos.html">Productos</a></li>
-            <li><a href="index.html#infraestructuras">Nosotros</a></li>
-            <li><a href="index.html#sedes">Sedes</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../productos.html">Productos</a></li>
+            <li><a href="../index.html#infraestructuras">Nosotros</a></li>
+            <li><a href="../index.html#sedes">Sedes</a></li>
+            <li><a href="../index.html#contacto">Contacto</a></li>
           </ul>
         </div>
 
@@ -419,7 +388,7 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="js/products-data.js"></script>
-  <script src="js/app.js"></script>
+  <script src="../js/products-data.js"></script>
+  <script src="../js/app.js"></script>
 </body>
 </html>

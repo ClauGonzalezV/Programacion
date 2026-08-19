@@ -922,3 +922,96 @@ dialog.modal-dialog::backdrop {
   .mobile-toggle { display: block; }
   .footer-grid { grid-template-columns: 1fr; }
 }
+
+/* ==========================================================================
+   LIGHT MODE DESIGN SYSTEM ([data-theme="light"])
+   ========================================================================== */
+[data-theme="light"] {
+  --bg-dark: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --bg-glass: rgba(255, 255, 255, 0.95);
+  --bg-glass-heavy: rgba(248, 250, 252, 0.98);
+
+  --primary-cyan: #0284c7;
+  --primary-blue: #2563eb;
+  --accent-amber: #d97706;
+  --accent-emerald: #059669;
+  --accent-purple: #7c3aed;
+
+  --text-white: #0f172a;
+  --text-main: #334155;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+
+  --border-light: #cbd5e1;
+  --border-glow: rgba(2, 132, 199, 0.35);
+
+  --shadow-glow: 0 10px 25px rgba(2, 132, 199, 0.12);
+  --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.08);
+
+  color-scheme: light;
+}
+
+[data-theme="light"] body {
+  background-color: #f8fafc;
+  color: #334155;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(2, 132, 199, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 85% 65%, rgba(37, 99, 235, 0.06) 0%, transparent 50%);
+}
+
+[data-theme="light"] .gradient-text {
+  background: linear-gradient(135deg, #0f172a 0%, #0284c7 50%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .gladiator-category-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+}
+
+[data-theme="light"] .banner-left-panel {
+  background: #ffffff;
+}
+
+[data-theme="light"] .banner-link-items a {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #0f172a;
+}
+
+[data-theme="light"] .banner-link-items a:hover {
+  background: #f0f9ff;
+  border-color: #0284c7;
+  color: #0284c7;
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.15);
+}
+
+[data-theme="light"] .product-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+}
+
+[data-theme="light"] .vertical-product-card {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .hero {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+}
+
+[data-theme="light"] .footer {
+  background: #0f172a;
+  color: #cbd5e1;
+}
+
+[data-theme="light"] .footer h4, [data-theme="light"] .footer .logo span {
+  color: #ffffff;
+}
+

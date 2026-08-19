@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gladiator Control - Control de Vehículos de Transporte y Camiones</title>
+  
+  <meta name="description" content="Sistema de control de acceso para vehículos de transporte y camiones de carga de Gladiator Control. Lectura TAG UHF, LPR patentes, software a medida e integración ERP.">
+  <meta name="keywords" content="Control acceso camiones, control vehiculos de transporte, lectura patentes LPR, TAG UHF camiones, software logistico, Gladiator Control">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gladiator Control - Control de Vehículos de Transporte">
+  <meta property="og:description" content="Soluciones integrales de hardware y software a medida para control de camiones y flotas en Chile y Perú.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://static.wixstatic.com/media/017f74_89bc4f37d2a14cc18db8605885730bde~mv2.png" type="image/png">
+
+  <!-- External Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../css/styles.css">
+  
+  <style>
+    .truck-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .vertical-product-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #cbd5e1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .vertical-product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,242,254,0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER & NAVBAR ================= -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="../index.html" class="logo">
+          <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+          <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="../index.html" class="nav-link">HOME</a></li>
+          <li><a href="../productos.html" class="nav-link active" style="color: var(--primary-cyan);">PRODUCTOS</a></li>
+          <li><a href="../index.html#soluciones" class="nav-link">SOLUCIONES</a></li>
+          <li><a href="../index.html#infraestructuras" class="nav-link">NOSOTROS</a></li>
+          <li><a href="../index.html#sedes" class="nav-link">SEDES</a></li>
+          <li><a href="../index.html#contacto" class="nav-link">CONTACTO</a></li>
+        </ul>
+
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+          <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20cotizar%20el%20Control%20de%20Vehiculos%20de%20Transporte" target="_blank" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Whatsapp click aquí
+          </a>
+          <button class="mobile-toggle" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero" style="padding-top: 140px; padding-bottom: 40px;">
+    <div class="container">
+      <div style="margin-bottom: 1.5rem;">
+        <a href="../productos.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary-cyan); font-weight: 600; font-size: 0.9rem;">
+          <i class="fa-solid fa-arrow-left"></i> Volver a Catálogo de Productos
+        </a>
+      </div>
+
+      <div class="text-center mx-auto" style="max-width: 900px;">
+        <div class="section-tag">
+          <i class="fa-solid fa-truck-front"></i> Control Logístico de Flotas y Camiones
+        </div>
+        <h1 class="gradient-text" style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">
+          CONTROL DE VEHÍCULOS DE TRANSPORTE Y CAMIONES
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
+          Gladiator Control ofrece soluciones integrales a medida de las necesidades de su Empresa. El control del acceso de vehículos de transporte es hoy un elemento básico para lograr auditorías financieras fidedignas y balances de carga precisos.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <a href="#fichas-tecnicas-transporte" class="btn btn-secondary" style="padding: 0.85rem 1.8rem;">
+            <i class="fa-solid fa-truck-ramp-box"></i> Ver Soluciones para Transporte
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VERTICAL CARDS SHOWCASE ================= -->
+  <section id="fichas-tecnicas-transporte" style="padding: 60px 0; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+    <div class="container">
+      
+      <div class="text-center mx-auto" style="margin-bottom: 3.5rem; max-width: 750px;">
+        <h2 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.75rem;">
+          SOLUCIONES DE HARDWARE Y SOFTWARE PARA CAMIONES Y FLOTAS
+        </h2>
+        <p style="color: var(--text-muted);">
+          Especificaciones de lectores de largo alcance, cámaras de lectura de patentes, software a medida e integración ERP.
+        </p>
+      </div>
+
+      <!-- 4 VERTICAL CARDS GRID -->
+      <div class="truck-card-grid">
+
+        <!-- CARD 1: LECTORES DE IDENTIFICACIÓN TAG UHF -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #2563eb; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">LECTORES DE LARGO ALCANCE</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">TAG UHF 865-928 MHz</div>
+            </div>
+            <div style="background: #ffffff; color: #1e3a8a; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">UHF PASS</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="25" width="90" height="90" rx="8" fill="#0f172a" stroke="#2563eb" stroke-width="2.5"/>
+                <path d="M 45 45 L 85 45 L 95 75 L 35 75 Z" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+                <circle cx="50" cy="85" r="8" fill="#00f2fe"/>
+                <circle cx="80" cy="85" r="8" fill="#00f2fe"/>
+                <text x="70" y="105" fill="#10b981" font-size="7" font-family="monospace" text-anchor="middle">ALCANCE 12 METROS</text>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Lectura Pasiva UHF:</strong> Detección instantánea de etiquetas adhesivas en parabrisas de camiones.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Largo Alcance (7 a 12m):</strong> Permite la apertura de barreras industriales sin detener la marcha.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Resistencia Industrial IP66:</strong> Antenas reforzadas para operar bajo lluvia, polvo y ambientes extremos.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Gestión de Flotas:</strong> Identificación fidedigna de camiones de carga y transporte pesado.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 2: RECONOCIMIENTO DE PATENTES (LPR) & ELECTRÓNICA PROPIA -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #0d9488; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">RECONOCIMIENTO LPR</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">LECTURA DE PATENTES & OCR</div>
+            </div>
+            <div style="background: #ffffff; color: #0f766e; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">LPR CAM</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="30" width="90" height="70" rx="8" fill="#0f172a" stroke="#0d9488" stroke-width="2.5"/>
+                <rect x="40" y="45" width="60" height="25" fill="#ffffff"/>
+                <text x="70" y="62" fill="#000000" font-size="10" font-weight="900" font-family="monospace" text-anchor="middle">AA•BB•12</text>
+                <text x="70" y="90" fill="#00f2fe" font-size="7" font-family="monospace" text-anchor="middle">LECTURA OCR 99%</text>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Cámaras OCR de Alta Resolución:</strong> Lectura automática de placas patentes de tracto y remolque.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Electrónica Propia Gladiator:</strong> Integración multimarca con lectores Mifare, biometría y barreras.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Captura en Movimiento:</strong> Precisión de lectura en horarios diurnos y nocturnos con iluminador IR.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Auditoría Visual:</strong> Registro de foto de la patente asociada al evento de ingreso.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 3: FABRICACIÓN DE SOFTWARE A MEDIDA & APP MÓVIL -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #7c3aed; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">SOFTWARE A MEDIDA</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">WINDOWS & APPS MÓVILES</div>
+            </div>
+            <div style="background: #ffffff; color: #6d28d9; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">SOFTWARE</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="25" width="90" height="90" rx="8" fill="#0f172a" stroke="#7c3aed" stroke-width="3"/>
+                <rect x="35" y="35" width="70" height="40" fill="#1e293b"/>
+                <path d="M 45 60 L 60 45 L 75 55 L 95 38" stroke="#00f2fe" stroke-width="2" fill="none"/>
+                <rect x="35" y="82" width="70" height="20" rx="3" fill="#334155"/>
+                <text x="70" y="95" fill="#f59e0b" font-size="7" font-family="monospace" text-anchor="middle">WINDOWS & APP</text>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Desarrollo a la Medida:</strong> Programación ajustada al flujo operativo exacto de la empresa.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Consola Windows & APP Móvil:</strong> Aplicaciones para PC de portería y celulares de guardias.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Registro de Guías y Chófer:</strong> Captura de RUT de chofer, empresa transportista y n° de guía.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Informes Financieros Fidedignos:</strong> Reportes de tiempos de permanencia en andenes de carga.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 4: INTEGRACIÓN CON ERP Y BALANZAS DE PESAJE -->
+        <div class="vertical-product-card">
+          <!-- Top Header Bar -->
+          <div style="background: #059669; color: #ffffff; padding: 1.1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">INTEGRACIÓN NATIVA</div>
+              <div style="font-size: 0.82rem; font-weight: 700; opacity: 0.9;">SAP, ORACLE & BALANZAS</div>
+            </div>
+            <div style="background: #ffffff; color: #047857; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 900; font-size: 0.75rem;">ERP INTEGRACIÓN</div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+            <div style="width: 100%; height: 160px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="25" width="90" height="90" rx="8" fill="#0f172a" stroke="#059669" stroke-width="3"/>
+                <path d="M 45 70 L 60 85 L 95 50" stroke="#10b981" stroke-width="3" fill="none"/>
+                <text x="70" y="103" fill="#00f2fe" font-size="7" font-family="monospace" text-anchor="middle">SAP / BALANZAS OK</text>
+              </svg>
+            </div>
+
+            <!-- Gladiator Badge -->
+            <div style="margin-bottom: 1.25rem; text-align: center;">
+              <span style="background: #0f172a; color: #00f2fe; padding: 0.4rem 1rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">GLADIATOR CONTROL</span>
+            </div>
+
+            <!-- Characteristics -->
+            <h4 style="font-size: 0.85rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.35rem;">CARACTERÍSTICAS:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Conexión con ERP Existente:</strong> Sincronización transparente con sistemas SAP, Oracle y SQL del cliente.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Integración a Balanzas de Pesaje:</strong> Registro automatizado de peso bruto, tara y neto del camión.
+              </li>
+              <li style="margin-bottom: 0.4rem; padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Optimización de Inversión:</strong> No reemplaza la infraestructura vigente, la potencia y moderniza.
+              </li>
+              <li style="padding-left: 1.2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb; font-weight: bold;">•</span>
+                <strong>Trazabilidad de Carga:</strong> Control total desde el ingreso hasta el despacho de mercancía.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DIRECT QUOTE CTA BANNER ================= -->
+  <section style="padding: 70px 0; background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(59, 130, 246, 0.15)); text-align: center;">
+    <div class="container mx-auto" style="max-width: 800px;">
+      <h3 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-white);">
+        ¿Necesitas Implementar Control de Vehículos de Transporte y Camiones en tu Empresa?
+      </h3>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">
+        Contacta a nuestros especialistas en Chile (Santiago / Chillán) o Perú (Lima) para asesoría técnica inmediata y presupuesto personalizado.
+      </p>
+      <a href="https://api.whatsapp.com/send?phone=+56976991350&text=Hola%20Gladiator%20Control!%20Deseo%20solicitar%20presupuesto%20para%20el%20Control%20de%20Vehiculos%20de%20Transporte" target="_blank" class="btn btn-whatsapp" style="padding: 1.1rem 2.2rem; font-size: 1.1rem;">
+        <i class="fa-brands fa-whatsapp"></i> Hablar por WhatsApp +56 9 7699 1350
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+  <a href="https://api.whatsapp.com/send?phone=+56976991350" target="_blank" class="whatsapp-float" aria-label="WhatsApp Gladiator Control">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="../index.html" class="logo">
+            <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+            <span>GLADIATOR <span style="color: var(--primary-cyan);">CONTROL</span></span>
+          </a>
+          <p>
+            Desarrollamos e integramos sistemas inteligentes de acceso, estacionamiento, intercomunicación y seguridad en Chile, Perú y México.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Líneas Destacadas</h4>
+          <ul class="footer-links">
+            <li><a href="vehiculos-transporte.html">Control Vehículos Transporte</a></li>
+            <li><a href="colegios-interactivo.html">Control para Colegios</a></li>
+            <li><a href="libro-id-access.html">Libro ID ACCESS</a></li>
+            <li><a href="tag-vehicular.html">TAG Vehicular UHF</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../productos.html">Productos</a></li>
+            <li><a href="../index.html#infraestructuras">Nosotros</a></li>
+            <li><a href="../index.html#sedes">Sedes</a></li>
+            <li><a href="../index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Contacto Chile & Perú</h4>
+          <p style="margin-top: 0; font-size: 0.85rem;">
+            Santiago: 22 840 2124 | Chillán: 42 253 6701<br>
+            Lima Perú: 51905488105<br>
+            <strong>WhatsApp:</strong> +56 9 7699 1350<br>
+            <strong>Email:</strong> gladiatorcontrol@gmail.com
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Gladiator Control - Equipos Estacionamiento y Acceso. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/products-data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>
